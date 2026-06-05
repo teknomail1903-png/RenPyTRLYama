@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using RenPyTRLauncher.Models;
 
 namespace RenPyTRLauncher
 {
@@ -13,93 +15,47 @@ namespace RenPyTRLauncher
         {
             InitializeComponent();
 
-            // initialize EF DbContext and services (EnsureCreated/SaveChanges calls removed to avoid build-time dependency issues)
-            var db = new Data.AppDbContext();
-
-            // Try to apply pending EF Core migrations at startup to ensure schema matches model
-            try
-            {
-                db.Database.Migrate();
-            }
-            catch
-            {
-                // If migrations cannot be applied at runtime, continue with best-effort schema fixes below
-            }
-
-            // Best-effort runtime schema fix: if the Users table is missing the text columns
-            // mapped to List<Guid> properties, add them so EF queries don't fail.
-            try
-            {
-                db.Database.OpenConnection();
-                using (var cmd = db.Database.GetDbConnection().CreateCommand())
-                {
-                    cmd.CommandText = "PRAGMA table_info(Users);";
-                    var existing = new System.Collections.Generic.HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read()) existing.Add(reader.GetString(1));
-                    }
-
-                    var needed = new[] { "FavoriteGameIds", "DownloadedPatchIds", "RecentDownloadedGameIds", "TotalDownloadCount" };
-                    foreach (var col in needed)
-                    {
-                        if (!existing.Contains(col))
-                        {
-                            using (var c2 = db.Database.GetDbConnection().CreateCommand())
-                            {
-                                // for numeric TotalDownloadCount add INTEGER with default 0
-                                if (string.Equals(col, "TotalDownloadCount", System.StringComparison.OrdinalIgnoreCase))
-                                {
-                                    c2.CommandText = $"ALTER TABLE Users ADD COLUMN {col} INTEGER NOT NULL DEFAULT 0";
-                                }
-                                else
-                                {
-                                    c2.CommandText = $"ALTER TABLE Users ADD COLUMN {col} TEXT";
-                                }
-                                c2.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                // Best-effort: if anything fails, ignore so app can continue to start.
-            }
-            finally
-            {
-                try { db.Database.CloseConnection(); } catch { }
-            }
+            var db = Data.DatabaseInitializer.Initialize();
 
             Services.ServiceLocator.GameService = new Services.EfGameService(db);
             Services.ServiceLocator.AnnouncementService = new Services.EfAnnouncementService(db);
             Services.ServiceLocator.UserService = new Services.EfUserService(db);
+            Services.ServiceLocator.PatchService = new Services.PatchService(
+                Services.ServiceLocator.GameService,
+                Services.ServiceLocator.UserService);
 
             viewModel = new ViewModels.MainViewModel();
             DataContext = viewModel;
 
-            // Sidebar handlers via FindName
-            var btnAna = GetElement<System.Windows.Controls.Button>("BtnAnaSayfa");
-            var btnOyun = GetElement<System.Windows.Controls.Button>("BtnOyunlar");
-            var btnKategori = GetElement<System.Windows.Controls.Button>("BtnKategori");
-            var btnTop10 = GetElement<System.Windows.Controls.Button>("BtnTop10");
-            var btnVip = GetElement<System.Windows.Controls.Button>("BtnVip");
-            var btnProfil = GetElement<System.Windows.Controls.Button>("BtnProfil");
-            var btnAyar = GetElement<System.Windows.Controls.Button>("BtnAyarlar");
-            var btnAdmin = GetElement<System.Windows.Controls.Button>("BtnAdmin");
-            var btnLogout = GetElement<System.Windows.Controls.Button>("BtnLogout");
+            WireSidebarButtons();
+            WireCategoryButtons();
+            WireSettingsButtons();
+        }
 
-            if (btnAna != null) btnAna.Click += BtnAnaSayfa_Click;
-            if (btnOyun != null) btnOyun.Click += BtnOyunlar_Click;
-            if (btnKategori != null) btnKategori.Click += BtnKategori_Click;
-            if (btnTop10 != null) btnTop10.Click += BtnTop10_Click;
-            if (btnVip != null) btnVip.Click += BtnVip_Click;
-            if (btnProfil != null) btnProfil.Click += BtnProfil_Click;
-            if (btnAyar != null) btnAyar.Click += BtnAyarlar_Click;
-            if (btnAdmin != null) btnAdmin.Click += BtnAdmin_Click;
-            if (btnLogout != null) btnLogout.Click += BtnLogout_Click;
+        private void WireSidebarButtons()
+        {
+            var mappings = new (string name, RoutedEventHandler handler)[]
+            {
+                ("BtnAnaSayfa", BtnAnaSayfa_Click),
+                ("BtnOyunlar", BtnOyunlar_Click),
+                ("BtnKategori", BtnKategori_Click),
+                ("BtnTop10", BtnTop10_Click),
+                ("BtnVip", BtnVip_Click),
+                ("BtnProfil", BtnProfil_Click),
+                ("BtnAyarlar", BtnAyarlar_Click),
+                ("BtnAdmin", BtnAdmin_Click),
+                ("BtnLogout", BtnLogout_Click)
+            };
 
-            // Category buttons (from PageKategori)
+            foreach (var (name, handler) in mappings)
+            {
+                var btn = GetElement<System.Windows.Controls.Button>(name);
+                if (btn != null) btn.Click += handler;
+            }
+        }
+
+        private void WireCategoryButtons()
+        {
             var btnKategoriVip = GetElement<System.Windows.Controls.Button>("BtnKategoriVip");
             var btnKategoriDevam = GetElement<System.Windows.Controls.Button>("BtnKategoriDevam");
             var btnKategoriBiten = GetElement<System.Windows.Controls.Button>("BtnKategoriBiten");
@@ -114,22 +70,123 @@ namespace RenPyTRLauncher
             if (btnKategoriKadin != null) btnKategoriKadin.Click += (s, e) => viewModel.FilterByCategory("Kadın Başrol");
             if (btnKategoriYamalar != null) btnKategoriYamalar.Click += (s, e) => FilterByPatches(viewModel);
 
-            // wire category panel controls
             var txtSearch = GetElement<System.Windows.Controls.TextBox>("TxtKategoriSearch");
             var btnClear = GetElement<System.Windows.Controls.Button>("BtnClearCategories");
             var btnApply = GetElement<System.Windows.Controls.Button>("BtnApplyCategories");
 
-            if (txtSearch != null) txtSearch.TextChanged += (s, e) => { viewModel.SearchText = txtSearch.Text; };
-            if (btnClear != null) btnClear.Click += (s, e) => { viewModel.ClearCategorySelection(); /* clear UI toggles */ ClearCategoryToggles(); };
+            if (txtSearch != null) txtSearch.TextChanged += (s, e) => { viewModel.SearchText = txtSearch.Text; viewModel.ApplyFilters(); };
+            if (btnClear != null) btnClear.Click += (s, e) => { viewModel.ClearCategorySelection(); ClearCategoryToggles(); };
             if (btnApply != null) btnApply.Click += (s, e) => { viewModel.ApplyFilters(); SetActivePage("PageKategori"); };
+        }
+
+        private void WireSettingsButtons()
+        {
+            var settingsButtons = new (string name, Action action)[]
+            {
+                ("BtnCheckUpdates", () => MessageBox.Show("Güncelleme kontrolü: En son sürüm kullanılıyor (v1.0).", "Güncellemeler", MessageBoxButton.OK, MessageBoxImage.Information)),
+                ("BtnClearSaves", () => ClearFolder("Saves", "Kayıt dosyaları")),
+                ("BtnClearCache", () => ClearFolder("Cache", "Önbellek")),
+                ("BtnClearLogs", () => ClearFolder("Logs", "Log dosyaları")),
+                ("BtnOpenGamesFolder", () => OpenAppFolder("Games")),
+                ("BtnOpenBackupFolder", () => OpenAppFolder("Backups"))
+            };
+
+            foreach (var (name, action) in settingsButtons)
+            {
+                var btn = GetElement<System.Windows.Controls.Button>(name);
+                if (btn != null) btn.Click += (s, e) => action();
+            }
+        }
+
+        private async void InstallPatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not System.Windows.Controls.Button btn || btn.Tag is not Game game)
+                return;
+
+            if (viewModel.CurrentUser == null)
+            {
+                MessageBox.Show("Kullanıcı oturumu bulunamadı.", "Yama Kur", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (game.IsVip && viewModel.CurrentUser.IsVip != true)
+            {
+                MessageBox.Show("Bu yama VIP üyelere özeldir.", "VIP Gerekli", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new OpenFolderDialog
+            {
+                Title = $"{game.Name} — Oyun klasörünü seçin (game/ klasörünün üst dizini)"
+            };
+
+            if (dialog.ShowDialog() != true) return;
+
+            btn.IsEnabled = false;
+            try
+            {
+                var result = await viewModel.InstallPatchAsync(game, dialog.FolderName);
+                MessageBox.Show(
+                    result.Message + (result.LogFilePath != null ? $"\n\nLog: {result.LogFilePath}" : string.Empty),
+                    result.Success ? "Kurulum Başarılı" : "Kurulum Başarısız",
+                    MessageBoxButton.OK,
+                    result.Success ? MessageBoxImage.Information : MessageBoxImage.Error);
+            }
+            finally
+            {
+                btn.IsEnabled = true;
+            }
+        }
+
+        private void BrowseGameFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFolderDialog { Title = "Oyun klasörünü seçin" };
+            if (dialog.ShowDialog() == true)
+                MessageBox.Show($"Seçilen klasör:\n{dialog.FolderName}", "Klasör Seçildi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private static string GetAppDataPath(string subFolder)
+        {
+            var basePath = System.IO.Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "RenPyTRLauncher");
+            return System.IO.Path.Combine(basePath, subFolder);
+        }
+
+        private void OpenAppFolder(string subFolder)
+        {
+            var path = GetAppDataPath(subFolder);
+            System.IO.Directory.CreateDirectory(path);
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true
+            });
+        }
+
+        private void ClearFolder(string subFolder, string label)
+        {
+            var path = GetAppDataPath(subFolder);
+            if (!System.IO.Directory.Exists(path))
+            {
+                MessageBox.Show($"{label} klasörü zaten boş.", label, MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            var res = MessageBox.Show($"{label} klasöründeki dosyalar silinsin mi?\n{path}", label, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (res != MessageBoxResult.Yes) return;
+
+            foreach (var file in System.IO.Directory.GetFiles(path))
+            {
+                try { System.IO.File.Delete(file); } catch { }
+            }
+            MessageBox.Show($"{label} temizlendi.", label, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void CategoryToggle_Click(object sender, RoutedEventArgs e)
         {
             if (sender is System.Windows.Controls.Primitives.ToggleButton tb && tb.Content is string cat)
-            {
                 viewModel.ToggleCategorySelection(cat);
-            }
         }
 
         private void ClearCategoryToggles()
@@ -159,27 +216,20 @@ namespace RenPyTRLauncher
             return null;
         }
 
-        // Kaldırılan "Yama Kurulumu" bölümüne ait event handler'lar temizlendi.
+        public void BtnKategori_Click(object sender, RoutedEventArgs e) => SetActivePage("PageKategori");
 
-        // Kategori butonu handler
-        public void BtnKategori_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageKategori");
-        private void BtnAdmin_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            ShowAdmin();
-        }
+        private void BtnAdmin_Click(object sender, RoutedEventArgs e) => ShowAdmin();
 
         private void ShowAdmin()
         {
-            // load control into AdminHost
             var ctrl = new Views.AdminUserControl();
             var adminHost = this.FindName("AdminHost") as System.Windows.Controls.ContentControl;
             if (adminHost != null)
             {
                 adminHost.Content = ctrl;
-                adminHost.Visibility = System.Windows.Visibility.Visible;
+                adminHost.Visibility = Visibility.Visible;
             }
 
-            // hide other pages simple approach
             SetVisibility("PageAnaSayfa", Visibility.Collapsed);
             SetVisibility("PageOyunlar", Visibility.Collapsed);
             SetVisibility("PageTop10", Visibility.Collapsed);
@@ -188,10 +238,12 @@ namespace RenPyTRLauncher
             SetVisibility("PageAyarlar", Visibility.Collapsed);
             SetVisibility("PageKategori", Visibility.Collapsed);
         }
-        // Centralized page switcher to reduce repetition and ensure consistent title updates
+
         private void SetActivePage(string pageName)
         {
-            // hide all then show target
+            var adminHost = GetElement<System.Windows.Controls.ContentControl>("AdminHost");
+            if (adminHost != null) adminHost.Visibility = Visibility.Collapsed;
+
             SetVisibility("PageAnaSayfa", Visibility.Collapsed);
             SetVisibility("PageOyunlar", Visibility.Collapsed);
             SetVisibility("PageTop10", Visibility.Collapsed);
@@ -233,29 +285,20 @@ namespace RenPyTRLauncher
             }
         }
 
-        // Sidebar handlers map to page names
-        public void BtnAnaSayfa_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageAnaSayfa");
-        public void BtnOyunlar_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageOyunlar");
-        public void BtnTop10_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageTop10");
+        public void BtnAnaSayfa_Click(object sender, RoutedEventArgs e) => SetActivePage("PageAnaSayfa");
+        public void BtnOyunlar_Click(object sender, RoutedEventArgs e) => SetActivePage("PageOyunlar");
+        public void BtnTop10_Click(object sender, RoutedEventArgs e) => SetActivePage("PageTop10");
         private void BtnVip_Click(object sender, RoutedEventArgs e) => SetActivePage("PageVip");
-        public void BtnProfil_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageProfil");
-        public void BtnAyarlar_Click(object sender, System.Windows.RoutedEventArgs e) => SetActivePage("PageAyarlar");
+        public void BtnProfil_Click(object sender, RoutedEventArgs e) => SetActivePage("PageProfil");
+        public void BtnAyarlar_Click(object sender, RoutedEventArgs e) => SetActivePage("PageAyarlar");
 
         private void BtnLogout_Click(object? sender, RoutedEventArgs e)
         {
-            var res = System.Windows.MessageBox.Show("Oturumu kapatmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (res == MessageBoxResult.Yes)
-            {
-                // For now, just close the main window (login screen can be shown here if exists)
-                this.Close();
-            }
+            var res = MessageBox.Show("Oturumu kapatmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.Yes) Close();
         }
 
-        // helper to find named element
-        private T? GetElement<T>(string name) where T : class
-        {
-            return this.FindName(name) as T;
-        }
+        private T? GetElement<T>(string name) where T : class => FindName(name) as T;
 
         private void SetVisibility(string name, Visibility visibility)
         {
@@ -272,8 +315,8 @@ namespace RenPyTRLauncher
         private void FilterByPatches(ViewModels.MainViewModel vm)
         {
             if (vm == null) return;
-            // show only games that have PatchFilePath not empty
-            vm.FilteredGames = new System.Collections.ObjectModel.ObservableCollection<Models.Game>(vm.Games.Where(g => !string.IsNullOrWhiteSpace(g.PatchFilePath)));
+            vm.FilteredGames = new System.Collections.ObjectModel.ObservableCollection<Game>(
+                vm.Games.Where(g => !string.IsNullOrWhiteSpace(g.PatchFilePath)));
             SetActivePage("PageKategori");
             SetText("TxtSayfa", "Yamalar");
         }

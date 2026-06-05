@@ -17,7 +17,7 @@ namespace RenPyTRLauncher.ViewModels
         public Models.User? CurrentUser
         {
             get => _currentUser;
-            private set { _currentUser = value; OnPropertyChanged(nameof(CurrentUser)); OnPropertyChanged(nameof(CurrentUserTotalDownloads)); }
+            private set { _currentUser = value; OnPropertyChanged(nameof(CurrentUser)); }
         }
 
         public ObservableCollection<Game> Games { get; } = new();
@@ -36,7 +36,17 @@ namespace RenPyTRLauncher.ViewModels
         public ObservableCollection<Game> FavoriteGames { get; } = new();
         public ObservableCollection<Game> DownloadedPatches { get; } = new();
         public ObservableCollection<Game> RecentlyDownloaded { get; } = new();
-        public int CurrentUserTotalDownloads => CurrentUser?.TotalDownloadCount ?? 0;
+        private int _currentUserTotalDownloads;
+        public int CurrentUserTotalDownloads
+        {
+            get => _currentUserTotalDownloads;
+            private set
+            {
+                if (_currentUserTotalDownloads == value) return;
+                _currentUserTotalDownloads = value;
+                OnPropertyChanged(nameof(CurrentUserTotalDownloads));
+            }
+        }
         public ObservableCollection<Models.Announcement> Announcements { get; } = new();
 
         // Kategori filtreleme destekleri
@@ -110,6 +120,16 @@ namespace RenPyTRLauncher.ViewModels
         {
             CheckVipExpiry();
 
+            if (CurrentUser != null)
+            {
+                var refreshed = _userService.GetById(CurrentUser.Id);
+                if (refreshed != null) CurrentUser = refreshed;
+            }
+            else
+            {
+                CurrentUser = _userService.GetByUsername("argion");
+            }
+
             Games.Clear();
             foreach (var g in _gameService.GetAll()) Games.Add(g);
 
@@ -123,6 +143,43 @@ namespace RenPyTRLauncher.ViewModels
             Categories.Clear();
             var cats = Games.SelectMany(g => g.Categories).Where(c => !string.IsNullOrWhiteSpace(c)).Select(c => c.Trim()).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(c => c);
             foreach (var c in cats) Categories.Add(c);
+
+            RefreshUserProfile();
+        }
+
+        private void RefreshUserProfile()
+        {
+            FavoriteGames.Clear();
+            DownloadedPatches.Clear();
+            RecentlyDownloaded.Clear();
+
+            if (CurrentUser == null)
+            {
+                CurrentUserTotalDownloads = 0;
+                return;
+            }
+
+            var gameLookup = Games.ToDictionary(g => g.Id);
+
+            foreach (var id in CurrentUser.FavoriteGameIds)
+            {
+                if (gameLookup.TryGetValue(id, out var game))
+                    FavoriteGames.Add(game);
+            }
+
+            foreach (var id in CurrentUser.DownloadedPatchIds)
+            {
+                if (gameLookup.TryGetValue(id, out var game))
+                    DownloadedPatches.Add(game);
+            }
+
+            foreach (var id in CurrentUser.RecentDownloadedGameIds)
+            {
+                if (gameLookup.TryGetValue(id, out var game))
+                    RecentlyDownloaded.Add(game);
+            }
+
+            CurrentUserTotalDownloads = CurrentUser.TotalDownloadCount;
         }
 
         public void CheckVipExpiry()
@@ -189,6 +246,21 @@ namespace RenPyTRLauncher.ViewModels
 
             var filtered = Games.Where(g => g.Categories.Contains(category)).ToList();
             FilteredGames = new ObservableCollection<Game>(filtered);
+        }
+
+        public async System.Threading.Tasks.Task<Models.PatchInstallResult> InstallPatchAsync(Models.Game game, string gameRootFolder)
+        {
+            if (CurrentUser == null)
+                return new Models.PatchInstallResult { Success = false, Message = "Giriş yapılmış kullanıcı bulunamadı." };
+
+            var patchService = Services.ServiceLocator.PatchService;
+            if (patchService == null)
+                return new Models.PatchInstallResult { Success = false, Message = "Yama servisi başlatılamadı." };
+
+            var result = await patchService.InstallPatchAsync(game, gameRootFolder, CurrentUser);
+            if (result.Success)
+                LoadData();
+            return result;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

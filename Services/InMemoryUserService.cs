@@ -13,9 +13,12 @@ namespace RenPyTRLauncher.Services
         {
             // örnek kullanıcılar
             var u1 = new User { Username = "argion", Email = "argion@example.com", IsVip = true, VipEndDate = DateTime.UtcNow.AddDays(30), Role = "Admin" };
-            u1.FavoriteGameIds.Add(Guid.NewGuid());
-            u1.DownloadedPatchIds.Add(Guid.NewGuid());
-            u1.RecentDownloadedGameIds.Add(Guid.NewGuid());
+            u1.FavoriteGameIds.Add(Data.DbSeeder.SummerMemoriesId);
+            u1.FavoriteGameIds.Add(Data.DbSeeder.BeingADikId);
+            u1.DownloadedPatchIds.Add(Data.DbSeeder.SummerMemoriesId);
+            u1.DownloadedPatchIds.Add(Data.DbSeeder.MilfyCityId);
+            u1.RecentDownloadedGameIds.Add(Data.DbSeeder.BeingADikId);
+            u1.RecentDownloadedGameIds.Add(Data.DbSeeder.SummerMemoriesId);
             u1.TotalDownloadCount = 5;
 
             var u2 = new User { Username = "user1", Email = "user1@example.com", IsVip = false, Role = "User" };
@@ -76,6 +79,33 @@ namespace RenPyTRLauncher.Services
             var u = GetById(userId);
             if (u == null) return;
             u.Role = "User";
+        }
+
+        public void RecordPatchDownload(Guid userId, Guid gameId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+
+            if (!u.DownloadedPatchIds.Contains(gameId))
+                u.DownloadedPatchIds.Add(gameId);
+
+            u.RecentDownloadedGameIds.Remove(gameId);
+            u.RecentDownloadedGameIds.Insert(0, gameId);
+            if (u.RecentDownloadedGameIds.Count > 20)
+                u.RecentDownloadedGameIds = u.RecentDownloadedGameIds.Take(20).ToList();
+
+            u.TotalDownloadCount++;
+        }
+
+        public void ToggleFavorite(Guid userId, Guid gameId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+
+            if (u.FavoriteGameIds.Contains(gameId))
+                u.FavoriteGameIds.Remove(gameId);
+            else
+                u.FavoriteGameIds.Add(gameId);
         }
     }
 }

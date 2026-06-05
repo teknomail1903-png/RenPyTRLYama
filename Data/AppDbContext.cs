@@ -1,4 +1,6 @@
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RenPyTRLauncher.Models;
 
 namespace RenPyTRLauncher.Data
@@ -12,31 +14,32 @@ namespace RenPyTRLauncher.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=renpytrlauncher.db",
-                x => x.MigrationsAssembly("RenPyTRLauncher"));
+            if (!optionsBuilder.IsConfigured)
+            {
+                var dbPath = Path.Combine(AppContext.BaseDirectory, "renpytrlauncher.db");
+                optionsBuilder.UseSqlite($"Data Source={dbPath}",
+                    x => x.MigrationsAssembly("RenPyTRLauncher"));
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // store categories as semicolon separated string using ValueConverter to avoid expression tree issues
-            var converter = new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<System.Collections.Generic.List<string>, string>(
-                v => string.Join(";", v ?? new System.Collections.Generic.List<string>()),
-                v => (v ?? string.Empty).Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries).ToList()
-            );
+            var stringListConverter = new ValueConverter<List<string>, string>(
+                v => EfValueConverters.StringListToDb(v),
+                v => EfValueConverters.StringListFromDb(v));
 
-            modelBuilder.Entity<Game>().Property(g => g.Categories).HasConversion(converter);
+            var guidListConverter = new ValueConverter<List<Guid>, string>(
+                v => EfValueConverters.GuidListToDb(v),
+                v => EfValueConverters.GuidListFromDb(v));
 
-            // converters for storing List<Guid> as semicolon separated strings
-            var guidListConverter = new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<System.Collections.Generic.List<System.Guid>, string>(
-                v => string.Join(";", (v ?? new System.Collections.Generic.List<System.Guid>()).Select(g => g.ToString())),
-                v => (v ?? string.Empty).Split(new[] { ';' }, System.StringSplitOptions.RemoveEmptyEntries).Select(s => System.Guid.Parse(s)).ToList()
-            );
+            modelBuilder.Entity<Game>().Property(g => g.Categories).HasConversion(stringListConverter);
 
             modelBuilder.Entity<User>().Property(u => u.FavoriteGameIds).HasConversion(guidListConverter);
             modelBuilder.Entity<User>().Property(u => u.DownloadedPatchIds).HasConversion(guidListConverter);

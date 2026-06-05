@@ -11,5 +11,6 @@ namespace RenPyTRLauncher.Services
         void Add(Game g);
         void Update(Game g);
         void Remove(Guid id);
+        void IncrementDownloadCount(Guid gameId);
     }
 }

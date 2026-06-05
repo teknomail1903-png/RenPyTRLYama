@@ -4,8 +4,6 @@ using RenPyTRLauncher.Services;
 using RenPyTRLauncher.Models;
 using System.Linq;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
-
 namespace RenPyTRLauncher.Views
 {
     public partial class AdminUserControl : System.Windows.Controls.UserControl
@@ -44,6 +42,8 @@ namespace RenPyTRLauncher.Views
 
             var btnAddAnn = this.FindName("BtnAddAnn") as System.Windows.Controls.Button;
             if (btnAddAnn != null) btnAddAnn.Click += BtnAddAnn_Click;
+            var btnDeleteAnn = this.FindName("BtnDeleteAnn") as System.Windows.Controls.Button;
+            if (btnDeleteAnn != null) btnDeleteAnn.Click += BtnDeleteAnn_Click;
 
             var btnEditGame = this.FindName("BtnEditGame") as System.Windows.Controls.Button;
             if (btnEditGame != null) btnEditGame.Click += BtnEditGame_Click;
@@ -61,6 +61,10 @@ namespace RenPyTRLauncher.Views
             if (btnRevokeVip != null) btnRevokeVip.Click += BtnRevokeVip_Click;
             var btnExtendVip = this.FindName("BtnExtendVip") as System.Windows.Controls.Button;
             if (btnExtendVip != null) btnExtendVip.Click += BtnExtendVip_Click;
+            var btnMakeAdmin = this.FindName("BtnMakeAdmin") as System.Windows.Controls.Button;
+            if (btnMakeAdmin != null) btnMakeAdmin.Click += BtnMakeAdmin_Click;
+            var btnRevokeAdmin = this.FindName("BtnRevokeAdmin") as System.Windows.Controls.Button;
+            if (btnRevokeAdmin != null) btnRevokeAdmin.Click += BtnRevokeAdmin_Click;
 
             // Refresh UI once
             RefreshLists();
@@ -242,6 +246,37 @@ namespace RenPyTRLauncher.Views
             _announcementService.Add(a);
             Services.ServiceLocator.NotifyDataChanged();
             RefreshLists();
+        }
+
+        private void BtnDeleteAnn_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var lst = GetControl<System.Windows.Controls.ListBox>("LstAnns");
+            if (lst?.SelectedItem is Announcement a)
+            {
+                _announcementService.Remove(a.Id);
+                Services.ServiceLocator.NotifyDataChanged();
+                RefreshLists();
+            }
+        }
+
+        private void BtnMakeAdmin_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (LstUsers.SelectedItem is Models.User u)
+            {
+                _userService.MakeAdmin(u.Id);
+                Services.ServiceLocator.NotifyDataChanged();
+                RefreshUsers();
+            }
+        }
+
+        private void BtnRevokeAdmin_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (LstUsers.SelectedItem is Models.User u)
+            {
+                _userService.RevokeAdmin(u.Id);
+                Services.ServiceLocator.NotifyDataChanged();
+                RefreshUsers();
+            }
         }
     }
 }

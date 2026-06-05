@@ -190,177 +190,32 @@
                 <ContentControl x:Name="AdminHost" Visibility="Collapsed" />
 
                 <Grid x:Name="PageOyunlar" Visibility="Collapsed">
-
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <WrapPanel Margin="10">
-
-            <!-- OYUN 1 -->
-            <Border Width="180" Height="280"
-                    Background="#2D2D30"
-                    CornerRadius="10"
-                    Style="{StaticResource CardHover}"
-                    Margin="10">
-
-                <StackPanel>
-
-                    <Image Source="Images/summermemories.jpg"
-                           Width="180"
-                           Height="120"
-                           Stretch="Fill"/>
-
-                    <TextBlock Text="Summer Memories"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="10,10,10,0"/>
-
-                    <TextBlock Text="Türkçe Yama v1.0"
-                               Foreground="LightGray"
-                               Margin="10,5"/>
-
-                    <Button Content="📂 Gözat"
-                            Margin="10,5"/>
-
-                    <Button Content="🔧 Yamayı Kur"
-                            Margin="10,5"/>
-
-                </StackPanel>
-
-            </Border>
-
-            <!-- OYUN 4 -->
-            <Border Width="180" Height="280"
-                    Background="#2D2D30"
-                    CornerRadius="10"
-                    Style="{StaticResource CardHover}"
-                    Margin="10">
-
-                <StackPanel>
-
-                    <Image Source="Images/summermemories.jpg"
-                           Width="180"
-                           Height="120"
-                           Stretch="Fill"/>
-
-                    <TextBlock Text="Game 4"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="10,10,10,0"/>
-
-                    <TextBlock Text="Türkçe Yama v1.0"
-                               Foreground="LightGray"
-                               Margin="10,5"/>
-
-                    <Button Content="📂 Gözat"
-                            Margin="10,5"/>
-
-                    <Button Content="🔧 Yamayı Kur"
-                            Margin="10,5"/>
-
-                </StackPanel>
-
-            </Border>
-
-            <!-- OYUN 5 -->
-            <Border Width="180" Height="280"
-                    Background="#2D2D30"
-                    CornerRadius="10"
-                    Style="{StaticResource CardHover}"
-                    Margin="10">
-
-                <StackPanel>
-
-                    <Image Source="Images/summermemories.jpg"
-                           Width="180"
-                           Height="120"
-                           Stretch="Fill"/>
-
-                    <TextBlock Text="Game 5"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="10,10,10,0"/>
-
-                    <TextBlock Text="Türkçe Yama v1.0"
-                               Foreground="LightGray"
-                               Margin="10,5"/>
-
-                    <Button Content="📂 Gözat"
-                            Margin="10,5"/>
-
-                    <Button Content="🔧 Yamayı Kur"
-                            Margin="10,5"/>
-
-                </StackPanel>
-
-            </Border>
-
-            <!-- OYUN 2 -->
-            <Border Width="180" Height="280"
-                    Background="#2D2D30"
-                    CornerRadius="10"
-                    Margin="10">
-
-                <StackPanel>
-
-                    <Image Source="Images/summermemories.jpg"
-                           Width="180"
-                           Height="120"
-                           Stretch="Fill"/>
-
-                    <TextBlock Text="Being A DIK"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="10,10,10,0"/>
-
-                    <TextBlock Text="Türkçe Yama v1.0"
-                               Foreground="LightGray"
-                               Margin="10,5"/>
-
-                    <Button Content="📂 Gözat"
-                            Margin="10,5"/>
-
-                    <Button Content="🔧 Yamayı Kur"
-                            Margin="10,5"/>
-
-                </StackPanel>
-
-            </Border>
-
-            <!-- OYUN 3 -->
-            <Border Width="180" Height="280"
-                    Background="#2D2D30"
-                    CornerRadius="10"
-                    Margin="10">
-
-                <StackPanel>
-
-                    <Image Source="Images/summermemories.jpg"
-                           Width="180"
-                           Height="120"
-                           Stretch="Fill"/>
-
-                    <TextBlock Text="Milfy City"
-                               Foreground="White"
-                               FontSize="18"
-                               Margin="10,10,10,0"/>
-
-                    <TextBlock Text="Türkçe Yama v1.0"
-                               Foreground="LightGray"
-                               Margin="10,5"/>
-
-                    <Button Content="📂 Gözat"
-                            Margin="10,5"/>
-
-                    <Button Content="🔧 Yamayı Kur"
-                            Margin="10,5"/>
-
-                </StackPanel>
-
-            </Border>
-
-        </WrapPanel>
-    </ScrollViewer>
-
-</Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Games}" Margin="10">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="180" Height="280" Background="#2D2D30" CornerRadius="10" Style="{StaticResource CardHover}" Margin="10">
+                                        <StackPanel>
+                                            <Image Source="{Binding ImagePath}" Width="180" Height="120" Stretch="Fill"/>
+                                            <TextBlock Text="{Binding Name}" Foreground="White" FontSize="18" Margin="10,10,10,0"/>
+                                            <TextBlock Foreground="LightGray" Margin="10,5">
+                                                <Run Text="Yama: "/>
+                                                <Run Text="{Binding PatchVersion, Mode=OneWay, TargetNullValue='-', FallbackValue='-'}"/>
+                                            </TextBlock>
+                                            <Button Content="📂 Gözat" Tag="{Binding}" Click="BrowseGameFolder_Click" Margin="10,5"/>
+                                            <Button Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click" Margin="10,5"/>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
 
     <Grid x:Name="PageKategori" Visibility="Collapsed">
 
@@ -376,6 +231,19 @@
                 <Button x:Name="BtnKategoriDevam" Content="Devam Eden" Height="32" Width="120" Margin="0,0,8,0"/>
                 <Button x:Name="BtnKategoriBiten" Content="Biten" Height="32" Width="100"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,8,0,0">
+                <Button x:Name="BtnKategoriErkek" Content="Erkek Başrol" Height="32" Width="120" Margin="0,0,8,0"/>
+                <Button x:Name="BtnKategoriKadin" Content="Kadın Başrol" Height="32" Width="120" Margin="0,0,8,0"/>
+                <Button x:Name="BtnKategoriYamalar" Content="Yamalar" Height="32" Width="100"/>
+            </StackPanel>
+            <TextBlock Text="Tüm Kategoriler" Foreground="LightGray" FontSize="12" Margin="0,12,0,4"/>
+            <ItemsControl x:Name="CategoryList" ItemsSource="{Binding Categories}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ToggleButton Content="{Binding}" Margin="0,2" Height="28" Click="CategoryToggle_Click"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <TextBox x:Name="TxtKategoriSearch" Margin="0,12,0,8" Height="32" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
                 <Button x:Name="BtnClearCategories" Content="Temizle" Width="100" Margin="4"/>
@@ -411,6 +279,7 @@
                                 <TextBlock Text="⬇" FontSize="12" Margin="0,0,6,0"/>
                                 <TextBlock Text="{Binding DownloadCount}" Foreground="White" FontSize="12"/>
                             </StackPanel>
+                            <Button Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click" Margin="0,8,0,0" Height="28"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -447,12 +316,15 @@
                                     <StackPanel Grid.Row="1" Margin="8">
                                         <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis" />
                                         <TextBlock Text="{Binding Categories[0]}" Foreground="LightGray" FontSize="12"/>
-                                        <TextBlock Text="Versiyon: {Binding Version}" Foreground="LightGray" FontSize="12"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Versiyon: " Foreground="LightGray" FontSize="12"/>
+                                            <TextBlock Text="{Binding Version}" Foreground="LightGray" FontSize="12"/>
+                                        </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="0,6,0,0" HorizontalAlignment="Left">
                                             <TextBlock Text="⬇" FontSize="12" Margin="0,0,6,0"/>
                                             <TextBlock Text="{Binding DownloadCount}" Foreground="White" FontSize="12"/>
                                         </StackPanel>
-                                        <Button Content="Detay" Width="80" HorizontalAlignment="Right" Margin="0,6,0,0" />
+                                        <Button Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click" Width="110" HorizontalAlignment="Right" Margin="0,6,0,0" />
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -465,164 +337,30 @@
 </Grid>
 
                 <Grid x:Name="PageVip" Visibility="Collapsed">
-                    <WrapPanel Margin="10">
-
-                        <!-- VIP 1 -->
-                        <Border Width="180" Height="280"
-                                Background="#2D2D30"
-                                CornerRadius="10"
-                                Margin="10">
-
-                            <StackPanel>
-
-                                <Border Height="120"
-                                        Background="#D4AF37"
-                                        CornerRadius="10,10,0,0"/>
-
-                                <TextBlock Text="VIP Game 1"
-                                           Foreground="White"
-                                           FontSize="18"
-                                           Margin="10,10,10,0"/>
-
-                                <TextBlock Text="VIP Türkçe Yama"
-                                           Foreground="Gold"
-                                           Margin="10,5"/>
-
-                                <Button Content="📂 Gözat"
-                                        Margin="10,5"/>
-
-                                <Button Content="🔧 Yamayı Kur"
-                                        Margin="10,5"/>
-
-                            </StackPanel>
-
-                        </Border>
-
-                        <!-- VIP 2 -->
-                        <Border Width="180" Height="280"
-                                Background="#2D2D30"
-                                CornerRadius="10"
-                                Margin="10">
-
-                            <StackPanel>
-
-                                <Border Height="120"
-                                        Background="#D4AF37"
-                                        CornerRadius="10,10,0,0"/>
-
-                                <TextBlock Text="VIP Game 2"
-                                           Foreground="White"
-                                           FontSize="18"
-                                           Margin="10,10,10,0"/>
-
-                                <TextBlock Text="VIP Türkçe Yama"
-                                           Foreground="Gold"
-                                           Margin="10,5"/>
-
-                                <Button Content="📂 Gözat"
-                                        Margin="10,5"/>
-
-                                <Button Content="🔧 Yamayı Kur"
-                                        Margin="10,5"/>
-
-                            </StackPanel>
-
-                        </Border>
-
-                        <!-- VIP 3 -->
-                        <Border Width="180" Height="280"
-                                Background="#2D2D30"
-                                CornerRadius="10"
-                                Margin="10">
-
-                            <StackPanel>
-
-                                <Border Height="120"
-                                        Background="#D4AF37"
-                                        CornerRadius="10,10,0,0"/>
-
-                                <TextBlock Text="VIP Game 3"
-                                           Foreground="White"
-                                           FontSize="18"
-                                           Margin="10,10,10,0"/>
-
-                                <TextBlock Text="VIP Türkçe Yama"
-                                           Foreground="Gold"
-                                           Margin="10,5"/>
-
-                                <Button Content="📂 Gözat"
-                                        Margin="10,5"/>
-
-                                <Button Content="🔧 Yamayı Kur"
-                                        Margin="10,5"/>
-
-                            </StackPanel>
-
-                        </Border>
-
-                        <!-- VIP 4 -->
-                        <Border Width="180" Height="280"
-                                Background="#2D2D30"
-                                CornerRadius="10"
-                                Margin="10">
-
-                            <StackPanel>
-
-                                <Border Height="120"
-                                        Background="#D4AF37"
-                                        CornerRadius="10,10,0,0"/>
-
-                                <TextBlock Text="VIP Game 4"
-                                           Foreground="White"
-                                           FontSize="18"
-                                           Margin="10,10,10,0"/>
-
-                                <TextBlock Text="VIP Türkçe Yama"
-                                           Foreground="Gold"
-                                           Margin="10,5"/>
-
-                                <Button Content="📂 Gözat"
-                                        Margin="10,5"/>
-
-                                <Button Content="🔧 Yamayı Kur"
-                                        Margin="10,5"/>
-
-                            </StackPanel>
-
-                        </Border>
-
-                        <!-- VIP 5 -->
-                        <Border Width="180" Height="280"
-                                Background="#2D2D30"
-                                CornerRadius="10"
-                                Margin="10">
-
-                            <StackPanel>
-
-                                <Border Height="120"
-                                        Background="#D4AF37"
-                                        CornerRadius="10,10,0,0"/>
-
-                                <TextBlock Text="VIP Game 5"
-                                           Foreground="White"
-                                           FontSize="18"
-                                           Margin="10,10,10,0"/>
-
-                                <TextBlock Text="VIP Türkçe Yama"
-                                           Foreground="Gold"
-                                           Margin="10,5"/>
-
-                                <Button Content="📂 Gözat"
-                                        Margin="10,5"/>
-
-                                <Button Content="🔧 Yamayı Kur"
-                                        Margin="10,5"/>
-
-                            </StackPanel>
-
-                        </Border>
-
-                    </WrapPanel>
+                    <ItemsControl ItemsSource="{Binding VipGames}" Margin="10">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="180" Height="280" Background="#2D2D30" CornerRadius="10" Margin="10">
+                                    <StackPanel>
+                                        <Border Height="120" CornerRadius="10,10,0,0">
+                                            <Grid>
+                                                <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
+                                                <Border Background="#D4AF3766"/>
+                                            </Grid>
+                                        </Border>
+                                        <TextBlock Text="{Binding Name}" Foreground="White" FontSize="18" Margin="10,10,10,0"/>
+                                        <TextBlock Text="VIP Türkçe Yama" Foreground="Gold" Margin="10,5"/>
+                                        <Button Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click" Margin="10,5"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
 
                 <Grid x:Name="PageProfil" Visibility="Collapsed">
@@ -645,9 +383,15 @@
                     <Ellipse Width="140" Height="140" Fill="#333" />
                     <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='Anonim'}" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,8,0,0"/>
                     <TextBlock Text="{Binding CurrentUser.Role, FallbackValue='User'}" Foreground="Gold" FontSize="14"/>
-                    <TextBlock Text="VIP: {Binding CurrentUser.IsVip}" Foreground="White" FontSize="12" Margin="0,6,0,0"/>
+                    <TextBlock Foreground="White" FontSize="12" Margin="0,6,0,0">
+                        <Run Text="VIP: "/>
+                        <Run Text="{Binding CurrentUser.IsVip, Mode=OneWay, FallbackValue=False}"/>
+                    </TextBlock>
                     <TextBlock Text="{Binding CurrentUser.VipEndDate, StringFormat='VIP Bitiş: {0:dd.MM.yyyy}', TargetNullValue='VIP Bitiş: -'}" Foreground="White" FontSize="12"/>
-                    <TextBlock Text="Toplam İndirme: {Binding CurrentUserTotalDownloads}" Foreground="White" FontSize="12" Margin="0,6,0,0"/>
+                    <TextBlock Foreground="White" FontSize="12" Margin="0,6,0,0">
+                        <Run Text="Toplam İndirme: "/>
+                        <Run Text="{Binding CurrentUserTotalDownloads, Mode=OneWay}"/>
+                    </TextBlock>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
@@ -699,9 +443,9 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Foreground="LightGray">
-                                    <Run Text="{Binding Name}" />
+                                    <Run Text="{Binding Name, Mode=OneWay}" />
                                     <Run Text=" - " />
-                                    <Run Text="{Binding PatchVersion}" />
+                                    <Run Text="{Binding PatchVersion, Mode=OneWay}" />
                                 </TextBlock>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -732,12 +476,12 @@
 
             <StackPanel>
                         <WrapPanel ItemHeight="40" ItemWidth="220" Orientation="Horizontal">
-                            <Button Content="🔄 Güncellemeleri Kontrol Et" Height="40" Width="220" Margin="4"/>
-                            <Button Content="🧹 Kayıt Dosyalarını Temizle" Height="40" Width="220" Margin="4"/>
-                            <Button Content="🧽 Cache Temizle" Height="40" Width="220" Margin="4"/>
-                            <Button Content="📄 Log Dosyalarını Temizle" Height="40" Width="220" Margin="4"/>
-                            <Button Content="📂 Oyun Klasörünü Aç" Height="40" Width="220" Margin="4"/>
-                            <Button Content="📁 Yedek Klasörünü Aç" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnCheckUpdates" Content="🔄 Güncellemeleri Kontrol Et" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnClearSaves" Content="🧹 Kayıt Dosyalarını Temizle" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnClearCache" Content="🧽 Cache Temizle" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnClearLogs" Content="📄 Log Dosyalarını Temizle" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnOpenGamesFolder" Content="📂 Oyun Klasörünü Aç" Height="40" Width="220" Margin="4"/>
+                            <Button x:Name="BtnOpenBackupFolder" Content="📁 Yedek Klasörünü Aç" Height="40" Width="220" Margin="4"/>
                         </WrapPanel>
                         <TextBlock Text="Launcher Sürümü: v1.0" Foreground="White" Margin="0,15,0,0"/>
 

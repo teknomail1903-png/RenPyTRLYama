@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using RenPyTRLauncher.Models;
 using RenPyTRLauncher.Services;
@@ -30,6 +31,10 @@ namespace RenPyTRLauncher.Views
             TxtDesc.Text = _game.Description;
             TxtVersion.Text = _game.Version;
             TxtImage.Text = _game.ImagePath;
+            var patchVerBox = this.FindName("TxtPatchVersion") as System.Windows.Controls.TextBox;
+            if (patchVerBox != null) patchVerBox.Text = _game.PatchVersion;
+            var catBox = this.FindName("TxtCategories") as System.Windows.Controls.TextBox;
+            if (catBox != null) catBox.Text = string.Join("; ", _game.Categories);
             var patchBox = this.FindName("TxtPatch") as System.Windows.Controls.TextBox;
             if (patchBox != null) patchBox.Text = _game.PatchFilePath;
             var chkVip = this.FindName("ChkIsVip") as System.Windows.Controls.CheckBox;
@@ -54,6 +59,17 @@ namespace RenPyTRLauncher.Views
             _game.Description = TxtDesc.Text ?? _game.Description;
             _game.Version = TxtVersion.Text ?? _game.Version;
             _game.ImagePath = TxtImage.Text ?? _game.ImagePath;
+            var patchVerBox = this.FindName("TxtPatchVersion") as System.Windows.Controls.TextBox;
+            if (patchVerBox != null) _game.PatchVersion = patchVerBox.Text ?? _game.PatchVersion;
+            var catBox = this.FindName("TxtCategories") as System.Windows.Controls.TextBox;
+            if (catBox != null)
+            {
+                _game.Categories = (catBox.Text ?? string.Empty)
+                    .Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(c => c.Trim())
+                    .Where(c => !string.IsNullOrWhiteSpace(c))
+                    .ToList();
+            }
             var patchBox = this.FindName("TxtPatch") as System.Windows.Controls.TextBox;
             if (patchBox != null) _game.PatchFilePath = patchBox.Text ?? _game.PatchFilePath;
             _game.IsVip = (this.FindName("ChkIsVip") as System.Windows.Controls.CheckBox)?.IsChecked == true;

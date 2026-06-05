@@ -93,5 +93,35 @@ namespace RenPyTRLauncher.Services
                 _db.SaveChanges();
             }
         }
+
+        public void RecordPatchDownload(Guid userId, Guid gameId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+
+            if (!u.DownloadedPatchIds.Contains(gameId))
+                u.DownloadedPatchIds.Add(gameId);
+
+            u.RecentDownloadedGameIds.Remove(gameId);
+            u.RecentDownloadedGameIds.Insert(0, gameId);
+            if (u.RecentDownloadedGameIds.Count > 20)
+                u.RecentDownloadedGameIds = u.RecentDownloadedGameIds.Take(20).ToList();
+
+            u.TotalDownloadCount++;
+            _db.SaveChanges();
+        }
+
+        public void ToggleFavorite(Guid userId, Guid gameId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+
+            if (u.FavoriteGameIds.Contains(gameId))
+                u.FavoriteGameIds.Remove(gameId);
+            else
+                u.FavoriteGameIds.Add(gameId);
+
+            _db.SaveChanges();
+        }
     }
 }

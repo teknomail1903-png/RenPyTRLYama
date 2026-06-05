@@ -16,5 +16,7 @@ namespace RenPyTRLauncher.Services
         void RevokeVip(Guid userId);
         void MakeAdmin(Guid userId);
         void RevokeAdmin(Guid userId);
+        void RecordPatchDownload(Guid userId, Guid gameId);
+        void ToggleFavorite(Guid userId, Guid gameId);
     }
 }

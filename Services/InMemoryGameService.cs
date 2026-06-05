@@ -11,10 +11,9 @@ namespace RenPyTRLauncher.Services
 
         public InMemoryGameService()
         {
-            // örnek oyunlar
-            _games.Add(new Game { Name = "Summer Memories", ImagePath = "Images/summermemories.jpg", Categories = new System.Collections.Generic.List<string>{ "VIP", "Romance" }, IsVip = true, IsFeatured = true, DownloadCount = 1200 });
-            _games.Add(new Game { Name = "Being A DIK", ImagePath = "Images/beingadik.jpg", Categories = new System.Collections.Generic.List<string>{ "Devam Eden" }, DownloadCount = 800 });
-            _games.Add(new Game { Name = "Milfy City", ImagePath = "Images/milfycity.jpg", Categories = new System.Collections.Generic.List<string>{ "Biten" }, DownloadCount = 600 });
+            _games.Add(new Game { Id = Data.DbSeeder.SummerMemoriesId, Name = "Summer Memories", ImagePath = "Images/summermemories.jpg", Categories = new System.Collections.Generic.List<string> { "VIP", "Romance", "Erkek Başrol" }, IsVip = true, IsFeatured = true, IsTop10 = true, DownloadCount = 1200, PatchVersion = "v1.0" });
+            _games.Add(new Game { Id = Data.DbSeeder.BeingADikId, Name = "Being A DIK", ImagePath = "Images/beingadik.jpg", Categories = new System.Collections.Generic.List<string> { "Devam Eden", "Erkek Başrol" }, IsTop10 = true, DownloadCount = 800, PatchVersion = "v0.9.4-tr" });
+            _games.Add(new Game { Id = Data.DbSeeder.MilfyCityId, Name = "Milfy City", ImagePath = "Images/milfycity.jpg", Categories = new System.Collections.Generic.List<string> { "Biten", "Kadın Başrol" }, DownloadCount = 600, PatchVersion = "v1.0-tr" });
         }
 
         public IEnumerable<Game> GetAll() => _games.OrderByDescending(g => g.CreatedDate);
@@ -37,5 +36,11 @@ namespace RenPyTRLauncher.Services
         }
 
         public void Remove(Guid id) => _games.RemoveAll(g => g.Id == id);
+
+        public void IncrementDownloadCount(Guid gameId)
+        {
+            var game = GetById(gameId);
+            if (game != null) game.DownloadCount++;
+        }
     }
 }

@@ -20,15 +20,19 @@
         <TextBox x:Name="TxtDesc" Grid.Row="3" Margin="0,4,0,8" />
 
         <StackPanel Grid.Row="4" Orientation="Vertical">
-            <TextBlock Text="(Resim veya yama seçmek için " Foreground="Gray" FontSize="12"/>
             <TextBlock Text="Versiyon" />
             <TextBox x:Name="TxtVersion" Margin="0,4,0,8" />
+            <TextBlock Text="Yama Versiyonu" />
+            <TextBox x:Name="TxtPatchVersion" Margin="0,4,0,8" />
+            <TextBlock Text="Kategoriler (noktalı virgülle ayırın)" />
+            <TextBox x:Name="TxtCategories" Margin="0,4,0,8" />
             <TextBlock Text="Image Path" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="TxtImage" Margin="0,4,0,8" Width="300"/>
                 <Button x:Name="BtnBrowseImage" Content="Gözat" Margin="8,4,0,8" Width="80"/>
             </StackPanel>
-            <TextBlock Text="Patch Path" />
+            <TextBlock Text="Patch Path / URL" />
+            <TextBlock Text="https://... veya github:owner/repo/SummerMemories_TR_v1.0.zip" Foreground="Gray" FontSize="11"/>
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="TxtPatch" Margin="0,4,0,8" Width="300"/>
                 <Button x:Name="BtnBrowsePatch" Content="Yama Seç" Margin="8,4,0,8" Width="80"/>

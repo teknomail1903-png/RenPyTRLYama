@@ -1,7 +1,6 @@
 <UserControl x:Class="RenPyTRLauncher.Views.AdminUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="clr-namespace:RenPyTRLauncher.ViewModels"
     Height="500" Width="800">
 
     <Grid Background="#151516">
@@ -39,7 +38,9 @@
                             <Button x:Name="BtnUserDelete" Content="Sil" Width="100" Margin="0,0,0,8"/>
                             <Button x:Name="BtnGrantVip" Content="VIP Ver" Width="100" Margin="0,0,0,8"/>
                             <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="100"/>
+                            <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="100" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnMakeAdmin" Content="Admin Yap" Width="100" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="100"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -115,7 +116,10 @@
 
                                             <StackPanel Grid.Row="1" Margin="6">
                                                 <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis" />
-                                                <TextBlock Text="Versiyon: {Binding Version}" Foreground="LightGray" FontSize="12" Margin="0,4,0,0"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <TextBlock Text="Versiyon: " Foreground="LightGray" FontSize="12"/>
+                                                    <TextBlock Text="{Binding Version}" Foreground="LightGray" FontSize="12"/>
+                                                </StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
                                                     <TextBlock Text="⬇" FontSize="12" Margin="0,0,6,0"/>
                                                     <TextBlock Text="{Binding DownloadCount}" Foreground="White" FontSize="12"/>
@@ -140,7 +144,10 @@
                     <TextBox x:Name="TxtAnnTitle" Margin="0,2,0,0"/>
                     <TextBlock Text="Mesaj" Foreground="White" Margin="0,8,0,0"/>
                     <TextBox x:Name="TxtAnnMsg" Height="80" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="120" Margin="0,8,0,0"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="120" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnDeleteAnn" Content="Duyuru Sil" Width="120"/>
+                    </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Header="⚙ Sistem Ayarları">
