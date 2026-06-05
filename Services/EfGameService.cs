@@ -14,8 +14,20 @@ namespace RenPyTRLauncher.Services
 
         public IEnumerable<Game> GetAll() => _db.Games.OrderByDescending(g => g.CreatedDate).ToList();
         public Game? GetById(Guid id) => _db.Games.FirstOrDefault(g => g.Id == id);
-        public void Add(Game g) { _db.Games.Add(g); _db.SaveChanges(); }
-        public void Update(Game g) { _db.Games.Update(g); _db.SaveChanges(); }
+        public void Add(Game g)
+        {
+            g.CreatedDate = DateTime.UtcNow;
+            g.UpdatedDate = DateTime.UtcNow;
+            _db.Games.Add(g);
+            _db.SaveChanges();
+        }
+
+        public void Update(Game g)
+        {
+            g.UpdatedDate = DateTime.UtcNow;
+            _db.Games.Update(g);
+            _db.SaveChanges();
+        }
         public void Remove(Guid id) { var ex = _db.Games.Find(id); if (ex != null) { _db.Games.Remove(ex); _db.SaveChanges(); } }
 
         public void IncrementDownloadCount(Guid gameId)

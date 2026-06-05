@@ -128,3 +128,6 @@ D:\RenPyTRLauncher\obj\Debug\net8.0-windows\refint\RenPyTRLauncher.dll
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\RenPyTRLauncher.pdb
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\RenPyTRLauncher.genruntimeconfig.cache
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\ref\RenPyTRLauncher.dll
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\RenPyTRLauncher_MarkupCompile.lref
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\App.baml

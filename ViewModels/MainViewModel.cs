@@ -9,9 +9,13 @@ namespace RenPyTRLauncher.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private System.Windows.Threading.DispatcherTimer? _vipTimer;
+        private System.Windows.Threading.DispatcherTimer? _announcementTimer;
         private readonly Services.IUserService _userService;
         private readonly Services.IGameService _gameService;
         private readonly Services.IAnnouncementService _announcementService;
+        private readonly Services.ISettingsService _settingsService;
+        private readonly Services.IMembershipService _membershipService;
+        private readonly Services.IActivityService _activityService;
 
         private Models.User? _currentUser;
         public Models.User? CurrentUser
@@ -21,21 +25,57 @@ namespace RenPyTRLauncher.ViewModels
         }
 
         public ObservableCollection<Game> Games { get; } = new();
-        private ObservableCollection<Game> _filtered = new();
-        public ObservableCollection<Game> FilteredGames
+        public ObservableCollection<Game> Recent { get; } = new();
+        public ObservableCollection<Game> UpdatedGames { get; } = new();
+        public ObservableCollection<Game> VipGames { get; } = new();
+        public ObservableCollection<LeaderboardEntry> Leaderboard { get; } = new();
+        public ObservableCollection<Game> FavoriteGames { get; } = new();
+        public ObservableCollection<Game> RecentlyDownloaded { get; } = new();
+        public ObservableCollection<Models.Announcement> Announcements { get; } = new();
+        public ObservableCollection<MembershipTier> MembershipTiers { get; } = new();
+        public ObservableCollection<UserActivity> RecentActivities { get; } = new();
+        public ObservableCollection<CategoryFolderItem> CategoryFolders { get; } = new();
+        public ObservableCollection<Game> CategoryGames { get; } = new();
+
+        private string? _selectedCategoryFolder;
+        public string? SelectedCategoryFolder
         {
-            get => _filtered;
-            set { _filtered = value; OnPropertyChanged(nameof(FilteredGames)); }
+            get => _selectedCategoryFolder;
+            set
+            {
+                _selectedCategoryFolder = value;
+                OnPropertyChanged(nameof(SelectedCategoryFolder));
+                OnPropertyChanged(nameof(IsCategoryFolderView));
+                OnPropertyChanged(nameof(IsCategoryGameListView));
+            }
         }
 
-        public ObservableCollection<Game> Featured { get; } = new();
-        public ObservableCollection<Game> Recent { get; } = new();
-        public ObservableCollection<Game> Top10 { get; } = new();
-        public ObservableCollection<Game> VipGames { get; } = new();
-        // Profil ile ilgili koleksiyonlar
-        public ObservableCollection<Game> FavoriteGames { get; } = new();
-        public ObservableCollection<Game> DownloadedPatches { get; } = new();
-        public ObservableCollection<Game> RecentlyDownloaded { get; } = new();
+        public bool IsCategoryFolderView => string.IsNullOrEmpty(SelectedCategoryFolder);
+        public bool IsCategoryGameListView => !string.IsNullOrEmpty(SelectedCategoryFolder);
+        public int CategoryGameCount => CategoryGames.Count;
+
+        private int _announcementIndex;
+        public int AnnouncementIndex
+        {
+            get => _announcementIndex;
+            set
+            {
+                if (Announcements.Count == 0) return;
+                _announcementIndex = ((value % Announcements.Count) + Announcements.Count) % Announcements.Count;
+                OnPropertyChanged(nameof(AnnouncementIndex));
+                OnPropertyChanged(nameof(CurrentAnnouncement));
+                OnPropertyChanged(nameof(AnnouncementCounter));
+            }
+        }
+
+        public string AnnouncementCounter =>
+            Announcements.Count > 0 ? $"{AnnouncementIndex + 1} / {Announcements.Count}" : "0 / 0";
+
+        public Announcement? CurrentAnnouncement =>
+            Announcements.Count > 0 && AnnouncementIndex >= 0 && AnnouncementIndex < Announcements.Count
+                ? Announcements[AnnouncementIndex]
+                : null;
+
         private int _currentUserTotalDownloads;
         public int CurrentUserTotalDownloads
         {
@@ -47,79 +87,100 @@ namespace RenPyTRLauncher.ViewModels
                 OnPropertyChanged(nameof(CurrentUserTotalDownloads));
             }
         }
-        public ObservableCollection<Models.Announcement> Announcements { get; } = new();
 
-        // Kategori filtreleme destekleri
-        public ObservableCollection<string> Categories { get; } = new();
-        private System.Collections.Generic.HashSet<string> _selectedCategories = new();
-        public System.Collections.Generic.IEnumerable<string> SelectedCategories => _selectedCategories;
-        private string _searchText = string.Empty;
-        public string SearchText { get => _searchText; set { _searchText = value ?? string.Empty; OnPropertyChanged(nameof(SearchText)); } }
+        public string WebsiteUrl { get; private set; } = "https://renpytr.com";
+        public string DiscordUrl { get; private set; } = "https://discord.gg/renpytr";
+        public string AnnouncementsUrl { get; private set; } = "https://renpytr.com/duyurular";
+        public string SupportUrl { get; private set; } = "https://renpytr.com/destek";
 
-        public void ToggleCategorySelection(string category)
-        {
-            if (string.IsNullOrWhiteSpace(category)) return;
-            if (_selectedCategories.Contains(category)) _selectedCategories.Remove(category);
-            else _selectedCategories.Add(category);
-            ApplyFilters();
-            OnPropertyChanged(nameof(SelectedCategories));
-        }
-
-        public void ClearCategorySelection()
-        {
-            _selectedCategories.Clear();
-            ApplyFilters();
-            OnPropertyChanged(nameof(SelectedCategories));
-        }
-
-        public void ApplyFilters()
-        {
-            var query = Games.AsEnumerable();
-            if (!string.IsNullOrWhiteSpace(SearchText))
-            {
-                var s = SearchText.ToLowerInvariant();
-                query = query.Where(g => g.Name.ToLowerInvariant().Contains(s) || (g.Description ?? string.Empty).ToLowerInvariant().Contains(s));
-            }
-
-            if (_selectedCategories.Any())
-            {
-                query = query.Where(g => g.Categories.Any(c => _selectedCategories.Contains(c)));
-            }
-
-            FilteredGames = new ObservableCollection<Game>(query);
-        }
+        public int TotalGames => Games.Count;
+        public int TotalUsers => _userService.GetAll().Count();
+        public int TotalDownloads => Games.Sum(g => g.DownloadCount);
+        public int VipMemberCount => _userService.GetAll().Count(u => u.IsVip);
+        public int ActiveDownloads => Services.DownloadTracker.ActiveCount;
 
         public MainViewModel()
         {
-            // use shared services if available
             _userService = Services.ServiceLocator.UserService ?? new Services.InMemoryUserService();
             _gameService = Services.ServiceLocator.GameService ?? new Services.InMemoryGameService();
             _announcementService = Services.ServiceLocator.AnnouncementService ?? new Services.InMemoryAnnouncementService();
+            _settingsService = Services.ServiceLocator.SettingsService ?? new Services.InMemorySettingsService();
+            _membershipService = Services.ServiceLocator.MembershipService ?? new Services.InMemoryMembershipService();
+            _activityService = Services.ServiceLocator.ActivityService ?? new Services.InMemoryActivityService();
 
-            // örnek current user
+            InitCategoryFolders();
             CurrentUser = _userService.GetByUsername("argion");
-
-            // subscribe to data change notifications
             Services.ServiceLocator.DataChanged += () => LoadData();
 
-            // load initial data
             LoadData();
 
-            // start periodic VIP expiry check every hour
             try
             {
-                _vipTimer = new System.Windows.Threading.DispatcherTimer();
-                _vipTimer.Interval = TimeSpan.FromHours(1);
-                _vipTimer.Tick += (s, e) => CheckVipExpiry();
+                _vipTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromHours(1) };
+                _vipTimer.Tick += (_, _) => CheckVipExpiry();
                 _vipTimer.Start();
+
+                _announcementTimer = new System.Windows.Threading.DispatcherTimer { Interval = TimeSpan.FromSeconds(6) };
+                _announcementTimer.Tick += (_, _) => NextAnnouncement();
+                _announcementTimer.Start();
             }
-            catch { /* if dispatcher not available, ignore - safe fallback */ }
+            catch { }
         }
+
+        private void InitCategoryFolders()
+        {
+            CategoryFolders.Clear();
+            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Devam Edenler", CategoryKey = "Devam Eden", Icon = "📁", AccentColor = "#3498DB" });
+            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Bitenler", CategoryKey = "Biten", Icon = "📁", AccentColor = "#27AE60" });
+            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Devam Etmeyenler", CategoryKey = "Devam Etmeyen", Icon = "📁", AccentColor = "#E67E22" });
+            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Erkek Başrol", CategoryKey = "Erkek Başrol", Icon = "📁", AccentColor = "#9B59B6" });
+            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Kadın Başrol", CategoryKey = "Kadın Başrol", Icon = "📁", AccentColor = "#E91E63" });
+        }
+
+        public void OpenCategoryFolder(string categoryKey, string displayName)
+        {
+            SelectedCategoryFolder = displayName;
+            CategoryGames.Clear();
+            foreach (var g in Games.Where(g => g.Categories.Any(c =>
+                string.Equals(c, categoryKey, StringComparison.OrdinalIgnoreCase))))
+                CategoryGames.Add(g);
+            OnPropertyChanged(nameof(CategoryGameCount));
+        }
+
+        public void CloseCategoryFolder()
+        {
+            SelectedCategoryFolder = null;
+            CategoryGames.Clear();
+            OnPropertyChanged(nameof(CategoryGameCount));
+        }
+
+        public void NextAnnouncement() => AnnouncementIndex = AnnouncementIndex + 1;
+        public void PrevAnnouncement() => AnnouncementIndex = AnnouncementIndex - 1;
 
         private void LoadData()
         {
             CheckVipExpiry();
+            RefreshCurrentUser();
 
+            Games.Clear();
+            foreach (var g in _gameService.GetAll()) Games.Add(g);
+
+            RefreshSections();
+            LoadAnnouncements();
+            LoadSettings();
+            LoadMembershipTiers();
+            RefreshUserProfile();
+            RefreshAdminStats();
+
+            if (!string.IsNullOrEmpty(SelectedCategoryFolder))
+            {
+                var folder = CategoryFolders.FirstOrDefault(f => f.DisplayName == SelectedCategoryFolder);
+                if (folder != null) OpenCategoryFolder(folder.CategoryKey, folder.DisplayName);
+            }
+        }
+
+        private void RefreshCurrentUser()
+        {
             if (CurrentUser != null)
             {
                 var refreshed = _userService.GetById(CurrentUser.Id);
@@ -129,29 +190,40 @@ namespace RenPyTRLauncher.ViewModels
             {
                 CurrentUser = _userService.GetByUsername("argion");
             }
+        }
 
-            Games.Clear();
-            foreach (var g in _gameService.GetAll()) Games.Add(g);
-
-            RefreshSections();
+        private void LoadAnnouncements()
+        {
             Announcements.Clear();
-            foreach (var a in _announcementService.GetAll()) Announcements.Add(a);
+            foreach (var a in _announcementService.GetAll().Where(x => x.IsActive).OrderByDescending(x => x.CreatedAt))
+                Announcements.Add(a);
+            AnnouncementIndex = 0;
+            OnPropertyChanged(nameof(AnnouncementCounter));
+        }
 
-            FilteredGames = new ObservableCollection<Game>(Games);
+        private void LoadSettings()
+        {
+            WebsiteUrl = _settingsService.Get(AppSettingKeys.WebsiteUrl, WebsiteUrl);
+            DiscordUrl = _settingsService.Get(AppSettingKeys.DiscordUrl, DiscordUrl);
+            AnnouncementsUrl = _settingsService.Get(AppSettingKeys.AnnouncementsUrl, AnnouncementsUrl);
+            SupportUrl = _settingsService.Get(AppSettingKeys.SupportUrl, SupportUrl);
+            OnPropertyChanged(nameof(WebsiteUrl));
+            OnPropertyChanged(nameof(DiscordUrl));
+            OnPropertyChanged(nameof(AnnouncementsUrl));
+            OnPropertyChanged(nameof(SupportUrl));
+        }
 
-            // kategorileri doldur
-            Categories.Clear();
-            var cats = Games.SelectMany(g => g.Categories).Where(c => !string.IsNullOrWhiteSpace(c)).Select(c => c.Trim()).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(c => c);
-            foreach (var c in cats) Categories.Add(c);
-
-            RefreshUserProfile();
+        private void LoadMembershipTiers()
+        {
+            MembershipTiers.Clear();
+            foreach (var t in _membershipService.GetAll()) MembershipTiers.Add(t);
         }
 
         private void RefreshUserProfile()
         {
             FavoriteGames.Clear();
-            DownloadedPatches.Clear();
             RecentlyDownloaded.Clear();
+            RecentActivities.Clear();
 
             if (CurrentUser == null)
             {
@@ -162,38 +234,38 @@ namespace RenPyTRLauncher.ViewModels
             var gameLookup = Games.ToDictionary(g => g.Id);
 
             foreach (var id in CurrentUser.FavoriteGameIds)
-            {
-                if (gameLookup.TryGetValue(id, out var game))
-                    FavoriteGames.Add(game);
-            }
-
-            foreach (var id in CurrentUser.DownloadedPatchIds)
-            {
-                if (gameLookup.TryGetValue(id, out var game))
-                    DownloadedPatches.Add(game);
-            }
+                if (gameLookup.TryGetValue(id, out var game)) FavoriteGames.Add(game);
 
             foreach (var id in CurrentUser.RecentDownloadedGameIds)
-            {
-                if (gameLookup.TryGetValue(id, out var game))
-                    RecentlyDownloaded.Add(game);
-            }
+                if (gameLookup.TryGetValue(id, out var game)) RecentlyDownloaded.Add(game);
+
+            foreach (var act in _activityService.GetForUser(CurrentUser.Id))
+                RecentActivities.Add(act);
 
             CurrentUserTotalDownloads = CurrentUser.TotalDownloadCount;
         }
 
+        public void RefreshAdminStats()
+        {
+            OnPropertyChanged(nameof(TotalGames));
+            OnPropertyChanged(nameof(TotalUsers));
+            OnPropertyChanged(nameof(TotalDownloads));
+            OnPropertyChanged(nameof(VipMemberCount));
+            OnPropertyChanged(nameof(ActiveDownloads));
+        }
+
         public void CheckVipExpiry()
         {
-            var users = _userService.GetAll();
-            foreach (var u in users)
+            foreach (var u in _userService.GetAll())
             {
                 if (u.IsVip && u.VipEndDate.HasValue && u.VipEndDate.Value < DateTime.UtcNow)
                 {
                     _userService.RevokeVip(u.Id);
-                    if (CurrentUser != null && CurrentUser.Id == u.Id)
+                    if (CurrentUser?.Id == u.Id)
                     {
                         CurrentUser.IsVip = false;
                         CurrentUser.VipEndDate = null;
+                        CurrentUser.MembershipLevel = "Ücretsiz";
                         OnPropertyChanged(nameof(CurrentUser));
                     }
                 }
@@ -202,50 +274,25 @@ namespace RenPyTRLauncher.ViewModels
 
         private void RefreshSections()
         {
-            Featured.Clear();
             Recent.Clear();
-            Top10.Clear();
+            UpdatedGames.Clear();
             VipGames.Clear();
+            Leaderboard.Clear();
 
-            foreach (var g in Games)
+            foreach (var g in Games.OrderByDescending(g => g.CreatedDate).Take(8))
+                Recent.Add(g);
+
+            foreach (var g in Games.OrderByDescending(g => g.UpdatedDate).Take(8))
+                UpdatedGames.Add(g);
+
+            foreach (var g in Games.Where(g => g.IsVip))
+                VipGames.Add(g);
+
+            var rank = 1;
+            foreach (var g in Games.OrderByDescending(g => g.DownloadCount).Take(10))
             {
-                if (g.IsFeatured) Featured.Add(g);
-                if (g.IsTop10) Top10.Add(g);
-                if (g.IsVip) VipGames.Add(g);
+                Leaderboard.Add(new LeaderboardEntry { Rank = rank++, Game = g });
             }
-
-            foreach (var r in Games.OrderByDescending(g => g.CreatedDate).Take(6)) Recent.Add(r);
-        }
-
-        public void FilterByCategory(string category)
-        {
-            if (string.IsNullOrWhiteSpace(category) || category == "Tüm Oyunlar")
-            {
-                FilteredGames = new ObservableCollection<Game>(Games);
-                return;
-            }
-
-            // launcher-odakli filtreler
-            if (category.Equals("VIP", StringComparison.OrdinalIgnoreCase))
-            {
-                FilteredGames = new ObservableCollection<Game>(Games.Where(g => g.IsVip));
-                return;
-            }
-
-            if (category.Equals("Devam Eden", StringComparison.OrdinalIgnoreCase))
-            {
-                FilteredGames = new ObservableCollection<Game>(Games.Where(g => g.Categories.Contains("Devam Eden")));
-                return;
-            }
-
-            if (category.Equals("Biten", StringComparison.OrdinalIgnoreCase))
-            {
-                FilteredGames = new ObservableCollection<Game>(Games.Where(g => g.Categories.Contains("Biten")));
-                return;
-            }
-
-            var filtered = Games.Where(g => g.Categories.Contains(category)).ToList();
-            FilteredGames = new ObservableCollection<Game>(filtered);
         }
 
         public async System.Threading.Tasks.Task<Models.PatchInstallResult> InstallPatchAsync(Models.Game game, string gameRootFolder)
@@ -257,10 +304,22 @@ namespace RenPyTRLauncher.ViewModels
             if (patchService == null)
                 return new Models.PatchInstallResult { Success = false, Message = "Yama servisi başlatılamadı." };
 
-            var result = await patchService.InstallPatchAsync(game, gameRootFolder, CurrentUser);
-            if (result.Success)
-                LoadData();
-            return result;
+            Services.DownloadTracker.Begin();
+            try
+            {
+                var result = await patchService.InstallPatchAsync(game, gameRootFolder, CurrentUser);
+                if (result.Success)
+                {
+                    _activityService.Log(CurrentUser.Id, $"{game.Name} yaması kuruldu", "🔧");
+                    LoadData();
+                }
+                return result;
+            }
+            finally
+            {
+                Services.DownloadTracker.End();
+                RefreshAdminStats();
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

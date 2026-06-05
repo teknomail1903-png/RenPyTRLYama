@@ -1,141 +1,97 @@
 using System;
-using System.Windows;
-using RenPyTRLauncher.Services;
-using RenPyTRLauncher.Models;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using RenPyTRLauncher.Models;
+using RenPyTRLauncher.Services;
+
 namespace RenPyTRLauncher.Views
 {
-    public partial class AdminUserControl : System.Windows.Controls.UserControl
+    public partial class AdminUserControl : UserControl
     {
         private readonly IGameService _gameService;
         private readonly IAnnouncementService _announcementService;
         private readonly IUserService _userService;
+        private readonly ISettingsService _settingsService;
+        private readonly IMembershipService _membershipService;
 
         public AdminUserControl()
         {
             InitializeComponent();
 
-            _gameService = Services.ServiceLocator.GameService ?? new InMemoryGameService();
-            _announcementService = Services.ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
-            _userService = Services.ServiceLocator.UserService ?? new InMemoryUserService();
-            // Subscribe to data change notifications to keep UI in sync
-            Services.ServiceLocator.DataChanged += OnDataChanged;
+            _gameService = ServiceLocator.GameService ?? new InMemoryGameService();
+            _announcementService = ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
+            _userService = ServiceLocator.UserService ?? new InMemoryUserService();
+            _settingsService = ServiceLocator.SettingsService ?? new InMemorySettingsService();
+            _membershipService = ServiceLocator.MembershipService ?? new InMemoryMembershipService();
 
-            // Attach handlers safely (controls may be null during designer/hot-reload)
-            var btnTop10Refresh = this.FindName("BtnTop10Refresh") as System.Windows.Controls.Button;
-            if (btnTop10Refresh != null) btnTop10Refresh.Click += (s, e) => RefreshTop10();
-            var btnTop10Remove = this.FindName("BtnTop10Remove") as System.Windows.Controls.Button;
-            if (btnTop10Remove != null) btnTop10Remove.Click += BtnTop10Remove_Click;
-            var lstTop = this.FindName("LstTop10") as System.Windows.Controls.ListBox;
-            if (lstTop != null) lstTop.MouseDoubleClick += (s, e) => { if (lstTop.SelectedItem is Game gg) { var win = new Views.EditGameWindow(gg, _gameService); win.ShowDialog(); RefreshLists(); RefreshTop10(); } };
-            var btnTop10Detail = this.FindName("BtnTop10Detail") as System.Windows.Controls.Button;
-            if (btnTop10Detail != null) btnTop10Detail.Click += (s, e) => {
-                var lb = GetControl<System.Windows.Controls.ListBox>("LstTop10");
-                if (lb?.SelectedItem is Game g) { var win = new Views.EditGameWindow(g, _gameService); win.ShowDialog(); RefreshLists(); RefreshTop10(); }
+            ServiceLocator.DataChanged += OnDataChanged;
+
+            BtnTop10Refresh.Click += (_, _) => RefreshTop10();
+            BtnTop10Remove.Click += BtnTop10Remove_Click;
+            LstTop10.MouseDoubleClick += (_, _) =>
+            {
+                if (LstTop10.SelectedItem is Game g)
+                {
+                    new EditGameWindow(g, _gameService).ShowDialog();
+                    RefreshAll();
+                }
             };
 
-            var btnAddGame = this.FindName("BtnAddGame") as System.Windows.Controls.Button;
-            if (btnAddGame != null) btnAddGame.Click += BtnAddGame_Click;
-            var btnDeleteGame = this.FindName("BtnDeleteGame") as System.Windows.Controls.Button;
-            if (btnDeleteGame != null) btnDeleteGame.Click += BtnDeleteGame_Click;
+            BtnAddGame.Click += BtnAddGame_Click;
+            BtnDeleteGame.Click += BtnDeleteGame_Click;
+            BtnEditGame.Click += BtnEditGame_Click;
+            BtnAddAnn.Click += BtnAddAnn_Click;
+            BtnDeleteAnn.Click += BtnDeleteAnn_Click;
 
-            var btnAddAnn = this.FindName("BtnAddAnn") as System.Windows.Controls.Button;
-            if (btnAddAnn != null) btnAddAnn.Click += BtnAddAnn_Click;
-            var btnDeleteAnn = this.FindName("BtnDeleteAnn") as System.Windows.Controls.Button;
-            if (btnDeleteAnn != null) btnDeleteAnn.Click += BtnDeleteAnn_Click;
+            BtnUserAdd.Click += BtnUserAdd_Click;
+            BtnUserEdit.Click += BtnUserEdit_Click;
+            BtnUserDelete.Click += BtnUserDelete_Click;
+            BtnGrantVip.Click += BtnGrantVip_Click;
+            BtnRevokeVip.Click += BtnRevokeVip_Click;
+            BtnExtendVip.Click += BtnExtendVip_Click;
+            BtnMakeAdmin.Click += BtnMakeAdmin_Click;
+            BtnRevokeAdmin.Click += BtnRevokeAdmin_Click;
 
-            var btnEditGame = this.FindName("BtnEditGame") as System.Windows.Controls.Button;
-            if (btnEditGame != null) btnEditGame.Click += BtnEditGame_Click;
+            LstMemberships.SelectionChanged += (_, _) => LoadSelectedTier();
+            BtnSaveTier.Click += BtnSaveTier_Click;
+            BtnDeleteTier.Click += BtnDeleteTier_Click;
+            BtnSaveSettings.Click += BtnSaveSettings_Click;
 
-            var btnUserAdd = this.FindName("BtnUserAdd") as System.Windows.Controls.Button;
-            if (btnUserAdd != null) btnUserAdd.Click += BtnUserAdd_Click;
-            var btnUserEdit = this.FindName("BtnUserEdit") as System.Windows.Controls.Button;
-            if (btnUserEdit != null) btnUserEdit.Click += BtnUserEdit_Click;
-            var btnUserDelete = this.FindName("BtnUserDelete") as System.Windows.Controls.Button;
-            if (btnUserDelete != null) btnUserDelete.Click += BtnUserDelete_Click;
-
-            var btnGrantVip = this.FindName("BtnGrantVip") as System.Windows.Controls.Button;
-            if (btnGrantVip != null) btnGrantVip.Click += BtnGrantVip_Click;
-            var btnRevokeVip = this.FindName("BtnRevokeVip") as System.Windows.Controls.Button;
-            if (btnRevokeVip != null) btnRevokeVip.Click += BtnRevokeVip_Click;
-            var btnExtendVip = this.FindName("BtnExtendVip") as System.Windows.Controls.Button;
-            if (btnExtendVip != null) btnExtendVip.Click += BtnExtendVip_Click;
-            var btnMakeAdmin = this.FindName("BtnMakeAdmin") as System.Windows.Controls.Button;
-            if (btnMakeAdmin != null) btnMakeAdmin.Click += BtnMakeAdmin_Click;
-            var btnRevokeAdmin = this.FindName("BtnRevokeAdmin") as System.Windows.Controls.Button;
-            if (btnRevokeAdmin != null) btnRevokeAdmin.Click += BtnRevokeAdmin_Click;
-
-            // Refresh UI once
-            RefreshLists();
-            RefreshUsers();
-
-            // Unsubscribe when unloaded to avoid leaks
-            this.Unloaded += (s, e) => Services.ServiceLocator.DataChanged -= OnDataChanged;
+            Unloaded += (_, _) => ServiceLocator.DataChanged -= OnDataChanged;
+            RefreshAll();
         }
 
-        private T? GetControl<T>(string name) where T : class
+        private void OnDataChanged() =>
+            Dispatcher?.BeginInvoke(new Action(RefreshAll));
+
+        private void RefreshAll()
         {
-            return this.FindName(name) as T;
+            RefreshDashboard();
+            RefreshLists();
+            RefreshUsers();
+            RefreshTop10();
+            RefreshMemberships();
+            LoadSettingsForm();
+        }
+
+        private void RefreshDashboard()
+        {
+            var games = _gameService.GetAll().ToList();
+            var users = _userService.GetAll().ToList();
+            TxtStatGames.Text = games.Count.ToString();
+            TxtStatUsers.Text = users.Count.ToString();
+            TxtStatDownloads.Text = games.Sum(g => g.DownloadCount).ToString("N0");
+            TxtStatVip.Text = users.Count(u => u.IsVip).ToString();
+            TxtStatActive.Text = DownloadTracker.ActiveCount.ToString();
         }
 
         private void RefreshLists()
         {
-            var lstGames = this.FindName("LstGames") as System.Windows.Controls.ListBox;
-            if (lstGames != null)
-            {
-                lstGames.ItemsSource = null;
-                var games = _gameService.GetAll().ToList();
-                lstGames.ItemsSource = games;
-            }
-
-            var lstAnns = this.FindName("LstAnns") as System.Windows.Controls.ListBox;
-            if (lstAnns != null)
-            {
-                lstAnns.ItemsSource = null;
-                lstAnns.ItemsSource = _announcementService.GetAll();
-            }
-        }
-
-        private void OnDataChanged()
-        {
-            // Called from ServiceLocator.DataChanged - ensure called on UI thread
-            _ = this.Dispatcher?.BeginInvoke(new Action(() =>
-            {
-                RefreshLists();
-                RefreshUsers();
-                RefreshTop10();
-            }));
-        }
-
-        private void RefreshTop10()
-        {
-            var lstTop = this.FindName("LstTop10") as System.Windows.Controls.ListBox;
-            if (lstTop != null)
-            {
-                lstTop.ItemsSource = null;
-                // Use the underlying game service to compute a simple "top 10".
-                // Prefer games marked IsTop10 and sort by DownloadCount; fall back to first 10.
-                var all = _gameService.GetAll();
-                var top = all.Where(g => g.IsTop10).OrderByDescending(g => g.DownloadCount).ToList();
-                if (!top.Any())
-                    top = all.Take(10).ToList();
-                lstTop.ItemsSource = top;
-            }
-        }
-
-        private void BtnTop10Remove_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var lstTop = this.FindName("LstTop10") as System.Windows.Controls.ListBox;
-            if (lstTop?.SelectedItem is Game g)
-            {
-                // Unmark as top 10 instead of deleting the game
-                g.IsTop10 = false;
-                _gameService.Update(g);
-                Services.ServiceLocator.NotifyDataChanged();
-                RefreshLists();
-                RefreshTop10();
-            }
+            LstGames.ItemsSource = null;
+            LstGames.ItemsSource = _gameService.GetAll().ToList();
+            LstAnns.ItemsSource = null;
+            LstAnns.ItemsSource = _announcementService.GetAll();
         }
 
         private void RefreshUsers()
@@ -144,137 +100,222 @@ namespace RenPyTRLauncher.Views
             LstUsers.ItemsSource = _userService.GetAll();
         }
 
-        private void BtnAddGame_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void RefreshTop10()
         {
-            var win = new Views.EditGameWindow(null, _gameService);
-            win.ShowDialog();
-            RefreshLists();
+            LstTop10.ItemsSource = null;
+            var all = _gameService.GetAll();
+            var top = all.Where(g => g.IsTop10).OrderByDescending(g => g.DownloadCount).ToList();
+            if (!top.Any()) top = all.OrderByDescending(g => g.DownloadCount).Take(10).ToList();
+            LstTop10.ItemsSource = top;
         }
 
-        private void BtnDeleteGame_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void RefreshMemberships()
         {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstGames");
-            if (lst?.SelectedItem is Game g)
+            LstMemberships.ItemsSource = null;
+            LstMemberships.ItemsSource = _membershipService.GetAll().ToList();
+        }
+
+        private void LoadSettingsForm()
+        {
+            TxtWebsiteUrl.Text = _settingsService.Get(AppSettingKeys.WebsiteUrl);
+            TxtDiscordUrl.Text = _settingsService.Get(AppSettingKeys.DiscordUrl);
+            TxtAnnouncementsUrl.Text = _settingsService.Get(AppSettingKeys.AnnouncementsUrl);
+            TxtSupportUrl.Text = _settingsService.Get(AppSettingKeys.SupportUrl);
+        }
+
+        private void LoadSelectedTier()
+        {
+            if (LstMemberships.SelectedItem is not MembershipTier tier) return;
+            TxtTierName.Text = tier.Name;
+            TxtTierPrice.Text = tier.PriceLabel;
+            TxtTierUrl.Text = tier.PurchaseUrl;
+            TxtTierFeatures.Text = string.Join(Environment.NewLine, tier.Features);
+        }
+
+        private void BtnSaveTier_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstMemberships.SelectedItem is MembershipTier tier)
             {
-                _gameService.Remove(g.Id);
-                Services.ServiceLocator.NotifyDataChanged();
-                RefreshLists();
-                RefreshTop10();
+                tier.Name = TxtTierName.Text;
+                tier.PriceLabel = TxtTierPrice.Text;
+                tier.PurchaseUrl = TxtTierUrl.Text;
+                tier.Features = TxtTierFeatures.Text
+                    .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                _membershipService.Update(tier);
+            }
+            else
+            {
+                _membershipService.Add(new MembershipTier
+                {
+                    Name = TxtTierName.Text,
+                    PriceLabel = TxtTierPrice.Text,
+                    PurchaseUrl = TxtTierUrl.Text,
+                    Features = TxtTierFeatures.Text
+                        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                    SortOrder = _membershipService.GetAll().Count() + 1
+                });
+            }
+            ServiceLocator.NotifyDataChanged();
+            RefreshMemberships();
+        }
+
+        private void BtnDeleteTier_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstMemberships.SelectedItem is MembershipTier tier)
+            {
+                _membershipService.Remove(tier.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshMemberships();
             }
         }
 
-        private void BtnUserAdd_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnSaveSettings_Click(object sender, RoutedEventArgs e)
         {
-            var u = new Models.User { Username = "yeni_kullanici_" + System.Guid.NewGuid().ToString().Substring(0,4), Email = "" };
-            _userService.Create(u);
-            Services.ServiceLocator.NotifyDataChanged();
+            _settingsService.Set(AppSettingKeys.WebsiteUrl, TxtWebsiteUrl.Text);
+            _settingsService.Set(AppSettingKeys.DiscordUrl, TxtDiscordUrl.Text);
+            _settingsService.Set(AppSettingKeys.AnnouncementsUrl, TxtAnnouncementsUrl.Text);
+            _settingsService.Set(AppSettingKeys.SupportUrl, TxtSupportUrl.Text);
+            ServiceLocator.NotifyDataChanged();
+            MessageBox.Show("Bağlantı ayarları kaydedildi.", "Ayarlar", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BtnTop10Remove_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTop10.SelectedItem is Game g)
+            {
+                g.IsTop10 = false;
+                _gameService.Update(g);
+                ServiceLocator.NotifyDataChanged();
+                RefreshAll();
+            }
+        }
+
+        private void BtnAddGame_Click(object sender, RoutedEventArgs e)
+        {
+            new EditGameWindow(null, _gameService).ShowDialog();
+            RefreshAll();
+        }
+
+        private void BtnDeleteGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstGames.SelectedItem is Game g)
+            {
+                _gameService.Remove(g.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshAll();
+            }
+        }
+
+        private void BtnEditGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstGames.SelectedItem is Game g)
+            {
+                new EditGameWindow(g, _gameService).ShowDialog();
+                RefreshAll();
+            }
+        }
+
+        private void BtnAddAnn_Click(object sender, RoutedEventArgs e)
+        {
+            _announcementService.Add(new Announcement
+            {
+                Title = TxtAnnTitle.Text,
+                Message = TxtAnnMsg.Text,
+                AccentColor = string.IsNullOrWhiteSpace(TxtAnnColor.Text) ? "#9B59FF" : TxtAnnColor.Text
+            });
+            ServiceLocator.NotifyDataChanged();
+            RefreshLists();
+        }
+
+        private void BtnDeleteAnn_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstAnns.SelectedItem is Announcement a)
+            {
+                _announcementService.Remove(a.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshLists();
+            }
+        }
+
+        private void BtnUserAdd_Click(object sender, RoutedEventArgs e)
+        {
+            _userService.Create(new User { Username = "user_" + Guid.NewGuid().ToString()[..6], Email = "" });
+            ServiceLocator.NotifyDataChanged();
             RefreshUsers();
         }
 
-        private void BtnUserEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnUserEdit_Click(object sender, RoutedEventArgs e)
         {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstUsers");
-            if (lst?.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
-                u.Username = u.Username + "_edit";
+                u.Username += "_edit";
                 _userService.Update(u);
-                Services.ServiceLocator.NotifyDataChanged();
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnUserDelete_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnUserDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (LstUsers.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 _userService.Delete(u.Id);
-                Services.ServiceLocator.NotifyDataChanged();
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnEditGame_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnGrantVip_Click(object sender, RoutedEventArgs e)
         {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstGames");
-            if (lst?.SelectedItem is Game g)
-            {
-                var win = new Views.EditGameWindow(g, _gameService);
-                win.ShowDialog();
-                RefreshLists();
-                RefreshTop10();
-            }
-        }
-
-        private void BtnGrantVip_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstUsers");
-            if (lst?.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 _userService.GrantVip(u.Id, DateTime.UtcNow.AddDays(30));
-                Services.ServiceLocator.NotifyDataChanged();
+                u.MembershipLevel = "Gold";
+                _userService.Update(u);
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnRevokeVip_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnRevokeVip_Click(object sender, RoutedEventArgs e)
         {
-            if (LstUsers.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 _userService.RevokeVip(u.Id);
-                Services.ServiceLocator.NotifyDataChanged();
+                u.MembershipLevel = "Ücretsiz";
+                _userService.Update(u);
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnExtendVip_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnExtendVip_Click(object sender, RoutedEventArgs e)
         {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstUsers");
-            if (lst?.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 var newEnd = (u.VipEndDate ?? DateTime.UtcNow).AddDays(30);
                 _userService.GrantVip(u.Id, newEnd);
-                Services.ServiceLocator.NotifyDataChanged();
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnAddAnn_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnMakeAdmin_Click(object sender, RoutedEventArgs e)
         {
-            var titleBox = GetControl<System.Windows.Controls.TextBox>("TxtAnnTitle");
-            var msgBox = GetControl<System.Windows.Controls.TextBox>("TxtAnnMsg");
-            var a = new Announcement { Title = titleBox?.Text ?? "(başlık)", Message = msgBox?.Text ?? "" };
-            _announcementService.Add(a);
-            Services.ServiceLocator.NotifyDataChanged();
-            RefreshLists();
-        }
-
-        private void BtnDeleteAnn_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var lst = GetControl<System.Windows.Controls.ListBox>("LstAnns");
-            if (lst?.SelectedItem is Announcement a)
-            {
-                _announcementService.Remove(a.Id);
-                Services.ServiceLocator.NotifyDataChanged();
-                RefreshLists();
-            }
-        }
-
-        private void BtnMakeAdmin_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (LstUsers.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 _userService.MakeAdmin(u.Id);
-                Services.ServiceLocator.NotifyDataChanged();
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }
 
-        private void BtnRevokeAdmin_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnRevokeAdmin_Click(object sender, RoutedEventArgs e)
         {
-            if (LstUsers.SelectedItem is Models.User u)
+            if (LstUsers.SelectedItem is User u)
             {
                 _userService.RevokeAdmin(u.Id);
-                Services.ServiceLocator.NotifyDataChanged();
+                ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
         }

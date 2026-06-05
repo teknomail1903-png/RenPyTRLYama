@@ -18,6 +18,9 @@ namespace RenPyTRLauncher.Data
         public DbSet<Game> Games { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<MembershipTier> MembershipTiers { get; set; }
+        public DbSet<AppSetting> AppSettings { get; set; }
+        public DbSet<UserActivity> UserActivities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,6 +47,8 @@ namespace RenPyTRLauncher.Data
             modelBuilder.Entity<User>().Property(u => u.FavoriteGameIds).HasConversion(guidListConverter);
             modelBuilder.Entity<User>().Property(u => u.DownloadedPatchIds).HasConversion(guidListConverter);
             modelBuilder.Entity<User>().Property(u => u.RecentDownloadedGameIds).HasConversion(guidListConverter);
+            modelBuilder.Entity<User>().Property(u => u.Badges).HasConversion(stringListConverter);
+            modelBuilder.Entity<MembershipTier>().Property(m => m.Features).HasConversion(stringListConverter);
         }
     }
 }

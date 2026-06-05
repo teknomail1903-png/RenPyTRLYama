@@ -12,6 +12,9 @@ namespace RenPyTRLauncher.Models
         public DateTime? VipEndDate { get; set; }
         public DateTime RegisterDate { get; set; } = DateTime.UtcNow;
         public string Role { get; set; } = "User"; // User or Admin
+        public string AvatarPath { get; set; } = string.Empty;
+        public string MembershipLevel { get; set; } = "Ücretsiz";
+        public System.Collections.Generic.List<string> Badges { get; set; } = new();
         // Yeni profil alanlari
         public System.Collections.Generic.List<Guid> FavoriteGameIds { get; set; } = new();
         public System.Collections.Generic.List<Guid> DownloadedPatchIds { get; set; } = new();

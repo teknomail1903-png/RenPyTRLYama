@@ -37,6 +37,7 @@ namespace RenPyTRLauncher.Data
             }
 
             EnsureUserColumns(db);
+            EnsureExtendedSchema(db);
             DbSeeder.SeedIfEmpty(db);
             return db;
         }
@@ -74,6 +75,78 @@ namespace RenPyTRLauncher.Data
             {
                 try { db.Database.CloseConnection(); } catch { }
             }
+        }
+
+        private static void EnsureExtendedSchema(AppDbContext db)
+        {
+            try
+            {
+                db.Database.OpenConnection();
+                using var cmd = db.Database.GetDbConnection().CreateCommand();
+
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS MembershipTiers (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        Name TEXT NOT NULL,
+                        Icon TEXT NOT NULL DEFAULT '💎',
+                        Price REAL NOT NULL DEFAULT 0,
+                        PriceLabel TEXT NOT NULL DEFAULT '',
+                        Features TEXT NOT NULL DEFAULT '',
+                        PurchaseUrl TEXT NOT NULL DEFAULT '',
+                        AccentColor TEXT NOT NULL DEFAULT '#9B59FF',
+                        SortOrder INTEGER NOT NULL DEFAULT 0,
+                        IsActive INTEGER NOT NULL DEFAULT 1
+                    );
+                    CREATE TABLE IF NOT EXISTS AppSettings (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        Key TEXT NOT NULL,
+                        Value TEXT NOT NULL DEFAULT ''
+                    );
+                    CREATE TABLE IF NOT EXISTS UserActivities (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        UserId TEXT NOT NULL,
+                        Description TEXT NOT NULL DEFAULT '',
+                        Icon TEXT NOT NULL DEFAULT '🎮',
+                        OccurredAt TEXT NOT NULL
+                    );";
+                cmd.ExecuteNonQuery();
+
+                EnsureColumn(db, "Games", "UpdatedDate", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Announcements", "ImagePath", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Announcements", "AccentColor", "TEXT NOT NULL DEFAULT '#9B59FF'");
+                EnsureColumn(db, "Announcements", "IsActive", "INTEGER NOT NULL DEFAULT 1");
+                EnsureColumn(db, "Users", "AvatarPath", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Users", "MembershipLevel", "TEXT NOT NULL DEFAULT 'Ücretsiz'");
+                EnsureColumn(db, "Users", "Badges", "TEXT NOT NULL DEFAULT ''");
+
+                using var fixDates = db.Database.GetDbConnection().CreateCommand();
+                fixDates.CommandText = "UPDATE Games SET UpdatedDate = CreatedDate WHERE UpdatedDate IS NULL OR UpdatedDate = ''";
+                try { fixDates.ExecuteNonQuery(); } catch { }
+            }
+            catch
+            {
+                // best-effort schema patch
+            }
+            finally
+            {
+                try { db.Database.CloseConnection(); } catch { }
+            }
+        }
+
+        private static void EnsureColumn(AppDbContext db, string table, string column, string definition)
+        {
+            using var cmd = db.Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = $"PRAGMA table_info({table});";
+            var existing = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read()) existing.Add(reader.GetString(1));
+            }
+            if (existing.Contains(column)) return;
+
+            using var alter = db.Database.GetDbConnection().CreateCommand();
+            alter.CommandText = $"ALTER TABLE {table} ADD COLUMN {column} {definition}";
+            alter.ExecuteNonQuery();
         }
     }
 }

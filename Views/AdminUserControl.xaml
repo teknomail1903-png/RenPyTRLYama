@@ -1,161 +1,219 @@
 <UserControl x:Class="RenPyTRLauncher.Views.AdminUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="500" Width="800">
+    Background="#0D0D0F">
 
-    <Grid Background="#151516">
-        <TabControl>
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="CardBg" Color="#1A1A22"/>
+        <SolidColorBrush x:Key="Accent" Color="#9B59FF"/>
+        <Style x:Key="StatCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBg}"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,12,12"/>
+            <Setter Property="MinWidth" Value="160"/>
+        </Style>
+        <Style x:Key="AdminLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#888"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="AdminValue" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="8">
+        <TabControl Background="Transparent" BorderThickness="0">
             <TabItem Header="📊 Dashboard">
-                <StackPanel Margin="12">
-                    <TextBlock Text="Dashboard" FontSize="18" Foreground="White" FontWeight="Bold"/>
-                    <TextBlock Text="Sistemdeki oyun ve kullanıcı istatistikleri burada gösterilecek." Foreground="White" Margin="0,8"/>
-                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12">
+                        <TextBlock Text="Dashboard" FontSize="22" Foreground="White" FontWeight="Bold" Margin="0,0,0,16"/>
+                        <WrapPanel x:Name="DashboardStats">
+                            <Border Style="{StaticResource StatCard}">
+                                <StackPanel>
+                                    <TextBlock Text="🎮 Toplam Oyun" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatGames" Style="{StaticResource AdminValue}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatCard}">
+                                <StackPanel>
+                                    <TextBlock Text="👥 Toplam Kullanıcı" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatUsers" Style="{StaticResource AdminValue}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatCard}">
+                                <StackPanel>
+                                    <TextBlock Text="⬇ Toplam İndirme" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatDownloads" Style="{StaticResource AdminValue}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatCard}">
+                                <StackPanel>
+                                    <TextBlock Text="💎 VIP Üye" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatVip" Style="{StaticResource AdminValue}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatCard}">
+                                <StackPanel>
+                                    <TextBlock Text="📥 Aktif İndirme" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatActive" Style="{StaticResource AdminValue}"/>
+                                </StackPanel>
+                            </Border>
+                        </WrapPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
+
             <TabItem Header="🎮 Oyun Yönetimi">
-                            <StackPanel Margin="12">
-                    <Button x:Name="BtnAddGame" Content="Oyun Ekle" Width="120" Margin="0,10"/>
-
-                    <ListBox x:Name="LstGames" DisplayMemberPath="Name" Height="220"/>
-
+                <StackPanel Margin="12">
+                    <Button x:Name="BtnAddGame" Content="+ Oyun Ekle" Width="140" Height="36" Margin="0,0,0,10"/>
+                    <ListBox x:Name="LstGames" DisplayMemberPath="Name" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
                     <StackPanel Orientation="Horizontal" Margin="0,10">
-                        <Button x:Name="BtnEditGame" Content="Düzenle" Width="80" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnDeleteGame" Content="Sil" Width="80"/>
+                        <Button x:Name="BtnEditGame" Content="Düzenle" Width="100" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnDeleteGame" Content="Sil" Width="100"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
+
             <TabItem Header="👥 Kullanıcı Yönetimi">
                 <StackPanel Margin="12">
-                    <TextBlock Text="Kullanıcılar" FontSize="16" Foreground="White" Margin="0,6"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ListBox x:Name="LstUsers" DisplayMemberPath="Username" Height="220" Grid.Column="0"/>
-                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="8,0,0,0">
-                            <Button x:Name="BtnUserAdd" Content="Ekle" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnUserEdit" Content="Düzenle" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnUserDelete" Content="Sil" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnGrantVip" Content="VIP Ver" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnMakeAdmin" Content="Admin Yap" Width="100" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="100"/>
+                        <ListBox x:Name="LstUsers" DisplayMemberPath="Username" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                            <Button x:Name="BtnUserAdd" Content="Ekle" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnUserEdit" Content="Düzenle" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnUserDelete" Content="Sil" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnGrantVip" Content="VIP Ver" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnMakeAdmin" Content="Admin Yap" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="110"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="💎 VIP Yönetimi">
+
+            <TabItem Header="💎 Üyelik Kartları">
                 <StackPanel Margin="12">
-                    <TextBlock Text="VIP yönetimi kullanıcı tablosundan da yönetilebilir." Foreground="White"/>
+                    <TextBlock Text="VIP üyelik planlarını buradan yönetin." Foreground="#888" Margin="0,0,0,10"/>
+                    <ListBox x:Name="LstMemberships" Height="200" Background="#1A1A22" Foreground="White" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Icon}" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                    <TextBlock Text=" — " Foreground="#666"/>
+                                    <TextBlock Text="{Binding PriceLabel}" Foreground="{StaticResource Accent}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Grid Margin="0,12,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                            <TextBlock Text="Ad" Foreground="White" FontSize="12"/>
+                            <TextBox x:Name="TxtTierName" Margin="0,4,0,8"/>
+                            <TextBlock Text="Fiyat Etiketi" Foreground="White" FontSize="12"/>
+                            <TextBox x:Name="TxtTierPrice" Margin="0,4,0,8"/>
+                            <TextBlock Text="Satın Al URL" Foreground="White" FontSize="12"/>
+                            <TextBox x:Name="TxtTierUrl" Margin="0,4,0,8"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Özellikler (satır başına bir)" Foreground="White" FontSize="12"/>
+                            <TextBox x:Name="TxtTierFeatures" Height="100" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,8"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="BtnSaveTier" Content="Kaydet" Width="100" Margin="0,0,8,0"/>
+                                <Button x:Name="BtnDeleteTier" Content="Sil" Width="100"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </TabItem>
+
             <TabItem Header="🏆 Top10 Yönetimi">
-                <Grid Margin="12">
-                    <Grid.Resources>
-                        <SolidColorBrush x:Key="CardBg" Color="#222229"/>
-                        <SolidColorBrush x:Key="Accent" Color="#9B59FF"/>
-                        <Style x:Key="TopCard" TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource CardBg}"/>
-                            <Setter Property="CornerRadius" Value="8"/>
-                            <Setter Property="Margin" Value="8"/>
-                            <Setter Property="Padding" Value="8"/>
-                            <Setter Property="Width" Value="220"/>
-                            <Setter Property="Height" Value="280"/>
-                        </Style>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Margin" Value="6"/>
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListBoxItem">
-                                        <Border Background="Transparent">
-                                            <ContentPresenter />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Grid.Resources>
-
-                    <StackPanel>
-                        <TextBlock Text="Top10 Oyunlar" FontSize="18" Foreground="White" FontWeight="Bold" Margin="0,0,0,8"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,8">
-                            <Button x:Name="BtnTop10Refresh" Content="Yenile" Width="100" Margin="0,0,8,0"/>
-                            <Button x:Name="BtnTop10Remove" Content="Kaldır" Width="100"/>
-                        </StackPanel>
-
-                        <ListBox x:Name="LstTop10" Height="360" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" AlternationCount="1000">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="{StaticResource CardBg}" CornerRadius="8" Margin="8" Padding="8" Width="220" Height="280">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="140"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid>
-                                                <Image Source="{Binding ImagePath}" Stretch="UniformToFill" />
-                                                <Border Background="#00000066" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8" Padding="4" CornerRadius="4">
-                                                    <TextBlock Foreground="White" FontWeight="Bold" FontSize="14">
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="# {0}">
-                                                                <Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="(ItemsControl.AlternationIndex)" />
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                </Border>
-                                            </Grid>
-
-                                            <StackPanel Grid.Row="1" Margin="6">
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis" />
-                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                                    <TextBlock Text="Versiyon: " Foreground="LightGray" FontSize="12"/>
-                                                    <TextBlock Text="{Binding Version}" Foreground="LightGray" FontSize="12"/>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
-                                                    <TextBlock Text="⬇" FontSize="12" Margin="0,0,6,0"/>
-                                                    <TextBlock Text="{Binding DownloadCount}" Foreground="White" FontSize="12"/>
-                                                    <TextBlock Text="   ★" FontSize="12" Margin="12,0,6,0"/>
-                                                    <TextBlock Text="0" Foreground="White" FontSize="12"/>
-                                                </StackPanel>
-                                                <Button Content="Detay" HorizontalAlignment="Right" Width="80" Margin="0,8,0,0"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                <StackPanel Margin="12">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,8">
+                        <Button x:Name="BtnTop10Refresh" Content="Yenile" Width="100" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnTop10Remove" Content="Kaldır" Width="100"/>
                     </StackPanel>
-                </Grid>
+                    <ListBox x:Name="LstTop10" Height="360" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AlternationCount="1000">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#1A1A22" CornerRadius="10" Margin="8" Padding="8" Width="200" Height="240">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="120"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
+                                            <Border Background="#00000088" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="6" Padding="6,3" CornerRadius="6">
+                                                <TextBlock Foreground="White" FontWeight="Bold">
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="# {0}">
+                                                            <Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="(ItemsControl.AlternationIndex)"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                        <StackPanel Grid.Row="1" Margin="4">
+                                            <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                            <TextBlock Foreground="#888" FontSize="11">
+                                                <Run Text="⬇ "/><Run Text="{Binding DownloadCount}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </TabItem>
+
             <TabItem Header="📢 Duyuru Yönetimi">
                 <StackPanel Margin="12">
-                    <TextBlock Text="Duyurular" FontSize="18" Foreground="White" FontWeight="Bold"/>
-                    <ListBox x:Name="LstAnns" DisplayMemberPath="Title" Height="200"/>
-                    <TextBlock Text="Başlık" Foreground="White" Margin="0,8,0,0"/>
-                    <TextBox x:Name="TxtAnnTitle" Margin="0,2,0,0"/>
-                    <TextBlock Text="Mesaj" Foreground="White" Margin="0,8,0,0"/>
-                    <TextBox x:Name="TxtAnnMsg" Height="80" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <ListBox x:Name="LstAnns" DisplayMemberPath="Title" Height="160" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                    <TextBlock Text="Başlık" Foreground="White" Margin="0,10,0,2"/>
+                    <TextBox x:Name="TxtAnnTitle"/>
+                    <TextBlock Text="Mesaj" Foreground="White" Margin="0,8,0,2"/>
+                    <TextBox x:Name="TxtAnnMsg" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+                    <TextBlock Text="Renk (#hex)" Foreground="White" Margin="0,8,0,2"/>
+                    <TextBox x:Name="TxtAnnColor" Text="#9B59FF"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
                         <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="120" Margin="0,0,8,0"/>
                         <Button x:Name="BtnDeleteAnn" Content="Duyuru Sil" Width="120"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="⚙ Sistem Ayarları">
-                <StackPanel Margin="12">
-                    <TextBlock Text="Sistem Ayarları" FontSize="18" Foreground="White" FontWeight="Bold"/>
-                    <TextBlock Text="Burada temel yapılandırma ayarları yer alır." Foreground="White" Margin="0,8"/>
+
+            <TabItem Header="⚙ Bağlantı Ayarları">
+                <StackPanel Margin="12" MaxWidth="500">
+                    <TextBlock Text="Launcher bağlantı ayarları" Foreground="White" FontWeight="Bold" Margin="0,0,0,12"/>
+                    <TextBlock Text="Web Sitesi URL" Foreground="#888" FontSize="12"/>
+                    <TextBox x:Name="TxtWebsiteUrl" Margin="0,4,0,10"/>
+                    <TextBlock Text="Discord URL" Foreground="#888" FontSize="12"/>
+                    <TextBox x:Name="TxtDiscordUrl" Margin="0,4,0,10"/>
+                    <TextBlock Text="Duyurular URL" Foreground="#888" FontSize="12"/>
+                    <TextBox x:Name="TxtAnnouncementsUrl" Margin="0,4,0,10"/>
+                    <TextBlock Text="Destek URL" Foreground="#888" FontSize="12"/>
+                    <TextBox x:Name="TxtSupportUrl" Margin="0,4,0,10"/>
+                    <Button x:Name="BtnSaveSettings" Content="Ayarları Kaydet" Width="160" Height="36" Margin="0,8,0,0"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
-            </Grid>
-        </UserControl>
+    </Grid>
+</UserControl>

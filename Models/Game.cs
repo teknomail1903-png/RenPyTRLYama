@@ -15,6 +15,7 @@ namespace RenPyTRLauncher.Models
         public bool IsTop10 { get; set; } = false;
         public bool IsFeatured { get; set; } = false; // shows in banner
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
         public int DownloadCount { get; set; } = 0;
         public string PatchFilePath { get; set; } = string.Empty;
         public string PatchVersion { get; set; } = string.Empty;

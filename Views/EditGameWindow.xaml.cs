@@ -77,14 +77,9 @@ namespace RenPyTRLauncher.Views
             _game.IsFeatured = (this.FindName("ChkIsFeatured") as System.Windows.Controls.CheckBox)?.IsChecked == true;
 
             if (_isNew)
-            {
-                _game.CreatedDate = DateTime.UtcNow;
                 _gameService.Add(_game);
-            }
             else
-            {
                 _gameService.Update(_game);
-            }
             Services.ServiceLocator.NotifyDataChanged();
             this.Close();
         }

@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Win32;
 using RenPyTRLauncher.Models;
+using RenPyTRLauncher.ViewModels;
 
 namespace RenPyTRLauncher
 {
     public partial class MainWindow : Window
     {
-        private readonly ViewModels.MainViewModel viewModel;
+        private readonly MainViewModel viewModel;
+        private readonly System.Collections.Generic.Dictionary<string, System.Windows.Controls.Button> _sidebarMap = new();
+        private string _activePage = "PageAnaSayfa";
 
         public MainWindow()
         {
@@ -20,88 +22,115 @@ namespace RenPyTRLauncher
             Services.ServiceLocator.GameService = new Services.EfGameService(db);
             Services.ServiceLocator.AnnouncementService = new Services.EfAnnouncementService(db);
             Services.ServiceLocator.UserService = new Services.EfUserService(db);
+            Services.ServiceLocator.SettingsService = new Services.EfSettingsService(db);
+            Services.ServiceLocator.MembershipService = new Services.EfMembershipService(db);
+            Services.ServiceLocator.ActivityService = new Services.EfActivityService(db);
             Services.ServiceLocator.PatchService = new Services.PatchService(
                 Services.ServiceLocator.GameService,
                 Services.ServiceLocator.UserService);
 
-            viewModel = new ViewModels.MainViewModel();
+            viewModel = new MainViewModel();
             DataContext = viewModel;
 
             WireSidebarButtons();
-            WireCategoryButtons();
             WireSettingsButtons();
+            SetActivePage("PageAnaSayfa");
         }
 
         private void WireSidebarButtons()
         {
-            var mappings = new (string name, RoutedEventHandler handler)[]
-            {
-                ("BtnAnaSayfa", BtnAnaSayfa_Click),
-                ("BtnOyunlar", BtnOyunlar_Click),
-                ("BtnKategori", BtnKategori_Click),
-                ("BtnTop10", BtnTop10_Click),
-                ("BtnVip", BtnVip_Click),
-                ("BtnProfil", BtnProfil_Click),
-                ("BtnAyarlar", BtnAyarlar_Click),
-                ("BtnAdmin", BtnAdmin_Click),
-                ("BtnLogout", BtnLogout_Click)
-            };
+            _sidebarMap["PageAnaSayfa"] = BtnAnaSayfa;
+            _sidebarMap["PageOyunlar"] = BtnOyunlar;
+            _sidebarMap["PageKategori"] = BtnKategori;
+            _sidebarMap["PageTop10"] = BtnTop10;
+            _sidebarMap["PageVip"] = BtnVip;
+            _sidebarMap["PageProfil"] = BtnProfil;
+            _sidebarMap["PageAyarlar"] = BtnAyarlar;
 
-            foreach (var (name, handler) in mappings)
-            {
-                var btn = GetElement<System.Windows.Controls.Button>(name);
-                if (btn != null) btn.Click += handler;
-            }
-        }
-
-        private void WireCategoryButtons()
-        {
-            var btnKategoriVip = GetElement<System.Windows.Controls.Button>("BtnKategoriVip");
-            var btnKategoriDevam = GetElement<System.Windows.Controls.Button>("BtnKategoriDevam");
-            var btnKategoriBiten = GetElement<System.Windows.Controls.Button>("BtnKategoriBiten");
-            var btnKategoriErkek = GetElement<System.Windows.Controls.Button>("BtnKategoriErkek");
-            var btnKategoriKadin = GetElement<System.Windows.Controls.Button>("BtnKategoriKadin");
-            var btnKategoriYamalar = GetElement<System.Windows.Controls.Button>("BtnKategoriYamalar");
-
-            if (btnKategoriVip != null) btnKategoriVip.Click += (s, e) => viewModel.FilterByCategory("VIP");
-            if (btnKategoriDevam != null) btnKategoriDevam.Click += (s, e) => viewModel.FilterByCategory("Devam Eden");
-            if (btnKategoriBiten != null) btnKategoriBiten.Click += (s, e) => viewModel.FilterByCategory("Biten");
-            if (btnKategoriErkek != null) btnKategoriErkek.Click += (s, e) => viewModel.FilterByCategory("Erkek Başrol");
-            if (btnKategoriKadin != null) btnKategoriKadin.Click += (s, e) => viewModel.FilterByCategory("Kadın Başrol");
-            if (btnKategoriYamalar != null) btnKategoriYamalar.Click += (s, e) => FilterByPatches(viewModel);
-
-            var txtSearch = GetElement<System.Windows.Controls.TextBox>("TxtKategoriSearch");
-            var btnClear = GetElement<System.Windows.Controls.Button>("BtnClearCategories");
-            var btnApply = GetElement<System.Windows.Controls.Button>("BtnApplyCategories");
-
-            if (txtSearch != null) txtSearch.TextChanged += (s, e) => { viewModel.SearchText = txtSearch.Text; viewModel.ApplyFilters(); };
-            if (btnClear != null) btnClear.Click += (s, e) => { viewModel.ClearCategorySelection(); ClearCategoryToggles(); };
-            if (btnApply != null) btnApply.Click += (s, e) => { viewModel.ApplyFilters(); SetActivePage("PageKategori"); };
+            BtnAnaSayfa.Click += (_, _) => SetActivePage("PageAnaSayfa");
+            BtnOyunlar.Click += (_, _) => SetActivePage("PageOyunlar");
+            BtnKategori.Click += (_, _) => { viewModel.CloseCategoryFolder(); SetActivePage("PageKategori"); };
+            BtnTop10.Click += (_, _) => SetActivePage("PageTop10");
+            BtnVip.Click += (_, _) => SetActivePage("PageVip");
+            BtnProfil.Click += (_, _) => SetActivePage("PageProfil");
+            BtnAyarlar.Click += (_, _) => SetActivePage("PageAyarlar");
+            BtnAdmin.Click += (_, _) => ShowAdmin();
+            BtnLogout.Click += BtnLogout_Click;
         }
 
         private void WireSettingsButtons()
         {
-            var settingsButtons = new (string name, Action action)[]
+            var settingsButtons = new (System.Windows.Controls.Button btn, Action action)[]
             {
-                ("BtnCheckUpdates", () => MessageBox.Show("Güncelleme kontrolü: En son sürüm kullanılıyor (v1.0).", "Güncellemeler", MessageBoxButton.OK, MessageBoxImage.Information)),
-                ("BtnClearSaves", () => ClearFolder("Saves", "Kayıt dosyaları")),
-                ("BtnClearCache", () => ClearFolder("Cache", "Önbellek")),
-                ("BtnClearLogs", () => ClearFolder("Logs", "Log dosyaları")),
-                ("BtnOpenGamesFolder", () => OpenAppFolder("Games")),
-                ("BtnOpenBackupFolder", () => OpenAppFolder("Backups"))
+                (BtnCheckUpdates, () => MessageBox.Show("Güncelleme kontrolü: En son sürüm kullanılıyor (v1.1).", "Güncellemeler", MessageBoxButton.OK, MessageBoxImage.Information)),
+                (BtnClearSaves, () => ClearFolder("Saves", "Kayıt dosyaları")),
+                (BtnClearCache, () => ClearFolder("Cache", "Önbellek")),
+                (BtnClearLogs, () => ClearFolder("Logs", "Log dosyaları")),
+                (BtnOpenGamesFolder, () => OpenAppFolder("Games")),
+                (BtnOpenBackupFolder, () => OpenAppFolder("Backups"))
             };
 
-            foreach (var (name, action) in settingsButtons)
+            foreach (var (btn, action) in settingsButtons)
+                btn.Click += (_, _) => action();
+
+            BtnRollbackLast.Click += (_, _) =>
             {
-                var btn = GetElement<System.Windows.Controls.Button>(name);
-                if (btn != null) btn.Click += (s, e) => action();
+                var latest = Services.RollbackService.GetLatestBackup();
+                if (latest == null)
+                {
+                    MessageBox.Show("Geri alınacak yedek bulunamadı.", "Rollback", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+                if (MessageBox.Show($"Son yedek geri yüklensin mi?\n{latest}", "Rollback",
+                        MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
+
+                var result = Services.RollbackService.RollbackFromFolder(latest);
+                MessageBox.Show(result.Message, result.Success ? "Rollback Başarılı" : "Rollback Başarısız",
+                    MessageBoxButton.OK, result.Success ? MessageBoxImage.Information : MessageBoxImage.Error);
+            };
+        }
+
+        private void AnnPrev_Click(object sender, RoutedEventArgs e) => viewModel.PrevAnnouncement();
+        private void AnnNext_Click(object sender, RoutedEventArgs e) => viewModel.NextAnnouncement();
+
+        private void CategoryFolder_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is CategoryFolderItem folder)
+                viewModel.OpenCategoryFolder(folder.CategoryKey, folder.DisplayName);
+        }
+
+        private void CategoryBack_Click(object sender, RoutedEventArgs e) => viewModel.CloseCategoryFolder();
+
+        private void PurchaseMembership_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string url)
+                OpenUrl(url);
+        }
+
+        private void OpenLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string url)
+                OpenUrl(url);
+        }
+
+        private static void OpenUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return;
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Link açılamadı: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private async void InstallPatch_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is not System.Windows.Controls.Button btn || btn.Tag is not Game game)
-                return;
+            if (sender is not System.Windows.Controls.Button btn) return;
+            var game = btn.Tag as Game ?? (btn.Tag as LeaderboardEntry)?.Game;
+            if (game == null) return;
 
             if (viewModel.CurrentUser == null)
             {
@@ -126,11 +155,11 @@ namespace RenPyTRLauncher
             try
             {
                 var result = await viewModel.InstallPatchAsync(game, dialog.FolderName);
-                MessageBox.Show(
-                    result.Message + (result.LogFilePath != null ? $"\n\nLog: {result.LogFilePath}" : string.Empty),
-                    result.Success ? "Kurulum Başarılı" : "Kurulum Başarısız",
-                    MessageBoxButton.OK,
-                    result.Success ? MessageBoxImage.Information : MessageBoxImage.Error);
+                var msg = result.Message;
+                if (result.BackupPath != null) msg += $"\n\nYedek: {result.BackupPath}";
+                if (result.LogFilePath != null) msg += $"\nLog: {result.LogFilePath}";
+                MessageBox.Show(msg, result.Success ? "Kurulum Başarılı" : "Kurulum Başarısız",
+                    MessageBoxButton.OK, result.Success ? MessageBoxImage.Information : MessageBoxImage.Error);
             }
             finally
             {
@@ -147,21 +176,16 @@ namespace RenPyTRLauncher
 
         private static string GetAppDataPath(string subFolder)
         {
-            var basePath = System.IO.Path.Combine(
+            return System.IO.Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "RenPyTRLauncher");
-            return System.IO.Path.Combine(basePath, subFolder);
+                "RenPyTRLauncher", subFolder);
         }
 
         private void OpenAppFolder(string subFolder)
         {
             var path = GetAppDataPath(subFolder);
             System.IO.Directory.CreateDirectory(path);
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-            {
-                FileName = path,
-                UseShellExecute = true
-            });
+            Process.Start(new ProcessStartInfo { FileName = path, UseShellExecute = true });
         }
 
         private void ClearFolder(string subFolder, string label)
@@ -173,8 +197,8 @@ namespace RenPyTRLauncher
                 return;
             }
 
-            var res = MessageBox.Show($"{label} klasöründeki dosyalar silinsin mi?\n{path}", label, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (res != MessageBoxResult.Yes) return;
+            if (MessageBox.Show($"{label} klasöründeki dosyalar silinsin mi?\n{path}", label,
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning) != MessageBoxResult.Yes) return;
 
             foreach (var file in System.IO.Directory.GetFiles(path))
             {
@@ -183,142 +207,77 @@ namespace RenPyTRLauncher
             MessageBox.Show($"{label} temizlendi.", label, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void CategoryToggle_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is System.Windows.Controls.Primitives.ToggleButton tb && tb.Content is string cat)
-                viewModel.ToggleCategorySelection(cat);
-        }
-
-        private void ClearCategoryToggles()
-        {
-            var container = GetElement<System.Windows.Controls.ItemsControl>("CategoryList");
-            if (container == null) return;
-            foreach (var item in container.Items)
-            {
-                var c = container.ItemContainerGenerator.ContainerFromItem(item) as System.Windows.DependencyObject;
-                if (c == null) continue;
-                var toggle = FindVisualChild<System.Windows.Controls.Primitives.ToggleButton>(c);
-                if (toggle != null) toggle.IsChecked = false;
-            }
-        }
-
-        private static T? FindVisualChild<T>(System.Windows.DependencyObject parent) where T : System.Windows.DependencyObject
-        {
-            if (parent == null) return null;
-            var count = System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < count; i++)
-            {
-                var child = System.Windows.Media.VisualTreeHelper.GetChild(parent, i);
-                if (child is T t) return t;
-                var res = FindVisualChild<T>(child);
-                if (res != null) return res;
-            }
-            return null;
-        }
-
-        public void BtnKategori_Click(object sender, RoutedEventArgs e) => SetActivePage("PageKategori");
-
-        private void BtnAdmin_Click(object sender, RoutedEventArgs e) => ShowAdmin();
-
         private void ShowAdmin()
         {
-            var ctrl = new Views.AdminUserControl();
-            var adminHost = this.FindName("AdminHost") as System.Windows.Controls.ContentControl;
-            if (adminHost != null)
-            {
-                adminHost.Content = ctrl;
-                adminHost.Visibility = Visibility.Visible;
-            }
-
-            SetVisibility("PageAnaSayfa", Visibility.Collapsed);
-            SetVisibility("PageOyunlar", Visibility.Collapsed);
-            SetVisibility("PageTop10", Visibility.Collapsed);
-            SetVisibility("PageVip", Visibility.Collapsed);
-            SetVisibility("PageProfil", Visibility.Collapsed);
-            SetVisibility("PageAyarlar", Visibility.Collapsed);
-            SetVisibility("PageKategori", Visibility.Collapsed);
+            AdminHost.Content = new Views.AdminUserControl();
+            AdminHost.Visibility = Visibility.Visible;
+            HideAllPages();
+            HighlightSidebar(null);
         }
 
         private void SetActivePage(string pageName)
         {
-            var adminHost = GetElement<System.Windows.Controls.ContentControl>("AdminHost");
-            if (adminHost != null) adminHost.Visibility = Visibility.Collapsed;
-
-            SetVisibility("PageAnaSayfa", Visibility.Collapsed);
-            SetVisibility("PageOyunlar", Visibility.Collapsed);
-            SetVisibility("PageTop10", Visibility.Collapsed);
-            SetVisibility("PageVip", Visibility.Collapsed);
-            SetVisibility("PageProfil", Visibility.Collapsed);
-            SetVisibility("PageAyarlar", Visibility.Collapsed);
-            SetVisibility("PageKategori", Visibility.Collapsed);
+            _activePage = pageName;
+            AdminHost.Visibility = Visibility.Collapsed;
+            HideAllPages();
 
             switch (pageName)
             {
-                case "PageAnaSayfa":
-                    SetVisibility("PageAnaSayfa", Visibility.Visible);
-                    SetText("TxtSayfa", "Ana Sayfa");
-                    break;
-                case "PageOyunlar":
-                    SetVisibility("PageOyunlar", Visibility.Visible);
-                    SetText("TxtSayfa", "Oyunlar");
-                    break;
-                case "PageTop10":
-                    SetVisibility("PageTop10", Visibility.Visible);
-                    SetText("TxtSayfa", "Top 10");
-                    break;
-                case "PageVip":
-                    SetVisibility("PageVip", Visibility.Visible);
-                    SetText("TxtSayfa", "VIP Oyunlar");
-                    break;
-                case "PageKategori":
-                    SetVisibility("PageKategori", Visibility.Visible);
-                    SetText("TxtSayfa", "Kategoriler");
-                    break;
-                case "PageProfil":
-                    SetVisibility("PageProfil", Visibility.Visible);
-                    SetText("TxtSayfa", "Profil");
-                    break;
-                case "PageAyarlar":
-                    SetVisibility("PageAyarlar", Visibility.Visible);
-                    SetText("TxtSayfa", "Ayarlar");
-                    break;
+                case "PageAnaSayfa": PageAnaSayfa.Visibility = Visibility.Visible; break;
+                case "PageOyunlar": PageOyunlar.Visibility = Visibility.Visible; break;
+                case "PageKategori": PageKategori.Visibility = Visibility.Visible; break;
+                case "PageTop10": PageTop10.Visibility = Visibility.Visible; break;
+                case "PageVip": PageVip.Visibility = Visibility.Visible; break;
+                case "PageProfil": PageProfil.Visibility = Visibility.Visible; break;
+                case "PageAyarlar": PageAyarlar.Visibility = Visibility.Visible; break;
+            }
+            HighlightSidebar(pageName);
+        }
+
+        private void HighlightSidebar(string? pageName)
+        {
+            var accent = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(155, 89, 255));
+            var activeBg = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(42, 32, 64));
+            var inactiveFg = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(184, 184, 192));
+
+            foreach (var (key, btn) in _sidebarMap)
+            {
+                var active = key == pageName;
+                btn.Background = active ? activeBg : System.Windows.Media.Brushes.Transparent;
+                btn.Foreground = active ? accent : inactiveFg;
             }
         }
 
-        public void BtnAnaSayfa_Click(object sender, RoutedEventArgs e) => SetActivePage("PageAnaSayfa");
-        public void BtnOyunlar_Click(object sender, RoutedEventArgs e) => SetActivePage("PageOyunlar");
-        public void BtnTop10_Click(object sender, RoutedEventArgs e) => SetActivePage("PageTop10");
-        private void BtnVip_Click(object sender, RoutedEventArgs e) => SetActivePage("PageVip");
-        public void BtnProfil_Click(object sender, RoutedEventArgs e) => SetActivePage("PageProfil");
-        public void BtnAyarlar_Click(object sender, RoutedEventArgs e) => SetActivePage("PageAyarlar");
+        private void HideAllPages()
+        {
+            PageAnaSayfa.Visibility = Visibility.Collapsed;
+            PageOyunlar.Visibility = Visibility.Collapsed;
+            PageKategori.Visibility = Visibility.Collapsed;
+            PageTop10.Visibility = Visibility.Collapsed;
+            PageVip.Visibility = Visibility.Collapsed;
+            PageProfil.Visibility = Visibility.Collapsed;
+            PageAyarlar.Visibility = Visibility.Collapsed;
+        }
 
         private void BtnLogout_Click(object? sender, RoutedEventArgs e)
         {
-            var res = MessageBox.Show("Oturumu kapatmak istediğinize emin misiniz?", "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (res == MessageBoxResult.Yes) Close();
+            if (!ConfirmExit()) return;
+            Close();
         }
 
-        private T? GetElement<T>(string name) where T : class => FindName(name) as T;
-
-        private void SetVisibility(string name, Visibility visibility)
+        private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            var el = GetElement<System.Windows.FrameworkElement>(name);
-            if (el != null) el.Visibility = visibility;
+            if (!ConfirmExit())
+                e.Cancel = true;
         }
 
-        private void SetText(string name, string text)
+        private bool ConfirmExit()
         {
-            var tb = GetElement<System.Windows.Controls.TextBlock>(name);
-            if (tb != null) tb.Text = text;
-        }
+            var msg = "Çıkmak istediğinize emin misiniz?";
+            if (Services.DownloadTracker.HasActiveDownloads)
+                msg = "Devam eden indirme mevcut. Çıkarsanız işlem yarım kalabilir.\n\nÇıkmak istediğinize emin misiniz?";
 
-        private void FilterByPatches(ViewModels.MainViewModel vm)
-        {
-            if (vm == null) return;
-            vm.FilteredGames = new System.Collections.ObjectModel.ObservableCollection<Game>(
-                vm.Games.Where(g => !string.IsNullOrWhiteSpace(g.PatchFilePath)));
-            SetActivePage("PageKategori");
-            SetText("TxtSayfa", "Yamalar");
+            return MessageBox.Show(msg, "Çıkış", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
         }
     }
 }

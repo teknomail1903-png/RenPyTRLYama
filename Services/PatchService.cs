@@ -89,7 +89,10 @@ namespace RenPyTRLauncher.Services
             var logFile = Path.Combine(logDir, $"patch_{game.Id:N}_{DateTime.Now:yyyyMMdd_HHmmss}.log");
 
             var tempRoot = Path.Combine(Path.GetTempPath(), "RenPyTRLauncher", Guid.NewGuid().ToString("N"));
-            var backupRoot = Path.Combine(tempRoot, "backup");
+            var persistentBackupRoot = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "RenPyTRLauncher", "Backups", game.Id.ToString("N"), DateTime.Now.ToString("yyyyMMdd_HHmmss"));
+            var backupRoot = Path.Combine(persistentBackupRoot, "files");
             var extractRoot = Path.Combine(tempRoot, "extract");
             var rollbackEntries = new List<(string Destination, string? BackupPath)>();
 
@@ -105,6 +108,7 @@ namespace RenPyTRLauncher.Services
 
                 Directory.CreateDirectory(tempRoot);
                 Directory.CreateDirectory(extractRoot);
+                Directory.CreateDirectory(backupRoot);
 
                 Log($"Oyun: {game.Name}");
                 Log($"Hedef klasör: {gameRootFolder}");
@@ -174,6 +178,14 @@ namespace RenPyTRLauncher.Services
                 ServiceLocator.NotifyDataChanged();
 
                 Log("Kurulum başarıyla tamamlandı.");
+                if (rollbackEntries.Any(e => e.BackupPath != null))
+                {
+                    var manifest = Path.Combine(persistentBackupRoot, "manifest.txt");
+                    await File.WriteAllLinesAsync(manifest,
+                        rollbackEntries.Where(e => e.BackupPath != null).Select(e => $"{e.Destination}|{e.BackupPath}"),
+                        cancellationToken).ConfigureAwait(false);
+                    Log($"Yedek kaydedildi: {persistentBackupRoot}");
+                }
                 await File.WriteAllTextAsync(logFile, log.ToString(), cancellationToken).ConfigureAwait(false);
 
                 return new PatchInstallResult
@@ -181,6 +193,7 @@ namespace RenPyTRLauncher.Services
                     Success = true,
                     Message = $"{game.Name} Türkçe yaması başarıyla kuruldu. ({files.Length} dosya)",
                     LogFilePath = logFile,
+                    BackupPath = rollbackEntries.Any(e => e.BackupPath != null) ? persistentBackupRoot : null,
                     FilesInstalled = files.Length
                 };
             }
