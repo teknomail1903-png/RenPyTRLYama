@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RenPyTRLauncher")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ebe8a03abaffcf66e0d38c175f8d9c9fd1647c9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+438b00213003f91d015981df0e46e89b6f61ef0a")]
 [assembly: System.Reflection.AssemblyProductAttribute("RenPyTRLauncher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RenPyTRLauncher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
