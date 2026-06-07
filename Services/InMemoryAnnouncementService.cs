@@ -15,6 +15,7 @@ namespace RenPyTRLauncher.Services
         }
         public IEnumerable<Announcement> GetAll() => _anns.OrderByDescending(a => a.CreatedAt);
         public void Add(Announcement a) => _anns.Add(a);
+        public void Update(Announcement a) { }
         public void Remove(Guid id) => _anns.RemoveAll(x => x.Id == id);
     }
 }

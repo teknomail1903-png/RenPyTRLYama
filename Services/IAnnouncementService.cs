@@ -8,6 +8,7 @@ namespace RenPyTRLauncher.Services
     {
         IEnumerable<Announcement> GetAll();
         void Add(Announcement a);
+        void Update(Announcement a);
         void Remove(Guid id);
     }
 }

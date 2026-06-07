@@ -1,0 +1,140 @@
+<Window x:Class="RenPyTRLauncher.Views.GameDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RenPyTRLauncher.Data"
+        Title="Oyun Detayı" Height="720" Width="960" MinHeight="600" MinWidth="800"
+        Background="#0D0D0F" WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <local:SafeImageConverter x:Key="SafeImage"/>
+        <local:StringToBrushConverter x:Key="StringToBrush"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#66C0F4"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1B2838"/>
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <!-- Hero banner -->
+            <Border Height="280" ClipToBounds="True">
+                <Grid>
+                    <Image x:Name="ImgHero" Stretch="UniformToFill" Opacity="0.45"/>
+                    <Border Background="#000000AA"/>
+                    <Grid Margin="32,24">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel VerticalAlignment="Bottom">
+                            <TextBlock x:Name="TxtName" Foreground="White" FontSize="36" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <Border Background="#33FFFFFF" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                                    <TextBlock x:Name="TxtVersion" Foreground="White" FontSize="13"/>
+                                </Border>
+                                <Border Background="#33FFFFFF" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                                    <TextBlock x:Name="TxtPatchVersion" Foreground="#66C0F4" FontSize="13"/>
+                                </Border>
+                                <Border x:Name="BadgeVip" Background="#FFD70033" CornerRadius="4" Padding="8,4" Visibility="Collapsed">
+                                    <TextBlock Text="💎 VIP" Foreground="#FFD700" FontSize="13" FontWeight="SemiBold"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Button x:Name="BtnFavorite" Content="☆ Favorilere Ekle" Width="160" Height="40" Margin="0,0,8,0"
+                                    Background="#33FFFFFF" Foreground="White" BorderThickness="0" Cursor="Hand" Click="BtnFavorite_Click"/>
+                            <Button x:Name="BtnInstall" Content="🔧 Yamayı Kur" Style="{StaticResource PrimaryButton}" Height="40" Click="BtnInstall_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Content below hero -->
+            <StackPanel Margin="32,300,32,32">
+                <TextBlock Text="Açıklama" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBlock x:Name="TxtDescription" Foreground="#C7D5E0" FontSize="14" TextWrapping="Wrap" Margin="0,0,0,24"/>
+
+                <TextBlock Text="Ekran Görüntüleri" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,24">
+                    <ItemsControl x:Name="ScreenshotList">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="220" Height="124" CornerRadius="6" Margin="0,0,10,0" ClipToBounds="True" Background="#1B2838">
+                                    <Image Source="{Binding Converter={StaticResource SafeImage}}" Stretch="UniformToFill"/>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <TextBlock x:Name="TxtNoScreenshots" Text="Henüz ekran görüntüsü eklenmemiş." Foreground="#666" FontSize="13" Margin="0,-16,0,24" Visibility="Collapsed"/>
+
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock Text="Yama Notları" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="16">
+                            <TextBlock x:Name="TxtPatchNotes" Foreground="#C7D5E0" FontSize="13" TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                        <TextBlock Text="İndirme Bağlantıları" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                        <ItemsControl x:Name="DownloadLinksList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Content="{Binding Label}" Tag="{Binding Url}" Click="DownloadLink_Click"
+                                            Background="#2A475E" Foreground="White" BorderThickness="0"
+                                            Padding="12,8" Margin="0,0,0,6" HorizontalContentAlignment="Left" Cursor="Hand"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock x:Name="TxtNoLinks" Text="Ek indirme bağlantısı yok." Foreground="#666" FontSize="13" Visibility="Collapsed"/>
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock Text="Kategoriler" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <ItemsControl x:Name="CategoryTags">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#2A475E" CornerRadius="4" Padding="10,5" Margin="0,0,8,8">
+                                <TextBlock Text="{Binding}" Foreground="White" FontSize="12"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <StackPanel Orientation="Horizontal" Margin="0,24,0,0">
+                    <TextBlock Foreground="#888" FontSize="12">
+                        <Run Text="⬇ "/><Run x:Name="TxtDownloadCount" Text="0"/><Run Text=" indirme"/>
+                    </TextBlock>
+                    <TextBlock Foreground="#888" FontSize="12" Margin="24,0,0,0">
+                        <Run Text="Son güncelleme: "/><Run x:Name="TxtUpdatedDate"/>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

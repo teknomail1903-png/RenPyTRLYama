@@ -33,6 +33,9 @@ namespace RenPyTRLauncher.Services
             ex.Version = g.Version;
             ex.PatchFilePath = g.PatchFilePath;
             ex.PatchVersion = g.PatchVersion;
+            ex.ScreenshotPaths = g.ScreenshotPaths;
+            ex.PatchNotes = g.PatchNotes;
+            ex.DownloadLinks = g.DownloadLinks;
         }
 
         public void Remove(Guid id) => _games.RemoveAll(g => g.Id == id);

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using RenPyTRLauncher.Models;
+using RenPyTRLauncher.Services;
 
 namespace RenPyTRLauncher.Data
 {
@@ -31,6 +32,8 @@ namespace RenPyTRLauncher.Data
                         DownloadCount = 1200,
                         PatchVersion = "v1.0",
                         PatchFilePath = "github:RenPyTR/SummerMemories/SummerMemories_TR_v1.0.zip",
+                        PatchNotes = "v1.0 — İlk Türkçe yama sürümü.\n- Ana hikaye çevirisi tamamlandı\n- Arayüz Türkçeleştirildi",
+                        DownloadLinks = new System.Collections.Generic.List<string> { "Resmi Site|https://renpytr.com", "Discord|https://discord.gg/renpytr" },
                         CreatedDate = DateTime.UtcNow.AddDays(-30),
                         UpdatedDate = DateTime.UtcNow.AddDays(-2)
                     },
@@ -84,11 +87,15 @@ namespace RenPyTRLauncher.Data
                 {
                     Username = "argion",
                     Email = "argion@example.com",
+                    PasswordHash = Services.PasswordHasher.Hash("admin123"),
                     IsVip = true,
                     VipEndDate = DateTime.UtcNow.AddDays(30),
-                    Role = "Admin",
+                    Role = UserRole.Admin,
                     MembershipLevel = "Gold",
-                    Badges = new System.Collections.Generic.List<string> { "🏆 İlk 100", "💎 VIP Üye", "🔥 Aktif Kullanıcı" },
+                    City = "İstanbul",
+                    Age = 25,
+                    AvatarPath = Services.ImageService.GetDefaultAvatar("argion"),
+                    Badges = new System.Collections.Generic.List<string> { "🏆 İlk 100", "💎 VIP Üye", "🔥 Aktif Kullanıcı", "🛡️ Admin" },
                     TotalDownloadCount = 12,
                     FavoriteGameIds = new System.Collections.Generic.List<Guid> { SummerMemoriesId, BeingADikId },
                     DownloadedPatchIds = new System.Collections.Generic.List<Guid> { SummerMemoriesId, MilfyCityId },
@@ -99,8 +106,21 @@ namespace RenPyTRLauncher.Data
                 {
                     Username = "user1",
                     Email = "user1@example.com",
-                    Role = "User",
-                    MembershipLevel = "Ücretsiz"
+                    PasswordHash = Services.PasswordHasher.Hash("user123"),
+                    Role = UserRole.User,
+                    MembershipLevel = "Ücretsiz",
+                    AvatarPath = Services.ImageService.GetDefaultAvatar("user1")
+                });
+
+                db.Users.Add(new User
+                {
+                    Username = "moderator",
+                    Email = "mod@example.com",
+                    PasswordHash = Services.PasswordHasher.Hash("mod123"),
+                    Role = UserRole.Mod,
+                    MembershipLevel = "Ücretsiz",
+                    AvatarPath = Services.ImageService.GetDefaultAvatar("moderator"),
+                    Badges = new System.Collections.Generic.List<string> { "🔧 Moderatör" }
                 });
             }
 
@@ -112,6 +132,7 @@ namespace RenPyTRLauncher.Data
                         Title = "RenPyTR Launcher'a Hoş Geldiniz!",
                         Message = "Türkçe yamaları buradan indirebilir ve kurabilirsiniz.",
                         AccentColor = "#9B59FF",
+                        IsPinned = true,
                         CreatedAt = DateTime.UtcNow
                     },
                     new Announcement
@@ -192,6 +213,14 @@ namespace RenPyTRLauncher.Data
             if (summer != null && string.IsNullOrWhiteSpace(summer.PatchFilePath))
                 summer.PatchFilePath = "github:RenPyTR/SummerMemories/SummerMemories_TR_v1.0.zip";
 
+            EnsureDefaultPasswords(db);
+
+            SeedCategories(db);
+            SeedHelpGuides(db);
+
+            if (!db.AppSettings.Any(s => s.Key == AppSettingKeys.Theme))
+                db.AppSettings.Add(new AppSetting { Key = AppSettingKeys.Theme, Value = ThemeService.SteamDark });
+
             var argionUser = db.Users.FirstOrDefault(u => u.Username == "argion");
             if (argionUser != null && !db.UserActivities.Any(a => a.UserId == argionUser.Id))
             {
@@ -202,6 +231,79 @@ namespace RenPyTRLauncher.Data
             }
 
             db.SaveChanges();
+        }
+
+        private static void SeedCategories(AppDbContext db)
+        {
+            if (db.Categories.Any()) return;
+            db.Categories.AddRange(
+                new GameCategory { Name = "Devam Eden", DisplayName = "Devam Edenler", Icon = "📁", AccentColor = "#3498DB", SortOrder = 1 },
+                new GameCategory { Name = "Biten", DisplayName = "Bitenler", Icon = "✅", AccentColor = "#27AE60", SortOrder = 2 },
+                new GameCategory { Name = "Devam Etmeyen", DisplayName = "Devam Etmeyenler", Icon = "⏸", AccentColor = "#E67E22", SortOrder = 3 },
+                new GameCategory { Name = "Erkek Başrol", DisplayName = "Erkek Başrol", Icon = "👨", AccentColor = "#9B59B6", SortOrder = 4 },
+                new GameCategory { Name = "Kadın Başrol", DisplayName = "Kadın Başrol", Icon = "👩", AccentColor = "#E91E63", SortOrder = 5 },
+                new GameCategory { Name = "VIP", DisplayName = "VIP Oyunlar", Icon = "💎", AccentColor = "#F1C40F", SortOrder = 6 },
+                new GameCategory { Name = "Romance", DisplayName = "Romance", Icon = "💕", AccentColor = "#E74C3C", SortOrder = 7 });
+        }
+
+        private static void SeedHelpGuides(AppDbContext db)
+        {
+            if (db.HelpGuides.Any()) return;
+            db.HelpGuides.AddRange(
+                new HelpGuide
+                {
+                    Title = "Yama Nasıl Kurulur?",
+                    Content = "1. Oyunlar veya oyun detay sayfasından 'Yamayı Kur' butonuna tıklayın.\n2. Oyun klasörünü seçin (game/ klasörünün bir üst dizini).\n3. Kurulum tamamlanana kadar bekleyin.\n4. Sorun olursa Destek sayfasından talep oluşturun.",
+                    Type = HelpGuideType.Text,
+                    SortOrder = 1
+                },
+                new HelpGuide
+                {
+                    Title = "Favorilere Nasıl Eklenir?",
+                    Content = "Oyun detay sayfasındaki yıldız butonuna tıklayarak oyunu favorilerinize ekleyebilirsiniz. Favoriler sayfasından tüm favori oyunlarınıza erişebilirsiniz.",
+                    Type = HelpGuideType.Text,
+                    SortOrder = 2
+                },
+                new HelpGuide
+                {
+                    Title = "Yama Kurulum Videosu",
+                    Content = "Adım adım yama kurulum rehberi.",
+                    Type = HelpGuideType.Video,
+                    VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                    SortOrder = 1
+                },
+                new HelpGuide
+                {
+                    Title = "VIP üyelik ne sağlar?",
+                    Content = "VIP üyeler özel yamalara erken erişim, öncelikli destek ve özel rozetler kazanır.",
+                    Type = HelpGuideType.FAQ,
+                    SortOrder = 1
+                },
+                new HelpGuide
+                {
+                    Title = "Yedekten geri yükleme nasıl yapılır?",
+                    Content = "Ayarlar > Bakım bölümünden 'Son Yedeği Geri Al' butonunu kullanabilirsiniz.",
+                    Type = HelpGuideType.FAQ,
+                    SortOrder = 2
+                },
+                new HelpGuide
+                {
+                    Title = "Ren'Py Oyun Klasörü Bulucu",
+                    Content = "Oyun klasörünüzü bulmak için genellikle Steam kütüphanesinden sağ tık > Yerel Dosyalara Göz At yolunu kullanın.",
+                    Type = HelpGuideType.Tool,
+                    SortOrder = 1
+                });
+        }
+
+        private static void EnsureDefaultPasswords(AppDbContext db)
+        {
+            foreach (var u in db.Users.Where(u => string.IsNullOrWhiteSpace(u.PasswordHash)))
+            {
+                u.PasswordHash = Services.PasswordHasher.Hash(
+                    u.Username.ToLower() == "argion" ? "admin123" : "user123");
+                if (string.IsNullOrWhiteSpace(u.AvatarPath))
+                    u.AvatarPath = Services.ImageService.GetDefaultAvatar(u.Username);
+            }
         }
     }
 }

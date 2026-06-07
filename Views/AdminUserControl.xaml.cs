@@ -14,18 +14,29 @@ namespace RenPyTRLauncher.Views
         private readonly IUserService _userService;
         private readonly ISettingsService _settingsService;
         private readonly IMembershipService _membershipService;
+        private readonly ISupportService _supportService;
+        private readonly ICategoryService _categoryService;
+        private readonly IHelpService _helpService;
+        private readonly INotificationService _notificationService;
+        private readonly User? _currentUser;
 
-        public AdminUserControl()
+        public AdminUserControl(User? currentUser = null)
         {
             InitializeComponent();
+            _currentUser = currentUser;
 
             _gameService = ServiceLocator.GameService ?? new InMemoryGameService();
             _announcementService = ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
             _userService = ServiceLocator.UserService ?? new InMemoryUserService();
             _settingsService = ServiceLocator.SettingsService ?? new InMemorySettingsService();
             _membershipService = ServiceLocator.MembershipService ?? new InMemoryMembershipService();
+            _supportService = ServiceLocator.SupportService ?? new InMemorySupportService();
+            _categoryService = ServiceLocator.CategoryService ?? new InMemoryCategoryService();
+            _helpService = ServiceLocator.HelpService ?? new InMemoryHelpService();
+            _notificationService = ServiceLocator.NotificationService ?? new InMemoryNotificationService(_userService);
 
             ServiceLocator.DataChanged += OnDataChanged;
+            ApplyRoleRestrictions();
 
             BtnTop10Refresh.Click += (_, _) => RefreshTop10();
             BtnTop10Remove.Click += BtnTop10Remove_Click;
@@ -42,7 +53,16 @@ namespace RenPyTRLauncher.Views
             BtnDeleteGame.Click += BtnDeleteGame_Click;
             BtnEditGame.Click += BtnEditGame_Click;
             BtnAddAnn.Click += BtnAddAnn_Click;
+            BtnUpdateAnn.Click += BtnUpdateAnn_Click;
             BtnDeleteAnn.Click += BtnDeleteAnn_Click;
+            LstAnns.SelectionChanged += (_, _) => LoadSelectedAnnouncement();
+
+            BtnAddCategory.Click += BtnAddCategory_Click;
+            BtnEditCategory.Click += BtnEditCategory_Click;
+            BtnDeleteCategory.Click += BtnDeleteCategory_Click;
+
+            BtnAddHelp.Click += BtnAddHelp_Click;
+            BtnDeleteHelp.Click += BtnDeleteHelp_Click;
 
             BtnUserAdd.Click += BtnUserAdd_Click;
             BtnUserEdit.Click += BtnUserEdit_Click;
@@ -52,6 +72,13 @@ namespace RenPyTRLauncher.Views
             BtnExtendVip.Click += BtnExtendVip_Click;
             BtnMakeAdmin.Click += BtnMakeAdmin_Click;
             BtnRevokeAdmin.Click += BtnRevokeAdmin_Click;
+            BtnMakeMod.Click += BtnMakeMod_Click;
+            BtnRevokeMod.Click += BtnRevokeMod_Click;
+
+            LstTickets.SelectionChanged += (_, _) => LoadSelectedTicket();
+            BtnReplyTicket.Click += BtnReplyTicket_Click;
+            BtnCloseTicket.Click += BtnCloseTicket_Click;
+            BtnReopenTicket.Click += BtnReopenTicket_Click;
 
             LstMemberships.SelectionChanged += (_, _) => LoadSelectedTier();
             BtnSaveTier.Click += BtnSaveTier_Click;
@@ -65,6 +92,22 @@ namespace RenPyTRLauncher.Views
         private void OnDataChanged() =>
             Dispatcher?.BeginInvoke(new Action(RefreshAll));
 
+        private void ApplyRoleRestrictions()
+        {
+            var isAdmin = AuthorizationService.CanManageGames(_currentUser);
+            var isMod = AuthorizationService.CanManageSupport(_currentUser);
+
+            TabGames.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabUsers.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabMemberships.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabTop10.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabAnnouncements.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabCategories.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabHelp.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabSettings.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
+            TabSupport.Visibility = isMod ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private void RefreshAll()
         {
             RefreshDashboard();
@@ -72,7 +115,57 @@ namespace RenPyTRLauncher.Views
             RefreshUsers();
             RefreshTop10();
             RefreshMemberships();
+            RefreshTickets();
+            RefreshCategories();
+            RefreshHelpGuides();
             LoadSettingsForm();
+        }
+
+        private void RefreshTickets()
+        {
+            LstTickets.ItemsSource = null;
+            LstTickets.ItemsSource = _supportService.GetAll().ToList();
+        }
+
+        private void LoadSelectedTicket()
+        {
+            if (LstTickets.SelectedItem is not SupportTicket t)
+            {
+                TxtTicketDetail.Text = "";
+                TxtTicketReply.Text = "";
+                return;
+            }
+            TxtTicketDetail.Text = $"[{t.TypeLabel}] {t.Subject}\n\n{t.Message}\n\nDurum: {t.StatusLabel}";
+            TxtTicketReply.Text = t.AdminReply;
+        }
+
+        private void BtnReplyTicket_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTickets.SelectedItem is not SupportTicket t || _currentUser == null) return;
+            if (string.IsNullOrWhiteSpace(TxtTicketReply.Text)) return;
+            _supportService.Reply(t.Id, _currentUser.Id, TxtTicketReply.Text);
+            ServiceLocator.NotifyDataChanged();
+            RefreshTickets();
+        }
+
+        private void BtnCloseTicket_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTickets.SelectedItem is SupportTicket t)
+            {
+                _supportService.Close(t.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshTickets();
+            }
+        }
+
+        private void BtnReopenTicket_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstTickets.SelectedItem is SupportTicket t)
+            {
+                _supportService.Reopen(t.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshTickets();
+            }
         }
 
         private void RefreshDashboard()
@@ -193,6 +286,16 @@ namespace RenPyTRLauncher.Views
         private void BtnAddGame_Click(object sender, RoutedEventArgs e)
         {
             new EditGameWindow(null, _gameService).ShowDialog();
+            var latest = _gameService.GetAll().OrderByDescending(g => g.CreatedDate).FirstOrDefault();
+            if (latest != null)
+            {
+                _notificationService.NotifyAllUsers(
+                    "Yeni Oyun Eklendi",
+                    $"{latest.Name} kataloğa eklendi.",
+                    NotificationType.NewGame,
+                    latest.Id);
+            }
+            ServiceLocator.NotifyDataChanged();
             RefreshAll();
         }
 
@@ -217,14 +320,103 @@ namespace RenPyTRLauncher.Views
 
         private void BtnAddAnn_Click(object sender, RoutedEventArgs e)
         {
-            _announcementService.Add(new Announcement
+            var ann = new Announcement
             {
                 Title = TxtAnnTitle.Text,
                 Message = TxtAnnMsg.Text,
-                AccentColor = string.IsNullOrWhiteSpace(TxtAnnColor.Text) ? "#9B59FF" : TxtAnnColor.Text
-            });
+                AccentColor = string.IsNullOrWhiteSpace(TxtAnnColor.Text) ? "#9B59FF" : TxtAnnColor.Text,
+                IsPinned = ChkAnnPinned.IsChecked == true
+            };
+            _announcementService.Add(ann);
+            _notificationService.NotifyAllUsers(ann.Title, ann.Message, NotificationType.Announcement);
             ServiceLocator.NotifyDataChanged();
             RefreshLists();
+        }
+
+        private void BtnUpdateAnn_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstAnns.SelectedItem is not Announcement a) return;
+            a.Title = TxtAnnTitle.Text;
+            a.Message = TxtAnnMsg.Text;
+            a.AccentColor = string.IsNullOrWhiteSpace(TxtAnnColor.Text) ? "#9B59FF" : TxtAnnColor.Text;
+            a.IsPinned = ChkAnnPinned.IsChecked == true;
+            _announcementService.Update(a);
+            ServiceLocator.NotifyDataChanged();
+            RefreshLists();
+        }
+
+        private void LoadSelectedAnnouncement()
+        {
+            if (LstAnns.SelectedItem is not Announcement a) return;
+            TxtAnnTitle.Text = a.Title;
+            TxtAnnMsg.Text = a.Message;
+            TxtAnnColor.Text = a.AccentColor;
+            ChkAnnPinned.IsChecked = a.IsPinned;
+        }
+
+        private void RefreshCategories()
+        {
+            LstCategories.ItemsSource = null;
+            LstCategories.ItemsSource = _categoryService.GetAll().ToList();
+        }
+
+        private void BtnAddCategory_Click(object sender, RoutedEventArgs e)
+        {
+            new EditCategoryWindow(null, _categoryService).ShowDialog();
+            ServiceLocator.NotifyDataChanged();
+            RefreshCategories();
+        }
+
+        private void BtnEditCategory_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstCategories.SelectedItem is GameCategory cat)
+            {
+                new EditCategoryWindow(cat, _categoryService).ShowDialog();
+                ServiceLocator.NotifyDataChanged();
+                RefreshCategories();
+            }
+        }
+
+        private void BtnDeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstCategories.SelectedItem is GameCategory cat)
+            {
+                _categoryService.Remove(cat.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshCategories();
+            }
+        }
+
+        private void RefreshHelpGuides()
+        {
+            LstHelpGuides.ItemsSource = null;
+            LstHelpGuides.ItemsSource = _helpService.GetAll().ToList();
+        }
+
+        private void BtnAddHelp_Click(object sender, RoutedEventArgs e)
+        {
+            var typeTag = (CmbHelpType.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "Text";
+            var type = Enum.TryParse<HelpGuideType>(typeTag, out var parsed) ? parsed : HelpGuideType.Text;
+            _helpService.Add(new HelpGuide
+            {
+                Title = TxtHelpTitle.Text,
+                Content = TxtHelpContent.Text,
+                VideoUrl = TxtHelpVideoUrl.Text,
+                Type = type,
+                SortOrder = _helpService.GetAll().Count() + 1
+            });
+            ServiceLocator.NotifyDataChanged();
+            RefreshHelpGuides();
+        }
+
+        private void BtnDeleteHelp_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstHelpGuides.SelectedItem is HelpGuide g)
+            {
+                _helpService.Remove(g.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshHelpGuides();
+            }
         }
 
         private void BtnDeleteAnn_Click(object sender, RoutedEventArgs e)
@@ -239,7 +431,7 @@ namespace RenPyTRLauncher.Views
 
         private void BtnUserAdd_Click(object sender, RoutedEventArgs e)
         {
-            _userService.Create(new User { Username = "user_" + Guid.NewGuid().ToString()[..6], Email = "" });
+            new EditUserWindow(null, _userService).ShowDialog();
             ServiceLocator.NotifyDataChanged();
             RefreshUsers();
         }
@@ -248,8 +440,7 @@ namespace RenPyTRLauncher.Views
         {
             if (LstUsers.SelectedItem is User u)
             {
-                u.Username += "_edit";
-                _userService.Update(u);
+                new EditUserWindow(u, _userService).ShowDialog();
                 ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
@@ -315,6 +506,26 @@ namespace RenPyTRLauncher.Views
             if (LstUsers.SelectedItem is User u)
             {
                 _userService.RevokeAdmin(u.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshUsers();
+            }
+        }
+
+        private void BtnMakeMod_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstUsers.SelectedItem is User u)
+            {
+                _userService.MakeMod(u.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshUsers();
+            }
+        }
+
+        private void BtnRevokeMod_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstUsers.SelectedItem is User u)
+            {
+                _userService.RevokeMod(u.Id);
                 ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }

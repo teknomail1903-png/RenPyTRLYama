@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using RenPyTRLauncher.Services;
 
 namespace RenPyTRLauncher.Data
 {
@@ -12,16 +13,19 @@ namespace RenPyTRLauncher.Data
         {
             var path = value as string;
             if (string.IsNullOrWhiteSpace(path)) return null;
+            if (ImageService.IsDefaultAvatar(path)) return null;
 
             try
             {
-                if (path.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
-                    path.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                var full = ImageService.ResolvePath(path);
+                if (string.IsNullOrWhiteSpace(full)) return null;
+
+                if (full.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
+                    full.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 {
-                    return new BitmapImage(new Uri(path, UriKind.Absolute));
+                    return new BitmapImage(new Uri(full, UriKind.Absolute));
                 }
 
-                var full = Path.IsPathRooted(path) ? path : Path.Combine(AppContext.BaseDirectory, path);
                 if (!File.Exists(full)) return null;
 
                 var img = new BitmapImage();

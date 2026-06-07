@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using RenPyTRLauncher.Models;
+using RenPyTRLauncher.Services;
 
 namespace RenPyTRLauncher.ViewModels
 {
@@ -10,21 +11,60 @@ namespace RenPyTRLauncher.ViewModels
     {
         private System.Windows.Threading.DispatcherTimer? _vipTimer;
         private System.Windows.Threading.DispatcherTimer? _announcementTimer;
-        private readonly Services.IUserService _userService;
-        private readonly Services.IGameService _gameService;
-        private readonly Services.IAnnouncementService _announcementService;
-        private readonly Services.ISettingsService _settingsService;
-        private readonly Services.IMembershipService _membershipService;
-        private readonly Services.IActivityService _activityService;
+        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
+        private readonly IAnnouncementService _announcementService;
+        private readonly ISettingsService _settingsService;
+        private readonly IMembershipService _membershipService;
+        private readonly IActivityService _activityService;
+        private readonly ISupportService _supportService;
+        private readonly IAuthService _authService;
+        private readonly ICategoryService _categoryService;
+        private readonly INotificationService _notificationService;
+        private readonly IHelpService _helpService;
 
         private Models.User? _currentUser;
         public Models.User? CurrentUser
         {
             get => _currentUser;
-            private set { _currentUser = value; OnPropertyChanged(nameof(CurrentUser)); }
+            set
+            {
+                _currentUser = value;
+                OnPropertyChanged(nameof(CurrentUser));
+                OnPropertyChanged(nameof(IsVipUser));
+                OnPropertyChanged(nameof(VipStatusText));
+                OnPropertyChanged(nameof(RoleDisplay));
+                OnPropertyChanged(nameof(ProfileCityText));
+                OnPropertyChanged(nameof(ProfileAgeText));
+            }
         }
 
+        public bool IsVipUser => CurrentUser?.IsVip == true;
+        public string VipStatusText
+        {
+            get
+            {
+                if (CurrentUser == null) return "Giriş yapılmadı";
+                if (!CurrentUser.IsVip) return "Ücretsiz Üye";
+                var end = CurrentUser.VipEndDate?.ToLocalTime().ToString("dd.MM.yyyy") ?? "Süresiz";
+                return $"VIP Aktif — Bitiş: {end}";
+            }
+        }
+        public string RoleDisplay => CurrentUser?.Role switch
+        {
+            "Admin" => "🛡️ Admin",
+            "Mod" => "🔧 Moderatör",
+            _ => "👤 Kullanıcı"
+        };
+
+        public string ProfileCityText =>
+            string.IsNullOrWhiteSpace(CurrentUser?.City) ? "Şehir belirtilmemiş" : CurrentUser!.City;
+
+        public string ProfileAgeText =>
+            CurrentUser?.Age.HasValue == true ? $"{CurrentUser.Age} yaşında" : "Yaş belirtilmemiş";
+
         public ObservableCollection<Game> Games { get; } = new();
+        public ObservableCollection<Game> FilteredGames { get; } = new();
         public ObservableCollection<Game> Recent { get; } = new();
         public ObservableCollection<Game> UpdatedGames { get; } = new();
         public ObservableCollection<Game> VipGames { get; } = new();
@@ -36,6 +76,65 @@ namespace RenPyTRLauncher.ViewModels
         public ObservableCollection<UserActivity> RecentActivities { get; } = new();
         public ObservableCollection<CategoryFolderItem> CategoryFolders { get; } = new();
         public ObservableCollection<Game> CategoryGames { get; } = new();
+        public ObservableCollection<SupportTicket> SupportTickets { get; } = new();
+        public ObservableCollection<Notification> Notifications { get; } = new();
+        public ObservableCollection<HelpGuide> TextGuides { get; } = new();
+        public ObservableCollection<HelpGuide> VideoGuides { get; } = new();
+        public ObservableCollection<HelpGuide> FaqGuides { get; } = new();
+        public ObservableCollection<HelpGuide> ToolGuides { get; } = new();
+        public ObservableCollection<string> SearchCategories { get; } = new();
+
+        private string _searchText = "";
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value ?? "";
+                OnPropertyChanged(nameof(SearchText));
+                ApplySearchFilter();
+            }
+        }
+
+        private string? _searchCategoryFilter;
+        public string? SearchCategoryFilter
+        {
+            get => _searchCategoryFilter;
+            set
+            {
+                _searchCategoryFilter = value;
+                OnPropertyChanged(nameof(SearchCategoryFilter));
+                ApplySearchFilter();
+            }
+        }
+
+        private bool _searchInFavoritesOnly;
+        public bool SearchInFavoritesOnly
+        {
+            get => _searchInFavoritesOnly;
+            set
+            {
+                _searchInFavoritesOnly = value;
+                OnPropertyChanged(nameof(SearchInFavoritesOnly));
+                ApplySearchFilter();
+            }
+        }
+
+        private int _unreadNotificationCount;
+        public int UnreadNotificationCount
+        {
+            get => _unreadNotificationCount;
+            private set
+            {
+                if (_unreadNotificationCount == value) return;
+                _unreadNotificationCount = value;
+                OnPropertyChanged(nameof(UnreadNotificationCount));
+                OnPropertyChanged(nameof(HasUnreadNotifications));
+            }
+        }
+
+        public bool HasUnreadNotifications => UnreadNotificationCount > 0;
+        public int FavoriteCount => FavoriteGames.Count;
 
         private string? _selectedCategoryFolder;
         public string? SelectedCategoryFolder
@@ -92,25 +191,34 @@ namespace RenPyTRLauncher.ViewModels
         public string DiscordUrl { get; private set; } = "https://discord.gg/renpytr";
         public string AnnouncementsUrl { get; private set; } = "https://renpytr.com/duyurular";
         public string SupportUrl { get; private set; } = "https://renpytr.com/destek";
+        public string CurrentTheme { get; private set; } = ThemeService.SteamDark;
 
         public int TotalGames => Games.Count;
         public int TotalUsers => _userService.GetAll().Count();
         public int TotalDownloads => Games.Sum(g => g.DownloadCount);
         public int VipMemberCount => _userService.GetAll().Count(u => u.IsVip);
-        public int ActiveDownloads => Services.DownloadTracker.ActiveCount;
+        public int ActiveDownloads => DownloadTracker.ActiveCount;
 
         public MainViewModel()
         {
-            _userService = Services.ServiceLocator.UserService ?? new Services.InMemoryUserService();
-            _gameService = Services.ServiceLocator.GameService ?? new Services.InMemoryGameService();
-            _announcementService = Services.ServiceLocator.AnnouncementService ?? new Services.InMemoryAnnouncementService();
-            _settingsService = Services.ServiceLocator.SettingsService ?? new Services.InMemorySettingsService();
-            _membershipService = Services.ServiceLocator.MembershipService ?? new Services.InMemoryMembershipService();
-            _activityService = Services.ServiceLocator.ActivityService ?? new Services.InMemoryActivityService();
+            _userService = ServiceLocator.UserService ?? new InMemoryUserService();
+            _gameService = ServiceLocator.GameService ?? new InMemoryGameService();
+            _announcementService = ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
+            _settingsService = ServiceLocator.SettingsService ?? new InMemorySettingsService();
+            _membershipService = ServiceLocator.MembershipService ?? new InMemoryMembershipService();
+            _activityService = ServiceLocator.ActivityService ?? new InMemoryActivityService();
+            _supportService = ServiceLocator.SupportService ?? new InMemorySupportService();
+            _authService = ServiceLocator.AuthService ?? new AuthService(_userService);
+            _categoryService = ServiceLocator.CategoryService ?? new InMemoryCategoryService();
+            _notificationService = ServiceLocator.NotificationService ?? new InMemoryNotificationService(_userService);
+            _helpService = ServiceLocator.HelpService ?? new InMemoryHelpService();
 
-            InitCategoryFolders();
-            CurrentUser = _userService.GetByUsername("argion");
-            Services.ServiceLocator.DataChanged += () => LoadData();
+            ThemeService.LoadFromSettings(_settingsService);
+            CurrentTheme = ThemeService.CurrentTheme;
+
+            LoadCategoryFolders();
+            CurrentUser = _authService.CurrentUser ?? _authService.TryRestoreSession();
+            ServiceLocator.DataChanged += () => LoadData();
 
             LoadData();
 
@@ -127,14 +235,24 @@ namespace RenPyTRLauncher.ViewModels
             catch { }
         }
 
-        private void InitCategoryFolders()
+        public void LoadCategoryFolders()
         {
             CategoryFolders.Clear();
-            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Devam Edenler", CategoryKey = "Devam Eden", Icon = "📁", AccentColor = "#3498DB" });
-            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Bitenler", CategoryKey = "Biten", Icon = "📁", AccentColor = "#27AE60" });
-            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Devam Etmeyenler", CategoryKey = "Devam Etmeyen", Icon = "📁", AccentColor = "#E67E22" });
-            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Erkek Başrol", CategoryKey = "Erkek Başrol", Icon = "📁", AccentColor = "#9B59B6" });
-            CategoryFolders.Add(new CategoryFolderItem { DisplayName = "Kadın Başrol", CategoryKey = "Kadın Başrol", Icon = "📁", AccentColor = "#E91E63" });
+            foreach (var cat in _categoryService.GetActive())
+            {
+                CategoryFolders.Add(new CategoryFolderItem
+                {
+                    DisplayName = cat.DisplayName,
+                    CategoryKey = cat.Name,
+                    Icon = cat.Icon,
+                    AccentColor = cat.AccentColor
+                });
+            }
+
+            SearchCategories.Clear();
+            SearchCategories.Add("Tüm Kategoriler");
+            foreach (var cat in _categoryService.GetActive())
+                SearchCategories.Add(cat.Name);
         }
 
         public void OpenCategoryFolder(string categoryKey, string displayName)
@@ -165,12 +283,17 @@ namespace RenPyTRLauncher.ViewModels
             Games.Clear();
             foreach (var g in _gameService.GetAll()) Games.Add(g);
 
+            LoadCategoryFolders();
+            ApplySearchFilter();
             RefreshSections();
             LoadAnnouncements();
             LoadSettings();
             LoadMembershipTiers();
             RefreshUserProfile();
             RefreshAdminStats();
+            RefreshSupportTickets();
+            RefreshNotifications();
+            LoadHelpGuides();
 
             if (!string.IsNullOrEmpty(SelectedCategoryFolder))
             {
@@ -179,23 +302,166 @@ namespace RenPyTRLauncher.ViewModels
             }
         }
 
+        public void ApplySearchFilter()
+        {
+            FilteredGames.Clear();
+            var query = Games.AsEnumerable();
+
+            if (SearchInFavoritesOnly && CurrentUser != null)
+            {
+                var favIds = CurrentUser.FavoriteGameIds.ToHashSet();
+                query = query.Where(g => favIds.Contains(g.Id));
+            }
+
+            if (!string.IsNullOrWhiteSpace(SearchCategoryFilter) &&
+                SearchCategoryFilter != "Tüm Kategoriler")
+            {
+                query = query.Where(g => g.Categories.Any(c =>
+                    string.Equals(c, SearchCategoryFilter, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                var term = SearchText.Trim();
+                query = query.Where(g =>
+                    g.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
+                    g.Description.Contains(term, StringComparison.OrdinalIgnoreCase));
+            }
+
+            foreach (var g in query) FilteredGames.Add(g);
+            OnPropertyChanged(nameof(SearchResultCount));
+        }
+
+        public int SearchResultCount => FilteredGames.Count;
+
+        public bool IsFavorite(Guid gameId) =>
+            CurrentUser?.FavoriteGameIds.Contains(gameId) == true;
+
+        public void ToggleFavorite(Game game)
+        {
+            if (CurrentUser == null) return;
+            var wasFavorite = IsFavorite(game.Id);
+            _userService.ToggleFavorite(CurrentUser.Id, game.Id);
+            RefreshCurrentUser();
+            RefreshUserProfile();
+            _activityService.Log(CurrentUser.Id,
+                wasFavorite ? $"{game.Name} favorilerden çıkarıldı" : $"{game.Name} favorilere eklendi",
+                wasFavorite ? "💔" : "⭐");
+            OnPropertyChanged(nameof(FavoriteCount));
+            ApplySearchFilter();
+        }
+
+        public void RefreshNotifications()
+        {
+            Notifications.Clear();
+            if (CurrentUser == null)
+            {
+                UnreadNotificationCount = 0;
+                return;
+            }
+            foreach (var n in _notificationService.GetForUser(CurrentUser.Id))
+                Notifications.Add(n);
+            UnreadNotificationCount = _notificationService.GetUnreadCount(CurrentUser.Id);
+        }
+
+        public void MarkNotificationRead(Notification notification)
+        {
+            _notificationService.MarkAsRead(notification.Id);
+            notification.IsRead = true;
+            RefreshNotifications();
+        }
+
+        public void MarkAllNotificationsRead()
+        {
+            if (CurrentUser == null) return;
+            _notificationService.MarkAllAsRead(CurrentUser.Id);
+            RefreshNotifications();
+        }
+
+        private void LoadHelpGuides()
+        {
+            TextGuides.Clear();
+            VideoGuides.Clear();
+            FaqGuides.Clear();
+            ToolGuides.Clear();
+
+            foreach (var g in _helpService.GetByType(HelpGuideType.Text)) TextGuides.Add(g);
+            foreach (var g in _helpService.GetByType(HelpGuideType.Video)) VideoGuides.Add(g);
+            foreach (var g in _helpService.GetByType(HelpGuideType.FAQ)) FaqGuides.Add(g);
+            foreach (var g in _helpService.GetByType(HelpGuideType.Tool)) ToolGuides.Add(g);
+        }
+
+        public void SetTheme(string theme)
+        {
+            ThemeService.SaveTheme(_settingsService, theme);
+            CurrentTheme = theme;
+            OnPropertyChanged(nameof(CurrentTheme));
+        }
+
         private void RefreshCurrentUser()
         {
             if (CurrentUser != null)
             {
                 var refreshed = _userService.GetById(CurrentUser.Id);
-                if (refreshed != null) CurrentUser = refreshed;
+                if (refreshed != null)
+                {
+                    AuthorizationService.SyncVipBadges(refreshed);
+                    CurrentUser = refreshed;
+                }
             }
             else
             {
-                CurrentUser = _userService.GetByUsername("argion");
+                CurrentUser = _authService.CurrentUser ?? _authService.TryRestoreSession();
             }
         }
+
+        public void RefreshSupportTickets()
+        {
+            SupportTickets.Clear();
+            if (CurrentUser == null) return;
+            foreach (var t in _supportService.GetForUser(CurrentUser.Id))
+                SupportTickets.Add(t);
+        }
+
+        public void CreateSupportTicket(SupportTicketType type, string subject, string message)
+        {
+            if (CurrentUser == null)
+            {
+                System.Windows.MessageBox.Show("Destek talebi için giriş yapmalısınız.", "Destek",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(subject) || string.IsNullOrWhiteSpace(message))
+            {
+                System.Windows.MessageBox.Show("Konu ve mesaj alanları zorunludur.", "Destek",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                return;
+            }
+
+            var ticket = new SupportTicket
+            {
+                UserId = CurrentUser.Id,
+                Subject = subject.Trim(),
+                Message = message.Trim(),
+                Type = type
+            };
+            _supportService.Create(ticket);
+            _activityService.Log(CurrentUser.Id, $"{ticket.TypeLabel} oluşturuldu: {subject}", "🆘");
+            RefreshSupportTickets();
+            TicketFormCleared?.Invoke();
+            System.Windows.MessageBox.Show("Talebiniz başarıyla gönderildi.", "Destek",
+                System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+        }
+
+        public event Action? TicketFormCleared;
 
         private void LoadAnnouncements()
         {
             Announcements.Clear();
-            foreach (var a in _announcementService.GetAll().Where(x => x.IsActive).OrderByDescending(x => x.CreatedAt))
+            var all = _announcementService.GetAll().Where(x => x.IsActive).ToList();
+            foreach (var a in all.Where(x => x.IsPinned).OrderByDescending(x => x.CreatedAt))
+                Announcements.Add(a);
+            foreach (var a in all.Where(x => !x.IsPinned).OrderByDescending(x => x.CreatedAt))
                 Announcements.Add(a);
             AnnouncementIndex = 0;
             OnPropertyChanged(nameof(AnnouncementCounter));
@@ -207,10 +473,12 @@ namespace RenPyTRLauncher.ViewModels
             DiscordUrl = _settingsService.Get(AppSettingKeys.DiscordUrl, DiscordUrl);
             AnnouncementsUrl = _settingsService.Get(AppSettingKeys.AnnouncementsUrl, AnnouncementsUrl);
             SupportUrl = _settingsService.Get(AppSettingKeys.SupportUrl, SupportUrl);
+            CurrentTheme = _settingsService.Get(AppSettingKeys.Theme, ThemeService.SteamDark);
             OnPropertyChanged(nameof(WebsiteUrl));
             OnPropertyChanged(nameof(DiscordUrl));
             OnPropertyChanged(nameof(AnnouncementsUrl));
             OnPropertyChanged(nameof(SupportUrl));
+            OnPropertyChanged(nameof(CurrentTheme));
         }
 
         private void LoadMembershipTiers()
@@ -228,6 +496,7 @@ namespace RenPyTRLauncher.ViewModels
             if (CurrentUser == null)
             {
                 CurrentUserTotalDownloads = 0;
+                OnPropertyChanged(nameof(FavoriteCount));
                 return;
             }
 
@@ -243,6 +512,9 @@ namespace RenPyTRLauncher.ViewModels
                 RecentActivities.Add(act);
 
             CurrentUserTotalDownloads = CurrentUser.TotalDownloadCount;
+            OnPropertyChanged(nameof(FavoriteCount));
+            OnPropertyChanged(nameof(ProfileCityText));
+            OnPropertyChanged(nameof(ProfileAgeText));
         }
 
         public void RefreshAdminStats()
@@ -290,21 +562,19 @@ namespace RenPyTRLauncher.ViewModels
 
             var rank = 1;
             foreach (var g in Games.OrderByDescending(g => g.DownloadCount).Take(10))
-            {
                 Leaderboard.Add(new LeaderboardEntry { Rank = rank++, Game = g });
-            }
         }
 
-        public async System.Threading.Tasks.Task<Models.PatchInstallResult> InstallPatchAsync(Models.Game game, string gameRootFolder)
+        public async System.Threading.Tasks.Task<PatchInstallResult> InstallPatchAsync(Game game, string gameRootFolder)
         {
             if (CurrentUser == null)
-                return new Models.PatchInstallResult { Success = false, Message = "Giriş yapılmış kullanıcı bulunamadı." };
+                return new PatchInstallResult { Success = false, Message = "Giriş yapılmış kullanıcı bulunamadı." };
 
-            var patchService = Services.ServiceLocator.PatchService;
+            var patchService = ServiceLocator.PatchService;
             if (patchService == null)
-                return new Models.PatchInstallResult { Success = false, Message = "Yama servisi başlatılamadı." };
+                return new PatchInstallResult { Success = false, Message = "Yama servisi başlatılamadı." };
 
-            Services.DownloadTracker.Begin();
+            DownloadTracker.Begin();
             try
             {
                 var result = await patchService.InstallPatchAsync(game, gameRootFolder, CurrentUser);
@@ -317,7 +587,7 @@ namespace RenPyTRLauncher.ViewModels
             }
             finally
             {
-                Services.DownloadTracker.End();
+                DownloadTracker.End();
                 RefreshAdminStats();
             }
         }

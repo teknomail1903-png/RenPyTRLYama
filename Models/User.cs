@@ -20,5 +20,7 @@ namespace RenPyTRLauncher.Models
         public System.Collections.Generic.List<Guid> DownloadedPatchIds { get; set; } = new();
         public System.Collections.Generic.List<Guid> RecentDownloadedGameIds { get; set; } = new();
         public int TotalDownloadCount { get; set; } = 0;
+        public string City { get; set; } = string.Empty;
+        public int? Age { get; set; }
     }
 }

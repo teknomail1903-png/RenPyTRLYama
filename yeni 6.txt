@@ -1,0 +1,23 @@
+<StackPanel>
+    <TextBlock Text="VIP Durumunuz" Foreground="#888" FontSize="12"/>
+    <TextBlock Text="{Binding VipStatusText}" Foreground="White" FontSize="18" FontWeight="SemiBold" Margin="0,6,0,0"/>
+
+    <Border Background="#2A2040"
+            CornerRadius="8"
+            Padding="10,6"
+            HorizontalAlignment="Left"
+            Margin="0,10,0,0"
+            Visibility="{Binding IsVipUser, Converter={StaticResource BoolToVis}}">
+        <TextBlock Text="💎 VIP Rozeti Aktif"
+                   Foreground="#9B59FF"
+                   FontWeight="SemiBold"/>
+    </Border>
+</StackPanel>
+
+<TextBlock Text="💎 Üyelik Planları" Style="{StaticResource SectionTitle}"/>
+<TextBlock Text="VIP avantajlarından yararlanmak için bir plan seçin veya destek üzerinden başvuru gönderin."
+           Foreground="#888"
+           Margin="0,0,0,16"/>
+
+<WrapPanel>
+    <ItemsControl ItemsSource="{Binding MembershipTiers}">

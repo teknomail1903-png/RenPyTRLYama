@@ -1,0 +1,89 @@
+<Window x:Class="RenPyTRLauncher.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RenPyTR Launcher — Giriş"
+        Height="560" Width="440"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#0D0D0F">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="AccentBrush" Color="#9B59FF"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1A1A22"/>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#222228"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="#222228"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource CardBrush}" CornerRadius="16" Margin="24" Padding="28">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,8">
+                <TextBlock Text="🎮" FontSize="32"/>
+                <TextBlock Text="RenPyTR" Foreground="White" FontSize="26" FontWeight="Bold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBlock Text="Türkçe Yama Launcher" Foreground="#888" FontSize="13" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TabControl x:Name="AuthTabs" Background="Transparent" BorderThickness="0">
+                <TabItem Header="Giriş Yap">
+                    <StackPanel Margin="0,16,0,0">
+                        <TextBlock Text="Kullanıcı Adı veya E-posta" Foreground="#AAA" FontSize="12"/>
+                        <TextBox x:Name="TxtLoginUser"/>
+                        <TextBlock Text="Şifre" Foreground="#AAA" FontSize="12"/>
+                        <PasswordBox x:Name="TxtLoginPass"/>
+                        <CheckBox x:Name="ChkRemember" Content="Beni Hatırla" Foreground="#CCC" Margin="0,0,0,16"/>
+                        <Button x:Name="BtnLogin" Content="Giriş Yap" Style="{StaticResource PrimaryBtn}" Click="BtnLogin_Click"/>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Kayıt Ol">
+                    <StackPanel Margin="0,16,0,0">
+                        <TextBlock Text="Kullanıcı Adı" Foreground="#AAA" FontSize="12"/>
+                        <TextBox x:Name="TxtRegUser"/>
+                        <TextBlock Text="E-posta" Foreground="#AAA" FontSize="12"/>
+                        <TextBox x:Name="TxtRegEmail"/>
+                        <TextBlock Text="Şifre" Foreground="#AAA" FontSize="12"/>
+                        <PasswordBox x:Name="TxtRegPass"/>
+                        <TextBlock Text="Şifre Tekrar" Foreground="#AAA" FontSize="12"/>
+                        <PasswordBox x:Name="TxtRegPass2"/>
+                        <Button x:Name="BtnRegister" Content="Kayıt Ol" Style="{StaticResource PrimaryBtn}" Margin="0,8,0,0" Click="BtnRegister_Click"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+
+            <TextBlock x:Name="TxtError" Foreground="#E74C3C" FontSize="12" TextWrapping="Wrap"
+                       HorizontalAlignment="Center" Margin="0,16,0,0" Visibility="Collapsed"/>
+            <TextBlock Foreground="#555" FontSize="11" HorizontalAlignment="Center" Margin="0,16,0,0"
+                       Text="Demo: argion / admin123"/>
+        </StackPanel>
+    </Border>
+</Window>

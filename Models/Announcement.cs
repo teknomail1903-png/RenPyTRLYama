@@ -10,6 +10,7 @@ namespace RenPyTRLauncher.Models
         public string ImagePath { get; set; } = string.Empty;
         public string AccentColor { get; set; } = "#9B59FF";
         public bool IsActive { get; set; } = true;
+        public bool IsPinned { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

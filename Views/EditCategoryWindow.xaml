@@ -1,0 +1,55 @@
+<Window x:Class="RenPyTRLauncher.Views.EditCategoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kategori Düzenle" Height="420" Width="440"
+        Background="#0D0D0F" WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="AccentBrush" Color="#66C0F4"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1A1A22"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#AAA"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#222228"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#333"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource CardBrush}" CornerRadius="12" Margin="16" Padding="24">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="📁 Kategori" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,0,16"/>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Kategori Anahtarı (oyunlarda kullanılır)"/>
+                <TextBox x:Name="TxtName"/>
+                <TextBlock Text="Görünen Ad"/>
+                <TextBox x:Name="TxtDisplayName"/>
+                <TextBlock Text="İkon (emoji)"/>
+                <TextBox x:Name="TxtIcon" Text="📁"/>
+                <TextBlock Text="Renk (#hex)"/>
+                <TextBox x:Name="TxtColor" Text="#3498DB"/>
+                <TextBlock Text="Sıra"/>
+                <TextBox x:Name="TxtSortOrder" Text="0"/>
+                <CheckBox x:Name="ChkActive" Content="Aktif" Foreground="White" IsChecked="True" Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                <Button x:Name="BtnCancel" Content="İptal" Width="90" Margin="0,0,8,0" Padding="8"/>
+                <Button x:Name="BtnSave" Content="Kaydet" Width="100" Padding="8"
+                        Background="{StaticResource AccentBrush}" Foreground="White" BorderThickness="0"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

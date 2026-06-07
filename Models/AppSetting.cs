@@ -15,5 +15,6 @@ namespace RenPyTRLauncher.Models
         public const string DiscordUrl = "DiscordUrl";
         public const string AnnouncementsUrl = "AnnouncementsUrl";
         public const string SupportUrl = "SupportUrl";
+        public const string Theme = "Theme";
     }
 }

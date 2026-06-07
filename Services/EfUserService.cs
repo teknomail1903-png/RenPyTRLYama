@@ -27,7 +27,14 @@ namespace RenPyTRLauncher.Services
 
         public User? GetByUsername(string username)
         {
-            return _db.Users.FirstOrDefault(u => u.Username == username);
+            return _db.Users.FirstOrDefault(u =>
+                u.Username.ToLower() == username.ToLower());
+        }
+
+        public User? GetByEmail(string email)
+        {
+            return _db.Users.FirstOrDefault(u =>
+                u.Email.ToLower() == email.ToLower());
         }
 
         public void Create(User user)
@@ -79,7 +86,7 @@ namespace RenPyTRLauncher.Services
             var u = GetById(userId);
             if (u != null)
             {
-                u.Role = "Admin";
+                u.Role = UserRole.Admin;
                 _db.SaveChanges();
             }
         }
@@ -89,7 +96,27 @@ namespace RenPyTRLauncher.Services
             var u = GetById(userId);
             if (u != null)
             {
-                u.Role = "User";
+                u.Role = UserRole.User;
+                _db.SaveChanges();
+            }
+        }
+
+        public void MakeMod(Guid userId)
+        {
+            var u = GetById(userId);
+            if (u != null)
+            {
+                u.Role = UserRole.Mod;
+                _db.SaveChanges();
+            }
+        }
+
+        public void RevokeMod(Guid userId)
+        {
+            var u = GetById(userId);
+            if (u != null)
+            {
+                u.Role = UserRole.User;
                 _db.SaveChanges();
             }
         }

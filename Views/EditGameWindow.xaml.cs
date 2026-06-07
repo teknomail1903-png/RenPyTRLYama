@@ -33,8 +33,12 @@ namespace RenPyTRLauncher.Views
             TxtImage.Text = _game.ImagePath;
             var patchVerBox = this.FindName("TxtPatchVersion") as System.Windows.Controls.TextBox;
             if (patchVerBox != null) patchVerBox.Text = _game.PatchVersion;
-            var catBox = this.FindName("TxtCategories") as System.Windows.Controls.TextBox;
-            if (catBox != null) catBox.Text = string.Join("; ", _game.Categories);
+            LstCategories.ItemsSource = ImageService.GetAvailableCategories();
+            foreach (var item in LstCategories.Items)
+            {
+                if (item is string cat && _game.Categories.Contains(cat))
+                    LstCategories.SelectedItems.Add(item);
+            }
             var patchBox = this.FindName("TxtPatch") as System.Windows.Controls.TextBox;
             if (patchBox != null) patchBox.Text = _game.PatchFilePath;
             var chkVip = this.FindName("ChkIsVip") as System.Windows.Controls.CheckBox;
@@ -43,14 +47,38 @@ namespace RenPyTRLauncher.Views
             if (chkTop10 != null) chkTop10.IsChecked = _game.IsTop10;
             var chkFeat = this.FindName("ChkIsFeatured") as System.Windows.Controls.CheckBox;
             if (chkFeat != null) chkFeat.IsChecked = _game.IsFeatured;
+            TxtPatchNotes.Text = _game.PatchNotes;
+            TxtScreenshots.Text = string.Join(Environment.NewLine, _game.ScreenshotPaths);
+            TxtDownloadLinks.Text = string.Join(Environment.NewLine, _game.DownloadLinks);
 
             BtnCancel.Click += (s, e) => this.Close();
             BtnSave.Click += BtnSave_Click;
 
-            var btnImg = this.FindName("BtnBrowseImage") as System.Windows.Controls.Button;
-            if (btnImg != null) btnImg.Click += BtnBrowseImage_Click;
+            BtnBrowseImage.Click += BtnBrowseImage_Click;
+            BtnUrlImage.Click += BtnUrlImage_Click;
             var btnPatch = this.FindName("BtnBrowsePatch") as System.Windows.Controls.Button;
             if (btnPatch != null) btnPatch.Click += BtnBrowsePatch_Click;
+            BtnAddScreenshot.Click += BtnAddScreenshot_Click;
+        }
+
+        private void BtnAddScreenshot_Click(object? sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Resim|*.png;*.jpg;*.jpeg;*.webp;*.bmp"
+            };
+            if (dlg.ShowDialog() != true) return;
+            try
+            {
+                var path = ImageService.UploadFromFile(dlg.FileName, ImageCategory.Games);
+                TxtScreenshots.Text = string.IsNullOrWhiteSpace(TxtScreenshots.Text)
+                    ? path
+                    : TxtScreenshots.Text + Environment.NewLine + path;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Yükleme Hatası", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -61,37 +89,57 @@ namespace RenPyTRLauncher.Views
             _game.ImagePath = TxtImage.Text ?? _game.ImagePath;
             var patchVerBox = this.FindName("TxtPatchVersion") as System.Windows.Controls.TextBox;
             if (patchVerBox != null) _game.PatchVersion = patchVerBox.Text ?? _game.PatchVersion;
-            var catBox = this.FindName("TxtCategories") as System.Windows.Controls.TextBox;
-            if (catBox != null)
-            {
-                _game.Categories = (catBox.Text ?? string.Empty)
-                    .Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(c => c.Trim())
-                    .Where(c => !string.IsNullOrWhiteSpace(c))
-                    .ToList();
-            }
+            _game.Categories = LstCategories.SelectedItems.Cast<string>().ToList();
             var patchBox = this.FindName("TxtPatch") as System.Windows.Controls.TextBox;
             if (patchBox != null) _game.PatchFilePath = patchBox.Text ?? _game.PatchFilePath;
             _game.IsVip = (this.FindName("ChkIsVip") as System.Windows.Controls.CheckBox)?.IsChecked == true;
             _game.IsTop10 = (this.FindName("ChkIsTop10") as System.Windows.Controls.CheckBox)?.IsChecked == true;
             _game.IsFeatured = (this.FindName("ChkIsFeatured") as System.Windows.Controls.CheckBox)?.IsChecked == true;
+            _game.PatchNotes = TxtPatchNotes.Text ?? "";
+            _game.ScreenshotPaths = TxtScreenshots.Text
+                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
+            _game.DownloadLinks = TxtDownloadLinks.Text
+                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 
             if (_isNew)
                 _gameService.Add(_game);
             else
+            {
                 _gameService.Update(_game);
+                ServiceLocator.NotificationService?.NotifyAllUsers(
+                    "Yama Güncellendi",
+                    $"{_game.Name} için yeni yama: {_game.PatchVersion}",
+                    NotificationType.NewPatch,
+                    _game.Id);
+            }
             Services.ServiceLocator.NotifyDataChanged();
             this.Close();
         }
 
         private void BtnBrowseImage_Click(object? sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Filter = "Image files|*.png;*.jpg;*.jpeg;*.bmp|All files|*.*";
-            if (dlg.ShowDialog() == true)
+            var dlg = new Microsoft.Win32.OpenFileDialog
             {
-                TxtImage.Text = dlg.FileName;
+                Filter = "Resim|*.png;*.jpg;*.jpeg;*.webp;*.bmp|Tümü|*.*"
+            };
+            if (dlg.ShowDialog() != true) return;
+            try
+            {
+                TxtImage.Text = ImageService.UploadFromFile(dlg.FileName, ImageCategory.Games);
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Yükleme Hatası", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void BtnUrlImage_Click(object? sender, RoutedEventArgs e)
+        {
+            var dlg = new InputDialog("Kapak görseli URL'sini girin:", TxtImage.Text) { Owner = this };
+            if (dlg.ShowDialog() == true && !string.IsNullOrWhiteSpace(dlg.Result))
+                TxtImage.Text = dlg.Result.Trim();
         }
 
         private void BtnBrowsePatch_Click(object? sender, RoutedEventArgs e)

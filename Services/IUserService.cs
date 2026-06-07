@@ -9,7 +9,10 @@ namespace RenPyTRLauncher.Services
         IEnumerable<User> GetAll();
         User? GetById(Guid id);
         User? GetByUsername(string username);
+        User? GetByEmail(string email);
         void Create(User user);
+        void MakeMod(Guid userId);
+        void RevokeMod(Guid userId);
         void Update(User user);
         void Delete(Guid id);
         void GrantVip(Guid userId, DateTime until);

@@ -21,6 +21,10 @@ namespace RenPyTRLauncher.Data
         public DbSet<MembershipTier> MembershipTiers { get; set; }
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<SupportTicket> SupportTickets { get; set; }
+        public DbSet<GameCategory> Categories { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<HelpGuide> HelpGuides { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,6 +47,8 @@ namespace RenPyTRLauncher.Data
                 v => EfValueConverters.GuidListFromDb(v));
 
             modelBuilder.Entity<Game>().Property(g => g.Categories).HasConversion(stringListConverter);
+            modelBuilder.Entity<Game>().Property(g => g.ScreenshotPaths).HasConversion(stringListConverter);
+            modelBuilder.Entity<Game>().Property(g => g.DownloadLinks).HasConversion(stringListConverter);
 
             modelBuilder.Entity<User>().Property(u => u.FavoriteGameIds).HasConversion(guidListConverter);
             modelBuilder.Entity<User>().Property(u => u.DownloadedPatchIds).HasConversion(guidListConverter);

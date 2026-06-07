@@ -14,198 +14,326 @@
         <local:BoolToVisibilityConverter x:Key="BoolToVis"/>
         <local:StringToBrushConverter x:Key="StringToBrush"/>
         <local:SafeImageConverter x:Key="SafeImage"/>
+        <local:AvatarImageConverter x:Key="AvatarImage"/>
         <local:CountToVisibilityConverter x:Key="CountToVis"/>
-
-        <DataTemplate x:Key="GameCoverImage">
-            <Grid>
-                <Border Background="#2A2A35"/>
-                <TextBlock Text="🎮" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5"/>
-                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}}" Stretch="UniformToFill"/>
-            </Grid>
-        </DataTemplate>
-
-        <Color x:Key="AccentColor">#9B59FF</Color>
-        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
-        <SolidColorBrush x:Key="SurfaceBrush" Color="#1A1A1F"/>
-        <SolidColorBrush x:Key="CardBrush" Color="#222228"/>
-
-        <DropShadowEffect x:Key="CardShadow" BlurRadius="16" ShadowDepth="2" Opacity="0.45" Color="#000000"/>
-
-        <Style TargetType="Button" x:Key="SidebarButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#B8B8C0"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="bd" Property="Background" Value="#2A2A32"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="GameCard" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+        <local:RoleToVisibilityConverter x:Key="RoleToVis"/>
+        <local:StringNotEmptyToVisibilityConverter x:Key="StrNotEmpty"/>
+        
+        <!-- Game Card Style -->
+        <Style x:Key="GameCardStyle" TargetType="Border">
+            <Setter Property="Background" Value="#1A1A22"/>
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Width" Value="200"/>
             <Setter Property="Height" Value="280"/>
-            <Setter Property="Margin" Value="0,0,14,0"/>
-            <Setter Property="Effect" Value="{StaticResource CardShadow}"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
-                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Background" Value="#222228"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect Color="#9B59FF" Opacity="0.4" BlurRadius="12" ShadowDepth="4"/>
+                        </Setter.Value>
+                    </Setter>
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <Style x:Key="SectionTitle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="0,24,0,12"/>
-        </Style>
-
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="16,8"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <DataTemplate x:Key="HorizontalGameCard">
-            <Border Style="{StaticResource GameCard}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="140"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Border Grid.Row="0" CornerRadius="12,12,0,0" ClipToBounds="True">
-                        <ContentControl Content="{Binding}" ContentTemplate="{StaticResource GameCoverImage}"/>
-                    </Border>
-                    <StackPanel Grid.Row="1" Margin="10,8">
-                        <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
-                        <TextBlock Foreground="#888" FontSize="11" Margin="0,4,0,0">
-                            <Run Text="v"/><Run Text="{Binding Version, Mode=OneWay}"/>
-                        </TextBlock>
-                        <Button Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click"
-                                Style="{StaticResource PrimaryButton}" Margin="0,10,0,0" Height="32" FontSize="12"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-        </DataTemplate>
     </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="220"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
         <Border Grid.Column="0" Background="#121216" BorderBrush="#2A2A30" BorderThickness="0,0,1,0">
-            <StackPanel Margin="10,16">
-                <StackPanel Orientation="Horizontal" Margin="8,0,0,20">
-                    <TextBlock Text="🎮" FontSize="22" VerticalAlignment="Center"/>
-                    <TextBlock Text="RenPyTR" Foreground="White" FontSize="18" FontWeight="Bold" Margin="8,0,0,0" VerticalAlignment="Center"/>
+            <StackPanel Margin="16,20">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <TextBlock Text="🎮" FontSize="24" VerticalAlignment="Center"/>
+                    <TextBlock Text="RenPyTR" Foreground="White" FontSize="20" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
-                <Button x:Name="BtnAnaSayfa" Style="{StaticResource SidebarButton}" Content="🏠  Ana Sayfa" Margin="0,2"/>
-                <Button x:Name="BtnOyunlar" Style="{StaticResource SidebarButton}" Content="🎮  Oyunlar" Margin="0,2"/>
-                <Button x:Name="BtnKategori" Style="{StaticResource SidebarButton}" Content="📁  Kategoriler" Margin="0,2"/>
-                <Button x:Name="BtnTop10" Style="{StaticResource SidebarButton}" Content="🏆  Top Sıralama" Margin="0,2"/>
-                <Button x:Name="BtnVip" Style="{StaticResource SidebarButton}" Content="💎  Üyelik" Margin="0,2"/>
-                <Button x:Name="BtnProfil" Style="{StaticResource SidebarButton}" Content="👤  Profil" Margin="0,2"/>
-                <Button x:Name="BtnAyarlar" Style="{StaticResource SidebarButton}" Content="⚙️  Ayarlar" Margin="0,2"/>
-                <Separator Margin="0,12" Background="#2A2A30"/>
-                <Button x:Name="BtnAdmin" Style="{StaticResource SidebarButton}" Content="🛠  Admin" Margin="0,2"/>
-                <Button x:Name="BtnLogout" Style="{StaticResource SidebarButton}" Content="🚪  Çıkış" Margin="0,2"/>
+                <Button x:Name="BtnAnaSayfa" Content="🏠 Ana Sayfa" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnOyunlar" Content="🎮 Oyunlar" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnFavoriler" Content="❤️ Favoriler" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnKategori" Content="📂 Kategoriler" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnVip" Content="� VIP" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnProfil" Content="� Profil" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnAyarlar" Content="⚙️ Ayarlar" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
+                <Button x:Name="BtnAdmin" Content="🛡 Admin" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14" Visibility="Collapsed"/>
+                <Button x:Name="BtnLogout" Content="🚪 Çıkış" Margin="0,24,0,0" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#E74C3C" BorderThickness="0" FontSize="14"/>
             </StackPanel>
         </Border>
 
         <!-- Content -->
-        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Background="#0D0D0F">
-            <StackPanel Margin="24,20">
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Top bar: notifications only -->
+            <Border Grid.Row="0" Background="#121216" BorderBrush="#2A2A30" BorderThickness="0,0,0,1" Padding="24,16">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button x:Name="BtnNotifications" Content="🔔" Width="48" Height="48"
+                            Background="#1A1A22" Foreground="White" BorderThickness="0" FontSize="18"
+                            Cursor="Hand" Click="BtnNotifications_Click"/>
+                    <Border x:Name="NotificationBadge" Background="#E74C3C" CornerRadius="10"
+                            Width="20" Height="20" Margin="-16,-8,0,0" VerticalAlignment="Top"
+                            Visibility="{Binding HasUnreadNotifications, Converter={StaticResource BoolToVis}}">
+                        <TextBlock Text="{Binding UnreadNotificationCount}" Foreground="White"
+                                   FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Notification dropdown -->
+            <Border x:Name="NotificationPanel" Grid.Row="0" Visibility="Collapsed"
+                    Background="#1A1A22" BorderBrush="#2A2A30" BorderThickness="1"
+                    CornerRadius="12" Width="380" MaxHeight="420"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,64,24,0"
+                    Panel.ZIndex="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="#222228" Padding="16,12" CornerRadius="12,12,0,0">
+                        <Grid>
+                            <TextBlock Text="🔔 Bildirimler" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                            <Button Content="Tümünü okundu işaretle"
+                                    HorizontalAlignment="Right"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontSize="12"
+                                    Cursor="Hand"
+                                    Click="MarkAllNotifications_Click"/>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="360">
+                        <ItemsControl ItemsSource="{Binding Notifications}" Margin="12">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#222228" CornerRadius="8" Padding="14" Margin="0,0,0,8"
+                                            Cursor="Hand" MouseLeftButtonUp="NotificationItem_Click">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding TypeIcon}" FontSize="20" Margin="0,0,12,0"/>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{Binding Title}" Foreground="White" FontWeight="SemiBold" FontSize="13"/>
+                                                <TextBlock Text="{Binding Message}" Foreground="#888" FontSize="12" TextTrimming="CharacterEllipsis" Margin="0,4,0,0"/>
+                                                <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#555" FontSize="11" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                            <Ellipse Grid.Column="1" Width="8" Height="8" Fill="#9B59FF"
+                                                     HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                     Visibility="{Binding IsRead, Converter={StaticResource BoolToVis}, ConverterParameter=Invert}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="#0D0D0F">
+            <StackPanel Margin="32,24">
 
                 <!-- ANA SAYFA -->
                 <StackPanel x:Name="PageAnaSayfa">
-                    <!-- Duyuru Carousel -->
-                    <Border Height="200" CornerRadius="14" Margin="0,0,0,8" ClipToBounds="True" Effect="{StaticResource CardShadow}">
+                    <!-- Featured Slider -->
+                    <Border Background="#1A1A22" CornerRadius="16" Height="280" Margin="0,0,0,32" Visibility="Visible">
                         <Grid>
-                            <Border Background="{Binding CurrentAnnouncement.AccentColor, Converter={StaticResource StringToBrush}}" Opacity="0.35"/>
-                            <Border Background="#1A1A22" Opacity="0.85"/>
-                            <Grid Margin="28">
+                            <Border Background="#2A2A35" CornerRadius="16"/>
+                            <Grid Margin="24">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Content="‹" FontSize="28" Width="44" Height="44"
-                                        Background="#33FFFFFF" Foreground="White" BorderThickness="0"
-                                        VerticalAlignment="Center" Click="AnnPrev_Click" Cursor="Hand"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0">
-                                    <TextBlock Text="📢 DUYURU" Foreground="{StaticResource AccentBrush}" FontSize="12" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding CurrentAnnouncement.Title, FallbackValue='Hoş Geldiniz'}"
-                                               Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,6,0,0"/>
-                                    <TextBlock Text="{Binding CurrentAnnouncement.Message, FallbackValue='RenPyTR Launcher'}"
-                                               Foreground="#B0B0B8" FontSize="14" TextWrapping="Wrap" MaxWidth="700" Margin="0,8,0,0"/>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="✨ ÖNE ÇIKAN" Foreground="#9B59FF" FontSize="14" FontWeight="Bold" Margin="0,0,0,12"/>
+                                    <TextBlock Text="Oyun Adı" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,0,0,8"/>
+                                    <TextBlock Text="Kısa açıklama buraya gelecek. Oyun hakkında bilgi." Foreground="#B0B0B8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,16"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="İleri" Background="#9B59FF" Foreground="White" BorderThickness="0" Padding="20,10" Cursor="Hand" Margin="0,0,12,0"/>
+                                        <Button Content="Geri" Background="#1A1A22" Foreground="White" BorderThickness="0" Padding="20,10" Cursor="Hand"/>
+                                    </StackPanel>
                                 </StackPanel>
-                                <Button Grid.Column="2" Content="›" FontSize="28" Width="44" Height="44"
-                                        Background="#33FFFFFF" Foreground="White" BorderThickness="0"
-                                        VerticalAlignment="Center" Click="AnnNext_Click" Cursor="Hand"/>
+                                <Border Grid.Column="1" Width="320" Height="200" CornerRadius="12" Background="#222228" VerticalAlignment="Center">
+                                    <TextBlock Text="🎮" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                </Border>
                             </Grid>
-                            <TextBlock Text="{Binding AnnouncementCounter}" Foreground="#888" FontSize="11"
-                                       HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                         </Grid>
                     </Border>
 
-                    <TextBlock Style="{StaticResource SectionTitle}" Text="🔥 Yeni Eklenenler"/>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,4">
-                        <ItemsControl ItemsSource="{Binding Recent}" ItemTemplate="{StaticResource HorizontalGameCard}">
+                    <!-- Announcement Banner -->
+                    <Border Background="#1A1A22" CornerRadius="12" Padding="24" Margin="0,0,0,32" Visibility="{Binding HasAnnouncement, Converter={StaticResource BoolToVis}}">
+                        <Grid>
+                            <Border Background="{Binding CurrentAnnouncement.AccentColor, Converter={StaticResource StringToBrush}, TargetNullValue='#9B59FF'}" Opacity="0.15" CornerRadius="12"/>
+                            <StackPanel Margin="12">
+                                <TextBlock Text="📢 DUYURU" Foreground="#9B59FF" FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding CurrentAnnouncement.Title, FallbackValue='Hoş Geldiniz'}"
+                                           Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,6,0,0"/>
+                                <TextBlock Text="{Binding CurrentAnnouncement.Message, FallbackValue='RenPyTR Launcher'}"
+                                           Foreground="#B0B0B8" FontSize="14" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Yeni Eklenenler -->
+                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="✨ Yeni Eklenenler" Margin="0,0,0,16"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,32">
+                        <ItemsControl ItemsSource="{Binding Recent}">
                             <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <ContentControl Grid.Row="0" Content="{Binding}">
+                                                <ContentControl.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Border Background="#2A2A35"/>
+                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                            <!-- Status Badge -->
+                                                            <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                <TextBlock Text="Yeni Eklendi" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                            <!-- Favorite Heart -->
+                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ContentControl.ContentTemplate>
+                                            </ContentControl>
+                                            <StackPanel Grid.Row="1" Margin="12,10">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                    <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
 
-                    <TextBlock Style="{StaticResource SectionTitle}" Text="💎 VIP Oyunlar"/>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding VipGames}" ItemTemplate="{StaticResource HorizontalGameCard}">
+                    <!-- Güncellenenler -->
+                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="� Güncellenenler" Margin="0,0,0,16"/>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,32">
+                        <ItemsControl ItemsSource="{Binding UpdatedGames}">
                             <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <ContentControl Grid.Row="0" Content="{Binding}">
+                                                <ContentControl.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Border Background="#2A2A35"/>
+                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                            <!-- Status Badge -->
+                                                            <Border Background="#E67E22" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                <TextBlock Text="🔄 Güncellendi" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                            <!-- VIP Badge -->
+                                                            <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                            <!-- Favorite Heart -->
+                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ContentControl.ContentTemplate>
+                                            </ContentControl>
+                                            <StackPanel Grid.Row="1" Margin="12,10">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                    <Run Text="📅 "/><Run Text="{Binding UpdatedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
 
-                    <TextBlock Style="{StaticResource SectionTitle}" Text="🔄 Güncellenen Oyunlar"/>
+                    <!-- Tamamlananlar -->
+                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="🏁 Tamamlananlar" Margin="0,0,0,16"/>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                        <ItemsControl ItemsSource="{Binding UpdatedGames}" ItemTemplate="{StaticResource HorizontalGameCard}">
+                        <ItemsControl ItemsSource="{Binding CompletedGames}">
                             <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <ContentControl Grid.Row="0" Content="{Binding}">
+                                                <ContentControl.ContentTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <Border Background="#2A2A35"/>
+                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                            <!-- Status Badge -->
+                                                            <Border Background="#27AE60" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                <TextBlock Text="🏁 Tamamlandı" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                            <!-- VIP Badge -->
+                                                            <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            </Border>
+                                                            <!-- Favorite Heart -->
+                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ContentControl.ContentTemplate>
+                                            </ContentControl>
+                                            <StackPanel Grid.Row="1" Margin="12,10">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                    <Run Text="📅 "/><Run Text="{Binding CompletedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
                 </StackPanel>
@@ -215,30 +343,51 @@
                 <!-- OYUNLAR -->
                 <Grid x:Name="PageOyunlar" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="🎮 Tüm Oyunlar" Style="{StaticResource SectionTitle}" Margin="0,0,0,12"/>
+                        <TextBlock Text="🎮 Tüm Oyunlar" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <TextBlock Foreground="#888" FontSize="14" Margin="0,0,0,16">
+                            <Run Text="{Binding SearchResultCount, Mode=OneWay}"/><Run Text=" oyun bulundu"/>
+                        </TextBlock>
                         <WrapPanel>
-                            <ItemsControl ItemsSource="{Binding Games}">
+                            <ItemsControl ItemsSource="{Binding FilteredGames}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Style="{StaticResource GameCard}" Margin="0,0,14,14">
+                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
                                             <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="140"/>
+                                                    <RowDefinition Height="160"/>
                                                     <RowDefinition Height="*"/>
                                                 </Grid.RowDefinitions>
-                                                <ContentControl Grid.Row="0" Content="{Binding}" ContentTemplate="{StaticResource GameCoverImage}"/>
-                                                <StackPanel Grid.Row="1" Margin="10,8">
-                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold"/>
-                                                    <TextBlock Foreground="#888" FontSize="11" Margin="0,4,0,0">
-                                                        <Run Text="Yama: "/><Run Text="{Binding PatchVersion, FallbackValue='-'}"/>
+                                                <ContentControl Grid.Row="0" Content="{Binding}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Border Background="#2A2A35"/>
+                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                                <!-- Status Badge -->
+                                                                <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                    <TextBlock Text="✨ Yeni" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                    <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Favorite Heart -->
+                                                                <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                    <TextBlock Text="🤍" FontSize="16"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                                <StackPanel Grid.Row="1" Margin="12,10">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
                                                     </TextBlock>
-                                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                                        <Button Content="📂 Gözat" Tag="{Binding}" Click="BrowseGameFolder_Click" Height="28" Margin="0,0,6,0" Padding="8,4"/>
-                                                        <Button Content="🔧 Kur" Tag="{Binding}" Click="InstallPatch_Click" Style="{StaticResource PrimaryButton}" Height="28" FontSize="11" Padding="8,4"/>
-                                                    </StackPanel>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
@@ -252,143 +401,152 @@
                 <!-- KATEGORİLER -->
                 <Grid x:Name="PageKategori" Visibility="Collapsed">
                     <!-- Klasör görünümü -->
-                    <WrapPanel Visibility="{Binding IsCategoryFolderView, Converter={StaticResource BoolToVis}}">
-                        <ItemsControl ItemsSource="{Binding CategoryFolders}" Width="{Binding RelativeSource={RelativeSource AncestorType=ScrollViewer}, Path=ActualWidth}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Tag="{Binding}" Click="CategoryFolder_Click" Cursor="Hand" Margin="0,0,16,16">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Width="220" Height="160" CornerRadius="16" Background="{Binding AccentColor}" Effect="{StaticResource CardShadow}">
-                                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                        <TextBlock Text="{Binding Icon}" FontSize="42" HorizontalAlignment="Center"/>
-                                                        <TextBlock Text="{Binding DisplayName}" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                                                    </StackPanel>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </WrapPanel>
+                    <StackPanel x:Name="CategoryFolderView" Visibility="{Binding IsCategoryFolderView, Converter={StaticResource BoolToVis}}">
+                        <TextBlock Text="📂 Kategoriler" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <WrapPanel>
+                            <ItemsControl ItemsSource="{Binding CategoryFolders}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Tag="{Binding}" Click="CategoryFolder_Click" Cursor="Hand" Margin="0,0,20,20">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Width="240" Height="180" CornerRadius="16"
+                                                            Background="{Binding AccentColor, Converter={StaticResource StringToBrush}, TargetNullValue='#9B59FF'}">
+                                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                            <TextBlock Text="{Binding Icon}" FontSize="48" HorizontalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding DisplayName}" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,12,0,0"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </StackPanel>
 
                     <!-- Oyun listesi görünümü -->
-                    <StackPanel Visibility="{Binding IsCategoryGameListView, Converter={StaticResource BoolToVis}}">
+                   <StackPanel x:Name="CategoryGameView" Visibility="{Binding IsCategoryGameView, Converter={StaticResource BoolToVis}}">
                         <Button Content="‹ Geri" Click="CategoryBack_Click" HorizontalAlignment="Left"
-                                Background="Transparent" Foreground="{StaticResource AccentBrush}" BorderThickness="0"
-                                FontSize="14" Cursor="Hand" Margin="0,0,0,12"/>
+                                Background="Transparent" Foreground="#9B59FF" BorderThickness="0"
+                                FontSize="14" Cursor="Hand" Margin="0,0,0,16"/>
                         <TextBlock Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,16">
-                            <Run Text="📁 "/><Run Text="{Binding SelectedCategoryFolder, Mode=OneWay}"/>
+                            <Run Text="📂 "/><Run Text="{Binding SelectedCategoryFolder, Mode=OneWay}"/>
                         </TextBlock>
                         <TextBlock Text="Bu kategoride henüz oyun yok." Foreground="#666" FontSize="14" Margin="0,20"
                                    Visibility="{Binding CategoryGameCount, Converter={StaticResource CountToVis}, ConverterParameter=Empty}"/>
-                        <ItemsControl ItemsSource="{Binding CategoryGames}"
-                                      Visibility="{Binding CategoryGameCount, Converter={StaticResource CountToVis}, ConverterParameter=NotEmpty}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="{StaticResource CardBrush}" CornerRadius="10" Margin="0,0,0,8" Padding="12">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="48"/>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Text="🎮" FontSize="24" VerticalAlignment="Center"/>
-                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0">
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
-                                                <TextBlock Text="{Binding Description}" Foreground="#888" FontSize="12" TextTrimming="CharacterEllipsis"/>
-                                            </StackPanel>
-                                            <Button Grid.Column="2" Content="🔧 Yamayı Kur" Tag="{Binding}" Click="InstallPatch_Click"
-                                                    Style="{StaticResource PrimaryButton}" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Grid>
-
-                <!-- TOP SIRALAMA -->
-                <Grid x:Name="PageTop10" Visibility="Collapsed">
-                    <StackPanel>
-                        <TextBlock Text="🏆 Top Sıralama" Style="{StaticResource SectionTitle}" Margin="0,0,0,16"/>
-                        <ItemsControl ItemsSource="{Binding Leaderboard}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Width="240" Height="300" Background="{StaticResource CardBrush}" CornerRadius="14"
-                                            Margin="0,0,16,16" Effect="{StaticResource CardShadow}">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="150"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
+                        <WrapPanel Visibility="{Binding CategoryGameCount, Converter={StaticResource CountToVis}, ConverterParameter=NotEmpty}" Margin="0,0,0,24">
+                            <ItemsControl ItemsSource="{Binding CategoryGames}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
                                             <Grid>
-                                                <ContentControl Content="{Binding Game}" ContentTemplate="{StaticResource GameCoverImage}"/>
-                                                <Border Background="#00000088" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10" Padding="8,4" CornerRadius="8">
-                                                    <TextBlock Foreground="White" FontWeight="Bold" FontSize="16">
-                                                        <Run Text="{Binding RankBadge, Mode=OneWay}"/>
-                                                        <Run Text=" #"/><Run Text="{Binding Rank, Mode=OneWay}"/>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="160"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <ContentControl Grid.Row="0" Content="{Binding}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Border Background="#2A2A35"/>
+                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                                <!-- Status Badge -->
+                                                                <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                    <TextBlock Text="✨ Yeni" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                    <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Favorite Heart -->
+                                                                <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                    <TextBlock Text="🤍" FontSize="16"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                                <StackPanel Grid.Row="1" Margin="12,10">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
                                                     </TextBlock>
-                                                </Border>
-                                            </Grid>
-                                            <StackPanel Grid.Row="1" Margin="12,10">
-                                                <TextBlock Text="{Binding Game.Name}" Foreground="White" FontWeight="Bold" FontSize="15"/>
-                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                                    <TextBlock Text="⬇ " Foreground="#888"/>
-                                                    <TextBlock Text="{Binding Game.DownloadCount}" Foreground="White"/>
-                                                    <TextBlock Text=" indirme" Foreground="#888" Margin="4,0,0,0"/>
                                                 </StackPanel>
-                                                <Button Content="🔧 Yamayı Kur" Tag="{Binding Game}" Click="InstallPatch_Click"
-                                                        Style="{StaticResource PrimaryButton}" Margin="0,12,0,0" Height="32"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
                     </StackPanel>
                 </Grid>
 
                 <!-- ÜYELİK (VIP) -->
                 <Grid x:Name="PageVip" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="💎 Üyelik Planları" Style="{StaticResource SectionTitle}"/>
-                        <TextBlock Text="VIP avantajlarından yararlanmak için bir plan seçin." Foreground="#888" Margin="0,0,0,16"/>
+                        <TextBlock Text="💎 VIP" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <TextBlock Text="VIP Durumunuz" Foreground="#888" FontSize="14" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding VipStatusText}" Foreground="White" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,24"/>
+
+                        <Border Background="#2A2040"
+                                CornerRadius="12"
+                                Padding="20,16"
+                                HorizontalAlignment="Left"
+                                Margin="0,0,0,32"
+                                Visibility="{Binding IsVipUser, Converter={StaticResource BoolToVis}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="💎" FontSize="24" Margin="0,0,12,0"/>
+                                <TextBlock Text="VIP Rozeti Aktif"
+                                           Foreground="#9B59FF"
+                                           FontWeight="SemiBold"
+                                           FontSize="16"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="💎 Üyelik Planları" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <TextBlock Text="VIP avantajlarından yararlanmak için bir plan seçin veya destek üzerinden başvuru gönderin."
+                                   Foreground="#888"
+                                   FontSize="14"
+                                   Margin="0,0,0,24"/>
+
                         <WrapPanel>
                             <ItemsControl ItemsSource="{Binding MembershipTiers}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="260" MinHeight="340" CornerRadius="16" Margin="0,0,20,20"
-                                                Background="{StaticResource CardBrush}" Effect="{StaticResource CardShadow}">
-                                            <StackPanel Margin="20">
-                                                <TextBlock Text="{Binding Icon}" FontSize="36"/>
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,8,0,0"/>
-                                                <TextBlock Text="{Binding PriceLabel}" Foreground="{StaticResource AccentBrush}" FontSize="22" FontWeight="Bold" Margin="0,8,0,12"/>
-                                                <ItemsControl ItemsSource="{Binding Features}">
-                                                    <ItemsControl.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Foreground="#B0B0B8" FontSize="13" Margin="0,3">
-                                                                <Run Text="✓ "/><Run Text="{Binding Mode=OneWay}"/>
-                                                            </TextBlock>
-                                                        </DataTemplate>
-                                                    </ItemsControl.ItemTemplate>
-                                                </ItemsControl>
-                                                <Button Content="Satın Al" Tag="{Binding PurchaseUrl}" Click="PurchaseMembership_Click"
-                                                        Style="{StaticResource PrimaryButton}" Margin="0,16,0,0" Height="40"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="280" MinHeight="360" CornerRadius="16" Margin="0,0,24,24"
+                                                    Background="#1A1A22">
+                                                <StackPanel Margin="24">
+                                                    <TextBlock Text="{Binding Icon}" FontSize="40" Margin="0,0,0,12"/>
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+                                                    <TextBlock Text="{Binding PriceLabel}" Foreground="#9B59FF" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
+                                                    <ItemsControl ItemsSource="{Binding Features}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Foreground="#B0B0B8" FontSize="14" Margin="0,4">
+                                                                    <Run Text="✓ "/><Run Text="{Binding Mode=OneWay}"/>
+                                                                </TextBlock>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                    <Button Content="Satın Al" Tag="{Binding PurchaseUrl}" Click="PurchaseMembership_Click"
+                                                            Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Margin="0,20,0,0" Height="44" FontSize="14"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </WrapPanel>
                     </StackPanel>
@@ -397,131 +555,230 @@
                 <!-- PROFİL -->
                 <Grid x:Name="PageProfil" Visibility="Collapsed">
                     <StackPanel>
-                        <Border CornerRadius="16" Height="140" Margin="0,0,0,20">
+                        <TextBlock Text="👤 Profil" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <Border CornerRadius="16" Height="160" Margin="0,0,0,32">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#2D1B69" Offset="0"/>
                                     <GradientStop Color="#9B59FF" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <Grid Margin="24">
+                            <Grid Margin="32">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="120"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Ellipse Width="80" Height="80" Fill="#33FFFFFF" Stroke="White" StrokeThickness="2"/>
-                                <TextBlock Text="👤" FontSize="40" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0,0,0">
+                                <Grid Width="96" Height="96">
+                                    <Ellipse Fill="{Binding CurrentUser.AvatarPath, Converter={StaticResource AvatarImage}}" Stroke="White" StrokeThickness="3"/>
+                                    <Image Source="{Binding CurrentUser.AvatarPath, Converter={StaticResource SafeImage}}" Stretch="UniformToFill">
+                                        <Image.Clip>
+                                            <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48"/>
+                                        </Image.Clip>
+                                    </Image>
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0,0,0">
                                     <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='Anonim'}" Foreground="White" FontSize="28" FontWeight="Bold"/>
-                                    <Border Background="#33FFFFFF" CornerRadius="6" Padding="8,4" HorizontalAlignment="Left" Margin="0,6,0,0">
-                                        <TextBlock Text="{Binding CurrentUser.MembershipLevel, FallbackValue='Ücretsiz'}" Foreground="White" FontSize="13" FontWeight="SemiBold"/>
-                                    </Border>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6" Margin="0,0,10,0">
+                                            <TextBlock Text="{Binding CurrentUser.MembershipLevel, FallbackValue='Ücretsiz'}" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                        </Border>
+                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6" Margin="0,0,10,0"
+                                                Visibility="{Binding IsVipUser, Converter={StaticResource BoolToVis}}">
+                                            <TextBlock Text="💎 VIP" Foreground="#FFD700" FontSize="14" FontWeight="SemiBold"/>
+                                        </Border>
+                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6">
+                                            <TextBlock Text="{Binding RoleDisplay}" Foreground="White" FontSize="14"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                                        <Button x:Name="BtnEditProfile" Content="✏️ Profili Düzenle" Height="36" Margin="0,0,10,0" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                                        <Button x:Name="BtnChangeAvatar" Content="📷 Avatar Değiştir" Height="36" Margin="0,0,10,0" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                                        <Button x:Name="BtnChangePassword" Content="🔐 Şifre Değiştir" Height="36" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
 
-                        <UniformGrid Columns="3" Margin="0,0,0,20">
-                            <Border Background="{StaticResource CardBrush}" CornerRadius="12" Margin="0,0,10,0" Padding="16">
+                        <UniformGrid Columns="3" Margin="0,0,0,32">
+                            <Border Background="#1A1A22" CornerRadius="12" Margin="0,0,12,0" Padding="20">
                                 <StackPanel>
-                                    <TextBlock Text="⬇ Toplam İndirme" Foreground="#888" FontSize="12"/>
-                                    <TextBlock Text="{Binding CurrentUserTotalDownloads}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    <TextBlock Text="⬇ Toplam İndirme" Foreground="#888" FontSize="13"/>
+                                    <TextBlock Text="{Binding CurrentUserTotalDownloads}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
                                 </StackPanel>
                             </Border>
-                            <Border Background="{StaticResource CardBrush}" CornerRadius="12" Margin="5,0" Padding="16">
+                            <Border Background="#1A1A22" CornerRadius="12" Margin="6,0" Padding="20">
                                 <StackPanel>
-                                    <TextBlock Text="⭐ Favoriler" Foreground="#888" FontSize="12"/>
-                                    <TextBlock Text="{Binding FavoriteGames.Count}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    <TextBlock Text="❤️ Favoriler" Foreground="#888" FontSize="13"/>
+                                    <TextBlock Text="{Binding FavoriteGames.Count}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
                                 </StackPanel>
                             </Border>
-                            <Border Background="{StaticResource CardBrush}" CornerRadius="12" Margin="10,0,0,0" Padding="16">
+                            <Border Background="#1A1A22" CornerRadius="12" Margin="12,0,0,0" Padding="20">
                                 <StackPanel>
-                                    <TextBlock Text="🏅 Rozetler" Foreground="#888" FontSize="12"/>
-                                    <TextBlock Text="{Binding CurrentUser.Badges.Count, FallbackValue=0}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    <TextBlock Text="🏅 Rozetler" Foreground="#888" FontSize="13"/>
+                                    <TextBlock Text="{Binding CurrentUser.Badges.Count, FallbackValue=0}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
                                 </StackPanel>
                             </Border>
                         </UniformGrid>
 
-                        <TextBlock Text="⭐ Favoriler" Style="{StaticResource SectionTitle}" Margin="0,0,0,8"/>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,16">
+                        <TextBlock Text="❤️ Favoriler" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,16"/>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,24">
                             <ItemsControl ItemsSource="{Binding FavoriteGames}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Width="140" Height="180" Background="{StaticResource CardBrush}" CornerRadius="10" Margin="0,0,10,0">
-                                            <StackPanel>
-                                                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource GameCoverImage}" Height="100"/>
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="12" Margin="8,6" TextTrimming="CharacterEllipsis"/>
-                                            </StackPanel>
+                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="FavoriteGame_Click" Tag="{Binding}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="160"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <ContentControl Grid.Row="0" Content="{Binding}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Border Background="#2A2A35"/>
+                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                                <!-- Status Badge -->
+                                                                <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                    <TextBlock Text="✨ Yeni" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                    <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Favorite Heart -->
+                                                                <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                    <TextBlock Text="❤️" FontSize="16"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                                <StackPanel Grid.Row="1" Margin="12,10">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </ScrollViewer>
 
-                        <TextBlock Text="📋 Son Aktiviteler" Style="{StaticResource SectionTitle}" Margin="0,0,0,8"/>
+                        <TextBlock Text="📋 Son Aktiviteler" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,16"/>
                         <ItemsControl ItemsSource="{Binding RecentActivities}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="12" Margin="0,0,0,6">
+                                    <Border Background="#1A1A22" CornerRadius="10" Padding="16" Margin="0,0,0,8">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Icon}" FontSize="18" Margin="0,0,12,0"/>
+                                            <TextBlock Text="{Binding Icon}" FontSize="20" Margin="0,0,14,0"/>
                                             <StackPanel>
-                                                <TextBlock Text="{Binding Description}" Foreground="White" FontSize="13"/>
-                                                <TextBlock Text="{Binding OccurredAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#666" FontSize="11"/>
+                                                <TextBlock Text="{Binding Description}" Foreground="White" FontSize="14"/>
+                                                <TextBlock Text="{Binding OccurredAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#666" FontSize="12" Margin="0,4,0,0"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                    </StackPanel>
+                </Grid>
 
-                        <TextBlock Text="🏅 Rozetler" Style="{StaticResource SectionTitle}" Margin="0,16,0,8"/>
-                        <ItemsControl ItemsSource="{Binding CurrentUser.Badges}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="#2A2A35" CornerRadius="20" Padding="12,6" Margin="0,0,8,8">
-                                        <TextBlock Text="{Binding}" Foreground="White" FontSize="13"/>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                <!-- FAVORİLER -->
+                <Grid x:Name="PageFavoriler" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16">
+                            <Run Text="❤️ Favorilerim ("/><Run Text="{Binding FavoriteCount, Mode=OneWay}"/><Run Text=")"/>
+                        </TextBlock>
+                        <TextBlock Text="Favori oyunlarınızı buradan yönetebilirsiniz." Foreground="#888" FontSize="14" Margin="0,0,0,24"/>
+                        <WrapPanel>
+                            <ItemsControl ItemsSource="{Binding FavoriteGames}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="160"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <ContentControl Grid.Row="0" Content="{Binding}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Border Background="#2A2A35"/>
+                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                                <StackPanel Grid.Row="1" Margin="12,10">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
                     </StackPanel>
                 </Grid>
 
                 <!-- AYARLAR -->
                 <Grid x:Name="PageAyarlar" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="⚙️ Ayarlar" Style="{StaticResource SectionTitle}"/>
-                        <TextBlock Text="Bağlantılar" Foreground="#888" Margin="0,0,0,10"/>
-                        <WrapPanel Margin="0,0,0,20">
-                            <Button Content="🌐 Web Sitesi" Tag="{Binding WebsiteUrl}" Click="OpenLink_Click" Style="{StaticResource PrimaryButton}" Width="180" Height="44" Margin="0,0,10,10"/>
-                            <Button Content="💬 Discord" Tag="{Binding DiscordUrl}" Click="OpenLink_Click" Style="{StaticResource PrimaryButton}" Width="180" Height="44" Margin="0,0,10,10"/>
-                            <Button Content="📢 Duyurular" Tag="{Binding AnnouncementsUrl}" Click="OpenLink_Click" Style="{StaticResource PrimaryButton}" Width="180" Height="44" Margin="0,0,10,10"/>
-                            <Button Content="🆘 Destek" Tag="{Binding SupportUrl}" Click="OpenLink_Click" Style="{StaticResource PrimaryButton}" Width="180" Height="44" Margin="0,0,10,10"/>
+                        <TextBlock Text="⚙️ Ayarlar" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        
+                        <TextBlock Text="Bağlantılar" Foreground="#888" FontSize="14" Margin="0,0,0,12"/>
+                        <WrapPanel Margin="0,0,0,32">
+                            <Button Content="🌐 Web Sitesi" Tag="{Binding WebsiteUrl}" Click="OpenLink_Click" Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Width="200" Height="48" Margin="0,0,12,12" FontSize="14"/>
+                            <Button Content="💬 Discord" Tag="{Binding DiscordUrl}" Click="OpenLink_Click" Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Width="200" Height="48" Margin="0,0,12,12" FontSize="14"/>
+                            <Button Content="📢 Duyurular" Tag="{Binding AnnouncementsUrl}" Click="OpenLink_Click" Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Width="200" Height="48" Margin="0,0,12,12" FontSize="14"/>
+                            <Button Content="🆘 Destek" Tag="{Binding SupportUrl}" Click="OpenLink_Click" Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Width="200" Height="48" Margin="0,0,12,12" FontSize="14"/>
                         </WrapPanel>
 
-                        <TextBlock Text="Bakım" Foreground="#888" Margin="0,0,0,10"/>
-                        <Border Background="{StaticResource CardBrush}" CornerRadius="12" Padding="20">
+                        <TextBlock Text="Bakım" Foreground="#888" FontSize="14" Margin="0,0,0,12"/>
+                        <Border Background="#1A1A22" CornerRadius="12" Padding="24" Margin="0,0,0,32">
                             <WrapPanel>
-                                <Button x:Name="BtnCheckUpdates" Content="🔄 Güncellemeleri Kontrol Et" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnClearSaves" Content="🧹 Kayıt Dosyalarını Temizle" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnClearCache" Content="🧽 Cache Temizle" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnClearLogs" Content="📄 Log Dosyalarını Temizle" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnOpenGamesFolder" Content="📂 Oyun Klasörünü Aç" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnOpenBackupFolder" Content="📁 Yedek Klasörünü Aç" Height="40" Width="220" Margin="0,0,10,10"/>
-                                <Button x:Name="BtnRollbackLast" Content="↩ Son Yedeği Geri Al" Height="40" Width="220" Margin="0,0,10,10"/>
+                                <Button x:Name="BtnCheckUpdates" Content="🔄 Güncellemeleri Kontrol Et" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnClearSaves" Content="🧹 Kayıt Dosyalarını Temizle" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnClearCache" Content="🧽 Cache Temizle" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnClearLogs" Content="📄 Log Dosyalarını Temizle" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnOpenGamesFolder" Content="📂 Oyun Klasörünü Aç" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnOpenBackupFolder" Content="📁 Yedek Klasörünü Aç" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
+                                <Button x:Name="BtnRollbackLast" Content="↩ Son Yedeği Geri Al" Height="44" Width="240" Margin="0,0,12,12" Background="#222228" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14"/>
                             </WrapPanel>
                         </Border>
-                        <TextBlock Text="Launcher Sürümü: v1.1" Foreground="#666" Margin="0,16,0,0"/>
+
+                        <TextBlock Text="🎨 Tema" Foreground="#888" FontSize="14" Margin="0,0,0,12"/>
+                        <Border Background="#1A1A22" CornerRadius="12" Padding="24">
+                            <StackPanel>
+                                <TextBlock Text="Launcher temasını seçin" Foreground="White" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,16"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <RadioButton x:Name="RbThemeSteam" Content="Steam Dark Theme" Foreground="White"
+                                                 GroupName="Theme" Margin="0,0,32,0" FontSize="14" Checked="ThemeChanged"/>
+                                    <RadioButton x:Name="RbThemeDiscord" Content="Discord Dark Theme" Foreground="White"
+                                                 GroupName="Theme" FontSize="14" Checked="ThemeChanged"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="Launcher Sürümü: v1.1" Foreground="#666" FontSize="12" Margin="0,24,0,0"/>
                     </StackPanel>
                 </Grid>
 
             </StackPanel>
         </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

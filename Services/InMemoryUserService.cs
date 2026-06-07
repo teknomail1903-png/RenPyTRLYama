@@ -12,7 +12,16 @@ namespace RenPyTRLauncher.Services
         public InMemoryUserService()
         {
             // örnek kullanıcılar
-            var u1 = new User { Username = "argion", Email = "argion@example.com", IsVip = true, VipEndDate = DateTime.UtcNow.AddDays(30), Role = "Admin" };
+            var u1 = new User
+            {
+                Username = "argion",
+                Email = "argion@example.com",
+                PasswordHash = PasswordHasher.Hash("admin123"),
+                IsVip = true,
+                VipEndDate = DateTime.UtcNow.AddDays(30),
+                Role = UserRole.Admin,
+                AvatarPath = ImageService.GetDefaultAvatar("argion")
+            };
             u1.FavoriteGameIds.Add(Data.DbSeeder.SummerMemoriesId);
             u1.FavoriteGameIds.Add(Data.DbSeeder.BeingADikId);
             u1.DownloadedPatchIds.Add(Data.DbSeeder.SummerMemoriesId);
@@ -21,7 +30,15 @@ namespace RenPyTRLauncher.Services
             u1.RecentDownloadedGameIds.Add(Data.DbSeeder.SummerMemoriesId);
             u1.TotalDownloadCount = 5;
 
-            var u2 = new User { Username = "user1", Email = "user1@example.com", IsVip = false, Role = "User" };
+            var u2 = new User
+            {
+                Username = "user1",
+                Email = "user1@example.com",
+                PasswordHash = PasswordHasher.Hash("user123"),
+                IsVip = false,
+                Role = UserRole.User,
+                AvatarPath = ImageService.GetDefaultAvatar("user1")
+            };
             u2.TotalDownloadCount = 0;
 
             _users.Add(u1);
@@ -31,6 +48,7 @@ namespace RenPyTRLauncher.Services
         public IEnumerable<User> GetAll() => _users;
         public User? GetById(Guid id) => _users.FirstOrDefault(u => u.Id == id);
         public User? GetByUsername(string username) => _users.FirstOrDefault(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+        public User? GetByEmail(string email) => _users.FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
         public void Create(User user) => _users.Add(user);
         public void Update(User user)
         {
@@ -71,14 +89,28 @@ namespace RenPyTRLauncher.Services
         {
             var u = GetById(userId);
             if (u == null) return;
-            u.Role = "Admin";
+            u.Role = UserRole.Admin;
         }
 
         public void RevokeAdmin(Guid userId)
         {
             var u = GetById(userId);
             if (u == null) return;
-            u.Role = "User";
+            u.Role = UserRole.User;
+        }
+
+        public void MakeMod(Guid userId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+            u.Role = UserRole.Mod;
+        }
+
+        public void RevokeMod(Guid userId)
+        {
+            var u = GetById(userId);
+            if (u == null) return;
+            u.Role = UserRole.User;
         }
 
         public void RecordPatchDownload(Guid userId, Guid gameId)

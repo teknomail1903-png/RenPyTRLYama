@@ -115,9 +115,59 @@ namespace RenPyTRLauncher.Data
                 EnsureColumn(db, "Announcements", "ImagePath", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Announcements", "AccentColor", "TEXT NOT NULL DEFAULT '#9B59FF'");
                 EnsureColumn(db, "Announcements", "IsActive", "INTEGER NOT NULL DEFAULT 1");
+                EnsureColumn(db, "Announcements", "IsPinned", "INTEGER NOT NULL DEFAULT 0");
                 EnsureColumn(db, "Users", "AvatarPath", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Users", "MembershipLevel", "TEXT NOT NULL DEFAULT 'Ücretsiz'");
                 EnsureColumn(db, "Users", "Badges", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Users", "PasswordHash", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Users", "City", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Users", "Age", "INTEGER");
+                EnsureColumn(db, "Games", "ScreenshotPaths", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "PatchNotes", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "DownloadLinks", "TEXT NOT NULL DEFAULT ''");
+
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS SupportTickets (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        UserId TEXT NOT NULL,
+                        Subject TEXT NOT NULL DEFAULT '',
+                        Message TEXT NOT NULL DEFAULT '',
+                        Type INTEGER NOT NULL DEFAULT 0,
+                        Status INTEGER NOT NULL DEFAULT 0,
+                        AdminReply TEXT NOT NULL DEFAULT '',
+                        RepliedByUserId TEXT,
+                        CreatedAt TEXT NOT NULL,
+                        RepliedAt TEXT
+                    );
+                    CREATE TABLE IF NOT EXISTS Categories (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        Name TEXT NOT NULL,
+                        DisplayName TEXT NOT NULL DEFAULT '',
+                        Icon TEXT NOT NULL DEFAULT '📁',
+                        AccentColor TEXT NOT NULL DEFAULT '#3498DB',
+                        SortOrder INTEGER NOT NULL DEFAULT 0,
+                        IsActive INTEGER NOT NULL DEFAULT 1
+                    );
+                    CREATE TABLE IF NOT EXISTS Notifications (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        UserId TEXT NOT NULL,
+                        Title TEXT NOT NULL DEFAULT '',
+                        Message TEXT NOT NULL DEFAULT '',
+                        Type INTEGER NOT NULL DEFAULT 0,
+                        IsRead INTEGER NOT NULL DEFAULT 0,
+                        CreatedAt TEXT NOT NULL,
+                        RelatedGameId TEXT
+                    );
+                    CREATE TABLE IF NOT EXISTS HelpGuides (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        Title TEXT NOT NULL DEFAULT '',
+                        Content TEXT NOT NULL DEFAULT '',
+                        Type INTEGER NOT NULL DEFAULT 0,
+                        VideoUrl TEXT NOT NULL DEFAULT '',
+                        SortOrder INTEGER NOT NULL DEFAULT 0,
+                        IsActive INTEGER NOT NULL DEFAULT 1
+                    );";
+                cmd.ExecuteNonQuery();
 
                 using var fixDates = db.Database.GetDbConnection().CreateCommand();
                 fixDates.CommandText = "UPDATE Games SET UpdatedDate = CreatedDate WHERE UpdatedDate IS NULL OR UpdatedDate = ''";

@@ -67,7 +67,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="🎮 Oyun Yönetimi">
+            <TabItem x:Name="TabGames" Header="🎮 Oyun Yönetimi">
                 <StackPanel Margin="12">
                     <Button x:Name="BtnAddGame" Content="+ Oyun Ekle" Width="140" Height="36" Margin="0,0,0,10"/>
                     <ListBox x:Name="LstGames" DisplayMemberPath="Name" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
@@ -78,7 +78,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="👥 Kullanıcı Yönetimi">
+            <TabItem x:Name="TabUsers" Header="👥 Kullanıcı Yönetimi">
                 <StackPanel Margin="12">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -94,13 +94,50 @@
                             <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="110" Margin="0,0,0,8"/>
                             <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="110" Margin="0,0,0,8"/>
                             <Button x:Name="BtnMakeAdmin" Content="Admin Yap" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="110"/>
+                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnMakeMod" Content="Mod Yap" Width="110" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnRevokeMod" Content="Mod Kaldır" Width="110"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="💎 Üyelik Kartları">
+            <TabItem x:Name="TabSupport" Header="🆘 Destek Talepleri">
+                <Grid Margin="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="320"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="LstTickets" Height="400" Background="#1A1A22" Foreground="White" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="4">
+                                    <TextBlock>
+                                        <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="#9B59FF"/>
+                                        <Run Text=" — "/>
+                                        <Run Text="{Binding Subject, Mode=OneWay}" FontWeight="SemiBold"/>
+                                        <Run Text=" ["/>
+                                        <Run Text="{Binding StatusLabel, Mode=OneWay}"/>
+                                        <Run Text="]"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#666" FontSize="11"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                        <TextBlock Text="Talep Detayı" Foreground="White" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <TextBlock x:Name="TxtTicketDetail" Foreground="#CCC" TextWrapping="Wrap" Height="120" Margin="0,0,0,10"/>
+                        <TextBlock Text="Admin Yanıtı" Foreground="#888" FontSize="12"/>
+                        <TextBox x:Name="TxtTicketReply" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                        <Button x:Name="BtnReplyTicket" Content="Yanıtla" Width="110" Margin="0,0,0,8"/>
+                        <Button x:Name="BtnCloseTicket" Content="Kapat" Width="110" Margin="0,0,0,8"/>
+                        <Button x:Name="BtnReopenTicket" Content="Yeniden Aç" Width="110"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="TabMemberships" Header="💎 Üyelik Kartları">
                 <StackPanel Margin="12">
                     <TextBlock Text="VIP üyelik planlarını buradan yönetin." Foreground="#888" Margin="0,0,0,10"/>
                     <ListBox x:Name="LstMemberships" Height="200" Background="#1A1A22" Foreground="White" BorderThickness="0">
@@ -140,7 +177,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="🏆 Top10 Yönetimi">
+            <TabItem x:Name="TabTop10" Header="🏆 Top10 Yönetimi">
                 <StackPanel Margin="12">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,8">
                         <Button x:Name="BtnTop10Refresh" Content="Yenile" Width="100" Margin="0,0,8,0"/>
@@ -184,7 +221,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="📢 Duyuru Yönetimi">
+            <TabItem x:Name="TabAnnouncements" Header="📢 Duyuru Yönetimi">
                 <StackPanel Margin="12">
                     <ListBox x:Name="LstAnns" DisplayMemberPath="Title" Height="160" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
                     <TextBlock Text="Başlık" Foreground="White" Margin="0,10,0,2"/>
@@ -193,14 +230,78 @@
                     <TextBox x:Name="TxtAnnMsg" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
                     <TextBlock Text="Renk (#hex)" Foreground="White" Margin="0,8,0,2"/>
                     <TextBox x:Name="TxtAnnColor" Text="#9B59FF"/>
+                    <CheckBox x:Name="ChkAnnPinned" Content="📌 Sabitle (Ana sayfada öncelikli)" Foreground="White" Margin="0,8,0,0"/>
                     <StackPanel Orientation="Horizontal" Margin="0,10">
                         <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="120" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnUpdateAnn" Content="Güncelle" Width="100" Margin="0,0,8,0"/>
                         <Button x:Name="BtnDeleteAnn" Content="Duyuru Sil" Width="120"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="⚙ Bağlantı Ayarları">
+            <TabItem x:Name="TabCategories" Header="📁 Kategoriler">
+                <StackPanel Margin="12">
+                    <Button x:Name="BtnAddCategory" Content="+ Kategori Ekle" Width="140" Height="36" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <ListBox x:Name="LstCategories" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Icon}" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold"/>
+                                    <TextBlock Text=" — " Foreground="#666"/>
+                                    <TextBlock Text="{Binding Name}" Foreground="#888"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Orientation="Horizontal" Margin="0,10">
+                        <Button x:Name="BtnEditCategory" Content="Düzenle" Width="100" Margin="0,0,8,0"/>
+                        <Button x:Name="BtnDeleteCategory" Content="Sil" Width="100"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem x:Name="TabHelp" Header="📚 Rehber Yönetimi">
+                <Grid Margin="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                        <ListBox x:Name="LstHelpGuides" Height="200" Background="#1A1A22" Foreground="White" BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding TypeIcon}" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <Button x:Name="BtnDeleteHelp" Content="Sil" Width="80"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Başlık" Foreground="White" FontSize="12"/>
+                        <TextBox x:Name="TxtHelpTitle" Margin="0,4,0,8"/>
+                        <TextBlock Text="İçerik" Foreground="White" FontSize="12"/>
+                        <TextBox x:Name="TxtHelpContent" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,8"/>
+                        <TextBlock Text="Video URL (video rehberler için)" Foreground="White" FontSize="12"/>
+                        <TextBox x:Name="TxtHelpVideoUrl" Margin="0,4,0,8"/>
+                        <TextBlock Text="Tür" Foreground="White" FontSize="12"/>
+                        <ComboBox x:Name="CmbHelpType" Margin="0,4,0,8">
+                            <ComboBoxItem Content="Yazılı Rehber" Tag="Text"/>
+                            <ComboBoxItem Content="Video Rehber" Tag="Video"/>
+                            <ComboBoxItem Content="SSS" Tag="FAQ"/>
+                            <ComboBoxItem Content="Araç" Tag="Tool"/>
+                        </ComboBox>
+                        <Button x:Name="BtnAddHelp" Content="Rehber Ekle" Width="120" Height="32"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem x:Name="TabSettings" Header="⚙ Bağlantı Ayarları">
                 <StackPanel Margin="12" MaxWidth="500">
                     <TextBlock Text="Launcher bağlantı ayarları" Foreground="White" FontWeight="Bold" Margin="0,0,0,12"/>
                     <TextBlock Text="Web Sitesi URL" Foreground="#888" FontSize="12"/>

@@ -131,3 +131,17 @@ D:\RenPyTRLauncher\obj\Debug\net8.0-windows\ref\RenPyTRLauncher.dll
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\RenPyTRLauncher_MarkupCompile.lref
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\App.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\ChangePasswordWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditUserWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\InputDialog.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\LoginWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\ChangePasswordWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditUserWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\InputDialog.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\LoginWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditCategoryWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditCategoryWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditProfileWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\GameDetailWindow.g.cs
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditProfileWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\GameDetailWindow.baml

@@ -19,5 +19,8 @@ namespace RenPyTRLauncher.Models
         public int DownloadCount { get; set; } = 0;
         public string PatchFilePath { get; set; } = string.Empty;
         public string PatchVersion { get; set; } = string.Empty;
+        public List<string> ScreenshotPaths { get; set; } = new();
+        public string PatchNotes { get; set; } = string.Empty;
+        public List<string> DownloadLinks { get; set; } = new();
     }
 }
