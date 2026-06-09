@@ -27,10 +27,11 @@ namespace RenPyTRLauncher.Views
             }
 
             CmbRole.ItemsSource = new[] { UserRole.User, UserRole.Mod, UserRole.Admin };
+            CmbMembership.ItemsSource = new[] { "Ücretsiz", "Bronz", "Gümüş", "Altın", "Platin", "Elmas", "VIP" };
             TxtUsername.Text = _user.Username;
             TxtEmail.Text = _user.Email;
             CmbRole.SelectedItem = _user.Role;
-            TxtMembership.Text = _user.MembershipLevel;
+            CmbMembership.SelectedItem = _user.MembershipLevel;
             TxtAvatar.Text = string.IsNullOrEmpty(_user.AvatarPath)
                 ? ImageService.GetDefaultAvatar(_user.Username)
                 : _user.AvatarPath;
@@ -76,7 +77,7 @@ namespace RenPyTRLauncher.Views
                 _user.Email = email;
                 _user.PasswordHash = PasswordHasher.Hash("user123");
                 _user.Role = CmbRole.SelectedItem?.ToString() ?? UserRole.User;
-                _user.MembershipLevel = TxtMembership.Text;
+                _user.MembershipLevel = CmbMembership.SelectedItem?.ToString() ?? "Ücretsiz";
                 _user.AvatarPath = TxtAvatar.Text;
                 AuthorizationService.SyncVipBadges(_user);
                 _userService.Create(_user);
@@ -86,7 +87,7 @@ namespace RenPyTRLauncher.Views
                 _user.Username = username;
                 _user.Email = email;
                 _user.Role = CmbRole.SelectedItem?.ToString() ?? UserRole.User;
-                _user.MembershipLevel = TxtMembership.Text;
+                _user.MembershipLevel = CmbMembership.SelectedItem?.ToString() ?? "Ücretsiz";
                 _user.AvatarPath = TxtAvatar.Text;
                 AuthorizationService.SyncVipBadges(_user);
                 _userService.Update(_user);

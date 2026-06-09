@@ -145,3 +145,5 @@ D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditProfileWindow.g.cs
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\GameDetailWindow.g.cs
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\EditProfileWindow.baml
 D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\GameDetailWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\ForgotPasswordWindow.baml
+D:\RenPyTRLauncher\obj\Debug\net8.0-windows\Views\ForgotPasswordWindow.g.cs

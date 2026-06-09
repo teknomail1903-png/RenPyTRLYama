@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\RenPyTRLauncher\App.xaml
-101427362901
+11-1212651663
 
-87-984296292
+89-1996217982
 230286351978
-MainWindow.xaml;Views\AdminUserControl.xaml;Views\ChangePasswordWindow.xaml;Views\EditCategoryWindow.xaml;Views\EditGameWindow.xaml;Views\EditProfileWindow.xaml;Views\EditUserWindow.xaml;Views\GameDetailWindow.xaml;Views\InputDialog.xaml;Views\LoginWindow.xaml;
+MainWindow.xaml;Views\AdminUserControl.xaml;Views\ChangePasswordWindow.xaml;Views\EditCategoryWindow.xaml;Views\EditGameWindow.xaml;Views\EditProfileWindow.xaml;Views\EditUserWindow.xaml;Views\ForgotPasswordWindow.xaml;Views\GameDetailWindow.xaml;Views\InputDialog.xaml;Views\LoginWindow.xaml;
 
 False
 

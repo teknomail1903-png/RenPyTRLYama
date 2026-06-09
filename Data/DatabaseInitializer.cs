@@ -125,6 +125,11 @@ namespace RenPyTRLauncher.Data
                 EnsureColumn(db, "Games", "ScreenshotPaths", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "PatchNotes", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "DownloadLinks", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "Type", "TEXT NOT NULL DEFAULT 'Game'");
+                EnsureColumn(db, "Games", "TurkishStatus", "TEXT NOT NULL DEFAULT 'English'");
+                EnsureColumn(db, "Games", "SteamStatus", "TEXT NOT NULL DEFAULT 'NotAvailable'");
+                EnsureColumn(db, "Games", "UpdateStatus", "TEXT NOT NULL DEFAULT 'Updated'");
+                EnsureColumn(db, "Games", "ParentGameId", "TEXT NOT NULL DEFAULT ''");
 
                 cmd.CommandText = @"
                     CREATE TABLE IF NOT EXISTS SupportTickets (

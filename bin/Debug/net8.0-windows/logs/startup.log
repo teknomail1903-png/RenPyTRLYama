@@ -1,94 +1,6 @@
-[2026-06-06 23:30:09.938] App Started
-[2026-06-06 23:30:09.988] Initializing Services...
-[2026-06-06 23:30:14.014] Services Loaded
-[2026-06-06 23:30:14.015] Database Initialized
-[2026-06-06 23:30:14.015] Checking for restored session...
-[2026-06-06 23:30:14.026] No session found, opening LoginWindow
-[2026-06-06 23:30:14.027] LoginWindow Created
-[2026-06-06 23:30:15.341] LoginWindow Shown
-[2026-06-06 23:30:40.771] App Started
-[2026-06-06 23:30:40.808] Initializing Services...
-[2026-06-06 23:30:43.892] Services Loaded
-[2026-06-06 23:30:43.893] Database Initialized
-[2026-06-06 23:30:43.893] Checking for restored session...
-[2026-06-06 23:30:43.904] No session found, opening LoginWindow
-[2026-06-06 23:30:43.905] LoginWindow Created
-[2026-06-06 23:30:44.714] LoginWindow Shown
-[2026-06-06 23:57:32.117] App Started
-[2026-06-06 23:57:32.152] Initializing Services...
-[2026-06-06 23:57:35.089] Services Loaded
-[2026-06-06 23:57:35.090] Database Initialized
-[2026-06-06 23:57:35.090] Checking for restored session...
-[2026-06-06 23:57:35.100] No session found, opening LoginWindow
-[2026-06-06 23:57:35.101] LoginWindow Created
-[2026-06-06 23:57:36.003] LoginWindow Shown
-[2026-06-07 00:43:51.308] App Started
-[2026-06-07 00:43:51.370] Initializing Services...
-[2026-06-07 00:43:56.666] Services Loaded
-[2026-06-07 00:43:56.667] Database Initialized
-[2026-06-07 00:43:56.668] Checking for restored session...
-[2026-06-07 00:43:56.683] No session found, opening LoginWindow
-[2026-06-07 00:43:56.683] LoginWindow Created
-[2026-06-07 00:43:59.419] LoginWindow Shown
-[2026-06-07 00:49:32.228] App Started
-[2026-06-07 00:49:32.266] Initializing Services...
-[2026-06-07 00:49:35.459] Services Loaded
-[2026-06-07 00:49:35.460] Database Initialized
-[2026-06-07 00:49:35.460] Checking for restored session...
-[2026-06-07 00:49:35.472] No session found, opening LoginWindow
-[2026-06-07 00:49:35.473] LoginWindow Created
-[2026-06-07 00:49:36.388] LoginWindow Shown
-[2026-06-07 00:52:06.315] App Started
-[2026-06-07 00:52:06.353] Initializing Services...
-[2026-06-07 00:52:09.684] Services Loaded
-[2026-06-07 00:52:09.685] Database Initialized
-[2026-06-07 00:52:09.685] Checking for restored session...
-[2026-06-07 00:52:09.696] No session found, opening LoginWindow
-[2026-06-07 00:52:09.696] LoginWindow Created
-[2026-06-07 00:52:10.514] LoginWindow Shown
-[2026-06-07 00:53:59.338] App Started
-[2026-06-07 00:53:59.372] Initializing Services...
-[2026-06-07 00:54:02.319] Services Loaded
-[2026-06-07 00:54:02.319] Database Initialized
-[2026-06-07 00:54:02.320] Checking for restored session...
-[2026-06-07 00:54:02.331] No session found, opening LoginWindow
-[2026-06-07 00:54:02.331] LoginWindow Created
-[2026-06-07 00:54:03.115] LoginWindow Shown
-[2026-06-07 01:02:01.475] App Started
-[2026-06-07 01:02:01.529] Initializing Services...
-[2026-06-07 01:02:07.657] Services Loaded
-[2026-06-07 01:02:07.658] Database Initialized
-[2026-06-07 01:02:07.659] Checking for restored session...
-[2026-06-07 01:02:07.661] No session found, opening LoginWindow
-[2026-06-07 01:02:07.662] LoginWindow Created
-[2026-06-07 01:02:08.644] LoginWindow Shown
-[2026-06-07 01:03:24.744] App Started
-[2026-06-07 01:03:24.799] Initializing Services...
-[2026-06-07 01:03:29.078] Services Loaded
-[2026-06-07 01:03:29.079] Database Initialized
-[2026-06-07 01:03:29.080] Checking for restored session...
-[2026-06-07 01:03:29.200] Session restored, opening MainWindow
-[2026-06-07 01:03:29.201] MainWindow Created
-[2026-06-07 01:03:31.900] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:03:31.941] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
+[2026-06-09 19:55:03.529] DispatcherUnhandledException: 'System.Windows.Markup.StaticResourceHolder' öğesinde değer sağlama işlemi özel durum döndürdü.
+[2026-06-09 19:55:03.532] DispatcherUnhandledException StackTrace:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
+   at System.Windows.Markup.XamlReader.RewrapException(Exception e, Uri baseUri)
    at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
    at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
    at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
@@ -101,7 +13,46 @@
    at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
    at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
    at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
+   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
+   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
+   at System.Windows.Controls.ScrollContentPresenter.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
+   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.ScrollViewer.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Decorator.MeasureOverride(Size constraint)
+   at System.Windows.Documents.AdornerDecorator.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Window.MeasureOverrideHelper(Size constraint)
+   at System.Windows.Window.MeasureOverride(Size availableSize)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
    at System.Windows.Interop.HwndSource.SetLayoutSize()
    at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
    at System.Windows.Window.SetRootVisualAndUpdateSTC()
@@ -109,34 +60,26 @@
    at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
    at System.Windows.Window.ShowHelper(Object booleanBox)
    at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:03:39.928] App Started
-[2026-06-07 01:03:39.961] Initializing Services...
-[2026-06-07 01:03:43.450] Services Loaded
-[2026-06-07 01:03:43.450] Database Initialized
-[2026-06-07 01:03:43.451] Checking for restored session...
-[2026-06-07 01:03:43.558] Session restored, opening MainWindow
-[2026-06-07 01:03:43.559] MainWindow Created
-[2026-06-07 01:03:45.243] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:03:45.273] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
+   at System.Windows.Window.ShowDialog()
+   at RenPyTRLauncher.MainWindow.OpenGameDetail(Game game) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 476
+   at RenPyTRLauncher.MainWindow.GameCard_Click(Object sender, MouseButtonEventArgs e) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 442
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   at System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   at System.Windows.Input.InputManager.ProcessStagingArea()
+   at System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   at System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+[2026-06-09 19:55:05.593] DispatcherUnhandledException: 'System.Windows.Markup.StaticResourceHolder' öğesinde değer sağlama işlemi özel durum döndürdü.
+[2026-06-09 19:55:05.595] DispatcherUnhandledException StackTrace:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
+   at System.Windows.Markup.XamlReader.RewrapException(Exception e, Uri baseUri)
    at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
    at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
    at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
@@ -149,7 +92,46 @@
    at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
    at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
    at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
+   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
+   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
+   at System.Windows.Controls.ScrollContentPresenter.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
+   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
+   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.ScrollViewer.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Decorator.MeasureOverride(Size constraint)
+   at System.Windows.Documents.AdornerDecorator.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
+   at System.Windows.Window.MeasureOverrideHelper(Size constraint)
+   at System.Windows.Window.MeasureOverride(Size availableSize)
+   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
+   at System.Windows.UIElement.Measure(Size availableSize)
    at System.Windows.Interop.HwndSource.SetLayoutSize()
    at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
    at System.Windows.Window.SetRootVisualAndUpdateSTC()
@@ -157,1012 +139,36 @@
    at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
    at System.Windows.Window.ShowHelper(Object booleanBox)
    at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:05:21.107] App Started
-[2026-06-07 01:05:21.152] Initializing Services...
-[2026-06-07 01:05:24.819] Services Loaded
-[2026-06-07 01:05:24.820] Database Initialized
-[2026-06-07 01:05:24.820] Checking for restored session...
-[2026-06-07 01:05:24.923] Session restored, opening MainWindow
-[2026-06-07 01:05:24.923] MainWindow Created
-[2026-06-07 01:05:26.524] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:05:26.555] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:07:09.703] App Started
-[2026-06-07 01:07:09.737] Initializing Services...
-[2026-06-07 01:07:13.340] Services Loaded
-[2026-06-07 01:07:13.341] Database Initialized
-[2026-06-07 01:07:13.342] Checking for restored session...
-[2026-06-07 01:07:13.442] Session restored, opening MainWindow
-[2026-06-07 01:07:13.443] MainWindow Created
-[2026-06-07 01:07:15.065] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:07:15.099] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:07:50.512] App Started
-[2026-06-07 01:07:50.546] Initializing Services...
-[2026-06-07 01:07:53.703] Services Loaded
-[2026-06-07 01:07:53.704] Database Initialized
-[2026-06-07 01:07:53.704] Checking for restored session...
-[2026-06-07 01:07:53.802] Session restored, opening MainWindow
-[2026-06-07 01:07:53.803] MainWindow Created
-[2026-06-07 01:07:55.263] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:07:55.293] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:09:09.269] App Started
-[2026-06-07 01:09:09.312] Initializing Services...
-[2026-06-07 01:09:12.670] Services Loaded
-[2026-06-07 01:09:12.671] Database Initialized
-[2026-06-07 01:09:12.671] Checking for restored session...
-[2026-06-07 01:09:12.764] Session restored, opening MainWindow
-[2026-06-07 01:09:12.765] MainWindow Created
-[2026-06-07 01:09:14.231] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:09:14.263] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:10:49.868] App Started
-[2026-06-07 01:10:49.907] Initializing Services...
-[2026-06-07 01:10:55.756] Services Loaded
-[2026-06-07 01:10:55.756] Database Initialized
-[2026-06-07 01:10:55.757] Checking for restored session...
-[2026-06-07 01:10:55.864] No session found, opening LoginWindow
-[2026-06-07 01:10:55.865] LoginWindow Created
-[2026-06-07 01:10:56.773] LoginWindow Shown
-[2026-06-07 01:12:17.256] App Started
-[2026-06-07 01:12:17.290] Initializing Services...
-[2026-06-07 01:12:20.506] Services Loaded
-[2026-06-07 01:12:20.507] Database Initialized
-[2026-06-07 01:12:20.507] Checking for restored session...
-[2026-06-07 01:12:20.599] Session restored, opening MainWindow
-[2026-06-07 01:12:20.600] MainWindow Created
-[2026-06-07 01:12:21.954] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:12:22.085] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:19:33.613] App Started
-[2026-06-07 01:19:33.648] Initializing Services...
-[2026-06-07 01:19:36.993] Services Loaded
-[2026-06-07 01:19:36.994] Database Initialized
-[2026-06-07 01:19:36.994] Checking for restored session...
-[2026-06-07 01:19:37.084] Session restored, opening MainWindow
-[2026-06-07 01:19:37.085] MainWindow Created
-[2026-06-07 01:19:38.561] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:19:38.594] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 01:26:48.765] App Started
-[2026-06-07 01:26:48.799] Initializing Services...
-[2026-06-07 01:26:52.102] Services Loaded
-[2026-06-07 01:26:52.103] Database Initialized
-[2026-06-07 01:26:52.104] Checking for restored session...
-[2026-06-07 01:26:52.198] Session restored, opening MainWindow
-[2026-06-07 01:26:52.199] MainWindow Created
-[2026-06-07 01:26:53.695] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 01:26:53.726] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 04:11:05.993] App Started
-[2026-06-07 04:11:06.031] Initializing Services...
-[2026-06-07 04:11:09.528] Services Loaded
-[2026-06-07 04:11:09.529] Database Initialized
-[2026-06-07 04:11:09.529] Checking for restored session...
-[2026-06-07 04:11:09.627] Session restored, opening MainWindow
-[2026-06-07 04:11:09.628] MainWindow Created
-[2026-06-07 04:11:11.136] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 04:11:11.202] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 04:14:43.097] App Started
-[2026-06-07 04:14:43.136] Initializing Services...
-[2026-06-07 04:14:47.120] Services Loaded
-[2026-06-07 04:14:47.120] Database Initialized
-[2026-06-07 04:14:47.121] Checking for restored session...
-[2026-06-07 04:14:47.245] Session restored, opening MainWindow
-[2026-06-07 04:14:47.246] MainWindow Created
-[2026-06-07 04:14:48.833] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 04:14:48.903] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 07:13:32.859] App Started
-[2026-06-07 07:13:32.901] Initializing Services...
-[2026-06-07 07:13:36.202] Services Loaded
-[2026-06-07 07:13:36.202] Database Initialized
-[2026-06-07 07:13:36.203] Checking for restored session...
-[2026-06-07 07:13:36.301] Session restored, opening MainWindow
-[2026-06-07 07:13:36.302] MainWindow Created
-[2026-06-07 07:13:37.830] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 07:13:37.862] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 08:30:28.154] App Started
-[2026-06-07 08:30:28.188] Initializing Services...
-[2026-06-07 08:30:31.164] Services Loaded
-[2026-06-07 08:30:31.165] Database Initialized
-[2026-06-07 08:30:31.165] Checking for restored session...
-[2026-06-07 08:30:31.255] Session restored, opening MainWindow
-[2026-06-07 08:30:31.256] MainWindow Created
-[2026-06-07 08:30:32.626] ERROR: NullReferenceException - Object reference not set to an instance of an object.
-[2026-06-07 08:30:32.655] STACK TRACE:    at System.Windows.StyleHelper.GetInstanceValue(UncommonField`1 dataField, DependencyObject container, FrameworkElement feChild, FrameworkContentElement fceChild, Int32 childIndex, DependencyProperty dp, Int32 i, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.GetChildValueHelper(UncommonField`1 dataField, ItemStructList`1& valueLookupList, DependencyProperty dp, DependencyObject container, FrameworkObject child, Int32 childIndex, Boolean styleLookup, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetChildValue(UncommonField`1 dataField, DependencyObject container, Int32 childIndex, FrameworkObject child, DependencyProperty dp, FrugalStructList`1& childRecordFromChildIndex, EffectiveValueEntry& entry, ValueLookupType& sourceType, FrameworkElementFactory templateRoot)
-   at System.Windows.StyleHelper.GetValueFromStyleOrTemplate(FrameworkObject fo, DependencyProperty dp, EffectiveValueEntry& entry)
-   at System.Windows.StyleHelper.ApplyStyleOrTemplateValue(FrameworkObject fo, DependencyProperty dp)
-   at System.Windows.StyleHelper.InvalidateContainerDependents(DependencyObject container, FrugalStructList`1& exclusionContainerDependents, FrugalStructList`1& oldContainerDependents, FrugalStructList`1& newContainerDependents)
-   at System.Windows.StyleHelper.DoStyleInvalidations(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle)
-   at System.Windows.StyleHelper.UpdateStyleCache(FrameworkElement fe, FrameworkContentElement fce, Style oldStyle, Style newStyle, Style& styleCache)
-   at System.Windows.FrameworkElement.OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-   at System.Windows.FrameworkElement.OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-   at System.Windows.DependencyObject.NotifyPropertyChange(DependencyPropertyChangedEventArgs args)
-   at System.Windows.DependencyObject.UpdateEffectiveValue(EntryIndex entryIndex, DependencyProperty dp, PropertyMetadata metadata, EffectiveValueEntry oldEntry, EffectiveValueEntry& newEntry, Boolean coerceWithDeferredReference, Boolean coerceWithCurrentValue, OperationType operationType)
-   at System.Windows.FrameworkTemplate.ReceivePropertySet(Object targetObject, XamlMember member, Object value, DependencyObject templatedParent)
-   at System.Windows.FrameworkTemplate.<>c__DisplayClass45_0.<LoadOptimizedTemplateContent>b__3(Object sender, XamlSetValueEventArgs setArgs)
-   at System.Xaml.XamlObjectWriter.OnSetValue(Object eventSender, XamlMember member, Object value)
-   at System.Xaml.XamlObjectWriter.SetValue(Object inst, XamlMember property, Object value)
-   at System.Xaml.XamlObjectWriter.Logic_ApplyPropertyValue(ObjectWriterContext ctx, XamlMember prop, Object value, Boolean onParent)
-   at System.Xaml.XamlObjectWriter.Logic_DoAssignmentToParentProperty(ObjectWriterContext ctx)
-   at System.Xaml.XamlObjectWriter.WriteEndMember()
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.ContextLayoutManager.UpdateLayout()
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 08:32:51.161] App Started
-[2026-06-07 08:32:51.218] Initializing Services...
-[2026-06-07 08:32:54.939] Services Loaded
-[2026-06-07 08:32:54.940] Database Initialized
-[2026-06-07 08:32:54.941] Checking for restored session...
-[2026-06-07 08:32:55.057] Session restored, opening MainWindow
-[2026-06-07 08:32:55.058] MainWindow Created
-[2026-06-07 08:32:55.406] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '36' ve satır konumu '25'.
-[2026-06-07 08:32:55.440] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 08:34:12.897] App Started
-[2026-06-07 08:34:12.952] Initializing Services...
-[2026-06-07 08:34:16.269] Services Loaded
-[2026-06-07 08:34:16.270] Database Initialized
-[2026-06-07 08:34:16.270] Checking for restored session...
-[2026-06-07 08:34:16.369] Session restored, opening MainWindow
-[2026-06-07 08:34:16.370] MainWindow Created
-[2026-06-07 08:34:16.677] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '36' ve satır konumu '25'.
-[2026-06-07 08:34:16.709] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 08:47:47.545] App Started
-[2026-06-07 08:47:47.579] Initializing Services...
-[2026-06-07 08:47:50.717] Services Loaded
-[2026-06-07 08:47:50.718] Database Initialized
-[2026-06-07 08:47:50.719] Checking for restored session...
-[2026-06-07 08:47:50.826] Session restored, opening MainWindow
-[2026-06-07 08:47:50.827] MainWindow Created
-[2026-06-07 08:47:51.150] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '39' ve satır konumu '25'.
-[2026-06-07 08:47:51.177] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 08:51:15.995] App Started
-[2026-06-07 08:51:16.029] Initializing Services...
-[2026-06-07 08:51:19.060] Services Loaded
-[2026-06-07 08:51:19.061] Database Initialized
-[2026-06-07 08:51:19.061] Checking for restored session...
-[2026-06-07 08:51:19.159] Session restored, opening MainWindow
-[2026-06-07 08:51:19.160] MainWindow Created
-[2026-06-07 08:51:19.477] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '39' ve satır konumu '25'.
-[2026-06-07 08:51:19.503] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:02:25.602] App Started
-[2026-06-07 09:02:25.636] Initializing Services...
-[2026-06-07 09:02:28.547] Services Loaded
-[2026-06-07 09:02:28.547] Database Initialized
-[2026-06-07 09:02:28.548] Checking for restored session...
-[2026-06-07 09:02:28.635] Session restored, opening MainWindow
-[2026-06-07 09:02:28.636] MainWindow Created
-[2026-06-07 09:02:28.934] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '40' ve satır konumu '25'.
-[2026-06-07 09:02:28.960] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:19:00.014] App Started
-[2026-06-07 09:19:00.056] Initializing Services...
-[2026-06-07 09:19:03.209] Services Loaded
-[2026-06-07 09:19:03.210] Database Initialized
-[2026-06-07 09:19:03.210] Checking for restored session...
-[2026-06-07 09:19:03.301] Session restored, opening MainWindow
-[2026-06-07 09:19:03.301] MainWindow Created
-[2026-06-07 09:19:03.764] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '122' ve satır konumu '70'.
-[2026-06-07 09:19:03.792] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:26:22.845] App Started
-[2026-06-07 09:26:22.881] Initializing Services...
-[2026-06-07 09:26:25.985] Services Loaded
-[2026-06-07 09:26:25.985] Database Initialized
-[2026-06-07 09:26:25.986] Checking for restored session...
-[2026-06-07 09:26:26.077] Session restored, opening MainWindow
-[2026-06-07 09:26:26.078] MainWindow Created
-[2026-06-07 09:26:26.525] ERROR: XamlParseException - ''System.Windows.Controls.UIElementCollection' türündeki koleksiyona değer ekleme işlemi özel durum döndürdü.' Satır numarası '123' ve satır konumu '62'.
-[2026-06-07 09:26:26.552] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:33:16.978] App Started
-[2026-06-07 09:33:17.015] Initializing Services...
-[2026-06-07 09:33:19.918] Services Loaded
-[2026-06-07 09:33:19.918] Database Initialized
-[2026-06-07 09:33:19.919] Checking for restored session...
-[2026-06-07 09:33:20.013] Session restored, opening MainWindow
-[2026-06-07 09:33:20.013] MainWindow Created
-[2026-06-07 09:33:20.438] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '166' ve satır konumu '77'.
-[2026-06-07 09:33:20.465] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:50:25.094] App Started
-[2026-06-07 09:50:25.129] Initializing Services...
-[2026-06-07 09:50:28.155] Services Loaded
-[2026-06-07 09:50:28.156] Database Initialized
-[2026-06-07 09:50:28.157] Checking for restored session...
-[2026-06-07 09:50:28.251] Session restored, opening MainWindow
-[2026-06-07 09:50:28.252] MainWindow Created
-[2026-06-07 09:50:28.707] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '197' ve satır konumu '26'.
-[2026-06-07 09:50:28.735] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:54:21.900] App Started
-[2026-06-07 09:54:21.936] Initializing Services...
-[2026-06-07 09:54:24.958] Services Loaded
-[2026-06-07 09:54:24.959] Database Initialized
-[2026-06-07 09:54:24.960] Checking for restored session...
-[2026-06-07 09:54:25.050] Session restored, opening MainWindow
-[2026-06-07 09:54:25.050] MainWindow Created
-[2026-06-07 09:54:25.599] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '204' ve satır konumu '22'.
-[2026-06-07 09:54:25.626] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 09:59:42.083] App Started
-[2026-06-07 09:59:42.118] Initializing Services...
-[2026-06-07 09:59:45.204] Services Loaded
-[2026-06-07 09:59:45.205] Database Initialized
-[2026-06-07 09:59:45.206] Checking for restored session...
-[2026-06-07 09:59:45.297] Session restored, opening MainWindow
-[2026-06-07 09:59:45.298] MainWindow Created
-[2026-06-07 09:59:45.738] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '213' ve satır konumu '22'.
-[2026-06-07 09:59:45.766] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:00:03.450] App Started
-[2026-06-07 10:00:03.484] Initializing Services...
-[2026-06-07 10:00:06.371] Services Loaded
-[2026-06-07 10:00:06.372] Database Initialized
-[2026-06-07 10:00:06.372] Checking for restored session...
-[2026-06-07 10:00:06.459] Session restored, opening MainWindow
-[2026-06-07 10:00:06.460] MainWindow Created
-[2026-06-07 10:00:06.888] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '213' ve satır konumu '22'.
-[2026-06-07 10:00:06.920] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:35:10.863] App Started
-[2026-06-07 10:35:10.914] Initializing Services...
-[2026-06-07 10:35:14.188] Services Loaded
-[2026-06-07 10:35:14.189] Database Initialized
-[2026-06-07 10:35:14.189] Checking for restored session...
-[2026-06-07 10:35:14.276] Session restored, opening MainWindow
-[2026-06-07 10:35:14.277] MainWindow Created
-[2026-06-07 10:35:14.724] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '215' ve satır konumu '26'.
-[2026-06-07 10:35:14.751] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:38:14.448] App Started
-[2026-06-07 10:38:14.484] Initializing Services...
-[2026-06-07 10:38:17.469] Services Loaded
-[2026-06-07 10:38:17.470] Database Initialized
-[2026-06-07 10:38:17.471] Checking for restored session...
-[2026-06-07 10:38:17.557] Session restored, opening MainWindow
-[2026-06-07 10:38:17.558] MainWindow Created
-[2026-06-07 10:38:17.982] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '228' ve satır konumu '36'.
-[2026-06-07 10:38:18.010] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:42:21.941] App Started
-[2026-06-07 10:42:21.975] Initializing Services...
-[2026-06-07 10:42:24.921] Services Loaded
-[2026-06-07 10:42:24.921] Database Initialized
-[2026-06-07 10:42:24.922] Checking for restored session...
-[2026-06-07 10:42:25.010] Session restored, opening MainWindow
-[2026-06-07 10:42:25.011] MainWindow Created
-[2026-06-07 10:42:25.467] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '296' ve satır konumu '77'.
-[2026-06-07 10:42:25.494] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:46:07.812] App Started
-[2026-06-07 10:46:07.847] Initializing Services...
-[2026-06-07 10:46:10.784] Services Loaded
-[2026-06-07 10:46:10.785] Database Initialized
-[2026-06-07 10:46:10.786] Checking for restored session...
-[2026-06-07 10:46:10.872] Session restored, opening MainWindow
-[2026-06-07 10:46:10.873] MainWindow Created
-[2026-06-07 10:46:11.373] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '296' ve satır konumu '77'.
-[2026-06-07 10:46:11.402] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:49:53.631] App Started
-[2026-06-07 10:49:53.665] Initializing Services...
-[2026-06-07 10:49:56.545] Services Loaded
-[2026-06-07 10:49:56.546] Database Initialized
-[2026-06-07 10:49:56.547] Checking for restored session...
-[2026-06-07 10:49:56.641] Session restored, opening MainWindow
-[2026-06-07 10:49:56.641] MainWindow Created
-[2026-06-07 10:49:57.096] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '296' ve satır konumu '77'.
-[2026-06-07 10:49:57.123] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:55:00.396] App Started
-[2026-06-07 10:55:00.430] Initializing Services...
-[2026-06-07 10:55:03.344] Services Loaded
-[2026-06-07 10:55:03.345] Database Initialized
-[2026-06-07 10:55:03.346] Checking for restored session...
-[2026-06-07 10:55:03.435] Session restored, opening MainWindow
-[2026-06-07 10:55:03.436] MainWindow Created
-[2026-06-07 10:55:03.887] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '296' ve satır konumu '77'.
-[2026-06-07 10:55:03.913] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 10:59:02.677] App Started
-[2026-06-07 10:59:02.711] Initializing Services...
-[2026-06-07 10:59:05.618] Services Loaded
-[2026-06-07 10:59:05.619] Database Initialized
-[2026-06-07 10:59:05.620] Checking for restored session...
-[2026-06-07 10:59:05.708] Session restored, opening MainWindow
-[2026-06-07 10:59:05.709] MainWindow Created
-[2026-06-07 10:59:06.155] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '333' ve satır konumu '36'.
-[2026-06-07 10:59:06.182] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 11:07:35.238] App Started
-[2026-06-07 11:07:35.273] Initializing Services...
-[2026-06-07 11:07:38.205] Services Loaded
-[2026-06-07 11:07:38.206] Database Initialized
-[2026-06-07 11:07:38.207] Checking for restored session...
-[2026-06-07 11:07:38.302] Session restored, opening MainWindow
-[2026-06-07 11:07:38.302] MainWindow Created
-[2026-06-07 11:07:38.753] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '333' ve satır konumu '36'.
-[2026-06-07 11:07:38.780] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 11:13:16.703] App Started
-[2026-06-07 11:13:16.738] Initializing Services...
-[2026-06-07 11:13:19.811] Services Loaded
-[2026-06-07 11:13:19.811] Database Initialized
-[2026-06-07 11:13:19.812] Checking for restored session...
-[2026-06-07 11:13:19.900] Session restored, opening MainWindow
-[2026-06-07 11:13:19.901] MainWindow Created
-[2026-06-07 11:13:20.362] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '333' ve satır konumu '36'.
-[2026-06-07 11:13:20.391] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 11:24:23.607] App Started
-[2026-06-07 11:24:23.651] Initializing Services...
-[2026-06-07 11:24:26.774] Services Loaded
-[2026-06-07 11:24:26.775] Database Initialized
-[2026-06-07 11:24:26.776] Checking for restored session...
-[2026-06-07 11:24:26.872] Session restored, opening MainWindow
-[2026-06-07 11:24:26.873] MainWindow Created
-[2026-06-07 11:24:27.351] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '377' ve satır konumu '26'.
-[2026-06-07 11:24:27.378] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 12:05:50.304] App Started
-[2026-06-07 12:05:50.346] Initializing Services...
-[2026-06-07 12:05:53.537] Services Loaded
-[2026-06-07 12:05:53.538] Database Initialized
-[2026-06-07 12:05:53.539] Checking for restored session...
-[2026-06-07 12:05:53.630] Session restored, opening MainWindow
-[2026-06-07 12:05:53.631] MainWindow Created
-[2026-06-07 12:05:54.166] ERROR: XamlParseException - ''System.Windows.StaticResourceExtension' öğesinde değer sağlama işlemi özel durum döndürdü.' Satır numarası '483' ve satır konumu '30'.
-[2026-06-07 12:05:54.203] STACK TRACE:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
-   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
-   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
-   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
-   at RenPyTRLauncher.MainWindow.InitializeComponent() in D:\RenPyTRLauncher\MainWindow.xaml:line 1
-   at RenPyTRLauncher.MainWindow..ctor() in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 42
-   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 44
-[2026-06-07 12:23:30.014] App Started
-[2026-06-07 12:23:30.056] Initializing Services...
-[2026-06-07 12:23:33.531] Services Loaded
-[2026-06-07 12:23:33.532] Database Initialized
-[2026-06-07 12:23:33.532] Checking for restored session...
-[2026-06-07 12:23:33.640] Session restored, opening MainWindow
-[2026-06-07 12:23:33.640] MainWindow Created
-[2026-06-07 12:23:35.740] MainWindow Shown
-[2026-06-07 12:24:24.025] App Started
-[2026-06-07 12:24:24.060] Initializing Services...
-[2026-06-07 12:24:27.246] Services Loaded
-[2026-06-07 12:24:27.247] Database Initialized
-[2026-06-07 12:24:27.247] Checking for restored session...
-[2026-06-07 12:24:27.345] Session restored, opening MainWindow
-[2026-06-07 12:24:27.346] MainWindow Created
-[2026-06-07 12:24:28.907] MainWindow Shown
-[2026-06-07 12:25:11.124] App Started
-[2026-06-07 12:25:11.165] Initializing Services...
-[2026-06-07 12:25:14.889] Services Loaded
-[2026-06-07 12:25:14.889] Database Initialized
-[2026-06-07 12:25:14.890] Checking for restored session...
-[2026-06-07 12:25:15.002] Session restored, opening MainWindow
-[2026-06-07 12:25:15.003] MainWindow Created
-[2026-06-07 12:25:16.981] MainWindow Shown
-[2026-06-07 12:27:29.407] App Started
-[2026-06-07 12:27:29.442] Initializing Services...
-[2026-06-07 12:27:32.708] Services Loaded
-[2026-06-07 12:27:32.709] Database Initialized
-[2026-06-07 12:27:32.710] Checking for restored session...
-[2026-06-07 12:27:32.813] Session restored, opening MainWindow
-[2026-06-07 12:27:32.814] MainWindow Created
-[2026-06-07 12:27:34.511] MainWindow Shown
-[2026-06-07 13:40:10.404] App Started
-[2026-06-07 13:40:10.443] Initializing Services...
-[2026-06-07 13:40:13.712] Services Loaded
-[2026-06-07 13:40:13.713] Database Initialized
-[2026-06-07 13:40:13.713] Checking for restored session...
-[2026-06-07 13:40:13.807] Session restored, opening MainWindow
-[2026-06-07 13:40:13.808] MainWindow Created
-[2026-06-07 13:40:15.492] MainWindow Shown
-[2026-06-07 14:02:47.334] App Started
-[2026-06-07 14:02:47.371] Initializing Services...
-[2026-06-07 14:02:50.703] Services Loaded
-[2026-06-07 14:02:50.704] Database Initialized
-[2026-06-07 14:02:50.705] Checking for restored session...
-[2026-06-07 14:02:50.810] Session restored, opening MainWindow
-[2026-06-07 14:02:50.811] MainWindow Created
-[2026-06-07 14:02:52.477] MainWindow Shown
-[2026-06-07 14:05:17.138] App Started
-[2026-06-07 14:05:17.173] Initializing Services...
-[2026-06-07 14:05:20.302] Services Loaded
-[2026-06-07 14:05:20.303] Database Initialized
-[2026-06-07 14:05:20.304] Checking for restored session...
-[2026-06-07 14:05:20.399] Session restored, opening MainWindow
-[2026-06-07 14:05:20.400] MainWindow Created
-[2026-06-07 14:05:22.119] MainWindow Shown
-[2026-06-07 14:21:48.088] App Started
-[2026-06-07 14:21:48.122] Initializing Services...
-[2026-06-07 14:21:51.003] Services Loaded
-[2026-06-07 14:21:51.004] Database Initialized
-[2026-06-07 14:21:51.004] Checking for restored session...
-[2026-06-07 14:21:51.092] Session restored, opening MainWindow
-[2026-06-07 14:21:51.093] MainWindow Created
-[2026-06-07 14:21:52.650] MainWindow Shown
-[2026-06-07 15:57:02.080] App Started
-[2026-06-07 15:57:02.115] Initializing Services...
-[2026-06-07 15:57:04.982] Services Loaded
-[2026-06-07 15:57:04.983] Database Initialized
-[2026-06-07 15:57:04.984] Checking for restored session...
-[2026-06-07 15:57:05.070] Session restored, opening MainWindow
-[2026-06-07 15:57:05.071] MainWindow Created
-[2026-06-07 15:57:06.842] MainWindow Shown
-[2026-06-07 15:57:21.614] App Started
-[2026-06-07 15:57:21.647] Initializing Services...
-[2026-06-07 15:57:24.614] Services Loaded
-[2026-06-07 15:57:24.615] Database Initialized
-[2026-06-07 15:57:24.616] Checking for restored session...
-[2026-06-07 15:57:24.702] Session restored, opening MainWindow
-[2026-06-07 15:57:24.703] MainWindow Created
-[2026-06-07 15:57:26.224] MainWindow Shown
-[2026-06-07 16:02:50.178] App Started
-[2026-06-07 16:02:50.213] Initializing Services...
-[2026-06-07 16:02:53.145] Services Loaded
-[2026-06-07 16:02:53.146] Database Initialized
-[2026-06-07 16:02:53.147] Checking for restored session...
-[2026-06-07 16:02:53.236] Session restored, opening MainWindow
-[2026-06-07 16:02:53.237] MainWindow Created
-[2026-06-07 16:02:54.724] MainWindow Shown
-[2026-06-07 16:03:07.613] App Started
-[2026-06-07 16:03:07.647] Initializing Services...
-[2026-06-07 16:03:10.647] Services Loaded
-[2026-06-07 16:03:10.648] Database Initialized
-[2026-06-07 16:03:10.649] Checking for restored session...
-[2026-06-07 16:03:10.659] No session found, opening LoginWindow
-[2026-06-07 16:03:10.659] LoginWindow Created
-[2026-06-07 16:03:11.463] LoginWindow Shown
-[2026-06-07 16:42:19.843] App Started
-[2026-06-07 16:42:19.876] Initializing Services...
-[2026-06-07 16:42:22.875] Services Loaded
-[2026-06-07 16:42:22.876] Database Initialized
-[2026-06-07 16:42:22.877] Checking for restored session...
-[2026-06-07 16:42:23.048] Session restored, opening MainWindow
-[2026-06-07 16:42:23.049] MainWindow Created
-[2026-06-07 16:42:24.651] MainWindow Shown
+   at System.Windows.Window.ShowDialog()
+   at RenPyTRLauncher.MainWindow.OpenGameDetail(Game game) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 476
+   at RenPyTRLauncher.MainWindow.GameCard_Click(Object sender, MouseButtonEventArgs e) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 442
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   at System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+   at System.Windows.Input.InputManager.ProcessStagingArea()
+   at System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+   at System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+[2026-06-09 19:59:28.465] App Started
+[2026-06-09 19:59:28.511] Initializing Services...
+[2026-06-09 19:59:32.386] Services Loaded
+[2026-06-09 19:59:32.387] Database Initialized
+[2026-06-09 19:59:32.388] Checking for restored session...
+[2026-06-09 19:59:32.483] Session restored, opening MainWindow
+[2026-06-09 19:59:32.483] MainWindow Created
+[2026-06-09 19:59:34.632] MainWindow Shown
+[2026-06-09 20:44:48.035] App Started
+[2026-06-09 20:44:48.073] Initializing Services...
+[2026-06-09 20:44:51.512] Services Loaded
+[2026-06-09 20:44:51.513] Database Initialized
+[2026-06-09 20:44:51.514] Checking for restored session...
+[2026-06-09 20:44:51.607] Session restored, opening MainWindow
+[2026-06-09 20:44:51.608] MainWindow Created
+[2026-06-09 20:44:53.969] MainWindow Shown

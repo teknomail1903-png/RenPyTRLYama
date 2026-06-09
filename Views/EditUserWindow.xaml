@@ -39,9 +39,9 @@
             <TextBlock Text="E-posta" Foreground="#AAA" FontSize="12"/>
             <TextBox x:Name="TxtEmail"/>
             <TextBlock Text="Rol" Foreground="#AAA" FontSize="12"/>
-            <ComboBox x:Name="CmbRole" Margin="0,0,0,10" Background="#222228" Foreground="White"/>
+            <ComboBox x:Name="CmbRole" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
             <TextBlock Text="Üyelik Seviyesi" Foreground="#AAA" FontSize="12"/>
-            <TextBox x:Name="TxtMembership"/>
+            <ComboBox x:Name="CmbMembership" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
             <TextBlock Text="Profil Resmi (URL veya yükle)" Foreground="#AAA" FontSize="12"/>
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="TxtAvatar" Width="300"/>

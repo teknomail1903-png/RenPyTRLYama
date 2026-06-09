@@ -25,6 +25,24 @@ namespace RenPyTRLauncher
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+            DispatcherUnhandledException += (s, args) =>
+            {
+                Log($"DispatcherUnhandledException: {args.Exception.Message}");
+                Log($"DispatcherUnhandledException StackTrace: {args.Exception.StackTrace}");
+                MessageBox.Show($"Unhandled Exception:\n\n{args.Exception.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                args.Handled = true;
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (s, args) =>
+            {
+                if (args.ExceptionObject is Exception ex)
+                {
+                    Log($"AppDomain UnhandledException: {ex.Message}");
+                    Log($"AppDomain UnhandledException StackTrace: {ex.StackTrace}");
+                    MessageBox.Show($"Unhandled Exception:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            };
+
             try
             {
                 Log("App Started");
@@ -56,7 +74,7 @@ namespace RenPyTRLauncher
             {
                 Log($"ERROR: {ex.GetType().Name} - {ex.Message}");
                 Log($"STACK TRACE: {ex.StackTrace}");
-                MessageBox.Show($"Uygulama başlatılırken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", 
+                MessageBox.Show($"Uygulama başlatılırken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.",
                     "Başlatma Hatası", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown();
             }

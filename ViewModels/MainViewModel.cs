@@ -63,10 +63,15 @@ namespace RenPyTRLauncher.ViewModels
         public string ProfileAgeText =>
             CurrentUser?.Age.HasValue == true ? $"{CurrentUser.Age} yaşında" : "Yaş belirtilmemiş";
 
+        public int FavoriteCount => CurrentUser?.FavoriteGameIds?.Count ?? 0;
+        public int PatchCount => FilteredPatches.Count;
+
         public ObservableCollection<Game> Games { get; } = new();
         public ObservableCollection<Game> FilteredGames { get; } = new();
+        public ObservableCollection<Game> FilteredPatches { get; } = new();
         public ObservableCollection<Game> Recent { get; } = new();
         public ObservableCollection<Game> UpdatedGames { get; } = new();
+        public ObservableCollection<Game> CompletedGames { get; } = new();
         public ObservableCollection<Game> VipGames { get; } = new();
         public ObservableCollection<LeaderboardEntry> Leaderboard { get; } = new();
         public ObservableCollection<Game> FavoriteGames { get; } = new();
@@ -134,7 +139,6 @@ namespace RenPyTRLauncher.ViewModels
         }
 
         public bool HasUnreadNotifications => UnreadNotificationCount > 0;
-        public int FavoriteCount => FavoriteGames.Count;
 
         private string? _selectedCategoryFolder;
         public string? SelectedCategoryFolder
@@ -151,6 +155,7 @@ namespace RenPyTRLauncher.ViewModels
 
         public bool IsCategoryFolderView => string.IsNullOrEmpty(SelectedCategoryFolder);
         public bool IsCategoryGameListView => !string.IsNullOrEmpty(SelectedCategoryFolder);
+        public bool IsCategoryGameView => !string.IsNullOrEmpty(SelectedCategoryFolder);
         public int CategoryGameCount => CategoryGames.Count;
 
         private int _announcementIndex;
@@ -305,6 +310,8 @@ namespace RenPyTRLauncher.ViewModels
         public void ApplySearchFilter()
         {
             FilteredGames.Clear();
+            FilteredPatches.Clear();
+
             var query = Games.AsEnumerable();
 
             if (SearchInFavoritesOnly && CurrentUser != null)
@@ -328,8 +335,16 @@ namespace RenPyTRLauncher.ViewModels
                     g.Description.Contains(term, StringComparison.OrdinalIgnoreCase));
             }
 
-            foreach (var g in query) FilteredGames.Add(g);
+            foreach (var g in query)
+            {
+                if (g.Type == GameType.Game)
+                    FilteredGames.Add(g);
+                else if (g.Type == GameType.Patch)
+                    FilteredPatches.Add(g);
+            }
+
             OnPropertyChanged(nameof(SearchResultCount));
+            OnPropertyChanged(nameof(PatchCount));
         }
 
         public int SearchResultCount => FilteredGames.Count;
@@ -548,6 +563,7 @@ namespace RenPyTRLauncher.ViewModels
         {
             Recent.Clear();
             UpdatedGames.Clear();
+            CompletedGames.Clear();
             VipGames.Clear();
             Leaderboard.Clear();
 
@@ -556,6 +572,9 @@ namespace RenPyTRLauncher.ViewModels
 
             foreach (var g in Games.OrderByDescending(g => g.UpdatedDate).Take(8))
                 UpdatedGames.Add(g);
+
+            foreach (var g in Games.OrderByDescending(g => g.UpdatedDate).Where(g => g.Version != "1.0" && g.PatchFilePath != "").Take(8))
+                CompletedGames.Add(g);
 
             foreach (var g in Games.Where(g => g.IsVip))
                 VipGames.Add(g);

@@ -22,12 +22,24 @@ namespace RenPyTRLauncher.Views
 
         public AdminUserControl(User? currentUser = null)
         {
-            InitializeComponent();
-            _currentUser = currentUser;
+            try
+            {
+                App.Log("AdminUserControl Constructor Start");
+                InitializeComponent();
+                _currentUser = currentUser;
 
-            _gameService = ServiceLocator.GameService ?? new InMemoryGameService();
-            _announcementService = ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
-            _userService = ServiceLocator.UserService ?? new InMemoryUserService();
+                _gameService = ServiceLocator.GameService ?? new InMemoryGameService();
+                _announcementService = ServiceLocator.AnnouncementService ?? new InMemoryAnnouncementService();
+                _userService = ServiceLocator.UserService ?? new InMemoryUserService();
+                App.Log("AdminUserControl Constructor End");
+            }
+            catch (Exception ex)
+            {
+                App.Log($"AdminUserControl Constructor Error: {ex.Message}");
+                App.Log($"AdminUserControl Constructor StackTrace: {ex.StackTrace}");
+                MessageBox.Show($"AdminUserControl oluşturulurken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
             _settingsService = ServiceLocator.SettingsService ?? new InMemorySettingsService();
             _membershipService = ServiceLocator.MembershipService ?? new InMemoryMembershipService();
             _supportService = ServiceLocator.SupportService ?? new InMemorySupportService();
@@ -36,57 +48,90 @@ namespace RenPyTRLauncher.Views
             _notificationService = ServiceLocator.NotificationService ?? new InMemoryNotificationService(_userService);
 
             ServiceLocator.DataChanged += OnDataChanged;
-            ApplyRoleRestrictions();
 
-            BtnTop10Refresh.Click += (_, _) => RefreshTop10();
-            BtnTop10Remove.Click += BtnTop10Remove_Click;
-            LstTop10.MouseDoubleClick += (_, _) =>
-            {
-                if (LstTop10.SelectedItem is Game g)
-                {
-                    new EditGameWindow(g, _gameService).ShowDialog();
-                    RefreshAll();
-                }
-            };
+            // Sidebar button events
+            BtnDashboard.Click += (_, _) => ShowPage("Dashboard");
+            BtnGames.Click += (_, _) => ShowPage("Games");
+            BtnPatches.Click += (_, _) => ShowPage("Patches");
+            BtnSlider.Click += (_, _) => ShowPage("Slider");
+            BtnAnnouncements.Click += (_, _) => ShowPage("Announcements");
+            BtnUsers.Click += (_, _) => ShowPage("Users");
+            BtnVipMembers.Click += (_, _) => ShowPage("VipMembers");
+            BtnMediaLibrary.Click += (_, _) => ShowPage("MediaLibrary");
+            BtnSettings.Click += (_, _) => ShowPage("Settings");
 
+            // Game management
             BtnAddGame.Click += BtnAddGame_Click;
             BtnDeleteGame.Click += BtnDeleteGame_Click;
             BtnEditGame.Click += BtnEditGame_Click;
+
+            // Patch management
+            BtnAddPatch.Click += BtnAddPatch_Click;
+            BtnDeletePatch.Click += BtnDeletePatch_Click;
+            BtnEditPatch.Click += BtnEditPatch_Click;
+
+            // Slider management
+            BtnAddToSlider.Click += BtnAddToSlider_Click;
+            BtnRemoveFromSlider.Click += BtnRemoveFromSlider_Click;
+
+            // Announcement management
             BtnAddAnn.Click += BtnAddAnn_Click;
             BtnUpdateAnn.Click += BtnUpdateAnn_Click;
             BtnDeleteAnn.Click += BtnDeleteAnn_Click;
             LstAnns.SelectionChanged += (_, _) => LoadSelectedAnnouncement();
 
-            BtnAddCategory.Click += BtnAddCategory_Click;
-            BtnEditCategory.Click += BtnEditCategory_Click;
-            BtnDeleteCategory.Click += BtnDeleteCategory_Click;
-
-            BtnAddHelp.Click += BtnAddHelp_Click;
-            BtnDeleteHelp.Click += BtnDeleteHelp_Click;
-
+            // User management
             BtnUserAdd.Click += BtnUserAdd_Click;
             BtnUserEdit.Click += BtnUserEdit_Click;
             BtnUserDelete.Click += BtnUserDelete_Click;
             BtnGrantVip.Click += BtnGrantVip_Click;
             BtnRevokeVip.Click += BtnRevokeVip_Click;
             BtnExtendVip.Click += BtnExtendVip_Click;
-            BtnMakeAdmin.Click += BtnMakeAdmin_Click;
-            BtnRevokeAdmin.Click += BtnRevokeAdmin_Click;
-            BtnMakeMod.Click += BtnMakeMod_Click;
-            BtnRevokeMod.Click += BtnRevokeMod_Click;
 
-            LstTickets.SelectionChanged += (_, _) => LoadSelectedTicket();
-            BtnReplyTicket.Click += BtnReplyTicket_Click;
-            BtnCloseTicket.Click += BtnCloseTicket_Click;
-            BtnReopenTicket.Click += BtnReopenTicket_Click;
-
-            LstMemberships.SelectionChanged += (_, _) => LoadSelectedTier();
+            // VIP membership management
             BtnSaveTier.Click += BtnSaveTier_Click;
             BtnDeleteTier.Click += BtnDeleteTier_Click;
+
+            // Media library
+            BtnAddMedia.Click += BtnAddMedia_Click;
+            BtnCheckMedia.Click += BtnCheckMedia_Click;
+
+            // Settings
             BtnSaveSettings.Click += BtnSaveSettings_Click;
 
-            Unloaded += (_, _) => ServiceLocator.DataChanged -= OnDataChanged;
+            // Quick Actions
+            BtnQuickAddGame.Click += BtnAddGame_Click;
+            BtnQuickAddAnnouncement.Click += BtnQuickAddAnnouncement_Click;
+            BtnQuickSearchUser.Click += BtnQuickSearchUser_Click;
+            BtnQuickGiveVip.Click += BtnQuickGiveVip_Click;
+
             RefreshAll();
+        }
+
+        private void ShowPage(string pageName)
+        {
+            PageDashboard.Visibility = Visibility.Collapsed;
+            PageGames.Visibility = Visibility.Collapsed;
+            PagePatches.Visibility = Visibility.Collapsed;
+            PageSlider.Visibility = Visibility.Collapsed;
+            PageAnnouncements.Visibility = Visibility.Collapsed;
+            PageUsers.Visibility = Visibility.Collapsed;
+            PageVipMembers.Visibility = Visibility.Collapsed;
+            PageMediaLibrary.Visibility = Visibility.Collapsed;
+            PageSettings.Visibility = Visibility.Collapsed;
+
+            switch (pageName)
+            {
+                case "Dashboard": PageDashboard.Visibility = Visibility.Visible; break;
+                case "Games": PageGames.Visibility = Visibility.Visible; break;
+                case "Patches": PagePatches.Visibility = Visibility.Visible; break;
+                case "Slider": PageSlider.Visibility = Visibility.Visible; break;
+                case "Announcements": PageAnnouncements.Visibility = Visibility.Visible; break;
+                case "Users": PageUsers.Visibility = Visibility.Visible; break;
+                case "VipMembers": PageVipMembers.Visibility = Visibility.Visible; break;
+                case "MediaLibrary": PageMediaLibrary.Visibility = Visibility.Visible; break;
+                case "Settings": PageSettings.Visibility = Visibility.Visible; break;
+            }
         }
 
         private void OnDataChanged() =>
@@ -97,109 +142,92 @@ namespace RenPyTRLauncher.Views
             var isAdmin = AuthorizationService.CanManageGames(_currentUser);
             var isMod = AuthorizationService.CanManageSupport(_currentUser);
 
-            TabGames.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabUsers.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabMemberships.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabTop10.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabAnnouncements.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabCategories.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabHelp.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabSettings.Visibility = isAdmin ? Visibility.Visible : Visibility.Collapsed;
-            TabSupport.Visibility = isMod ? Visibility.Visible : Visibility.Collapsed;
+            // Yeni yapıda role restrictions daha sonra eklenecek
         }
 
         private void RefreshAll()
         {
             RefreshDashboard();
             RefreshLists();
+            RefreshPatches();
+            RefreshSlider();
             RefreshUsers();
-            RefreshTop10();
             RefreshMemberships();
-            RefreshTickets();
-            RefreshCategories();
-            RefreshHelpGuides();
             LoadSettingsForm();
-        }
-
-        private void RefreshTickets()
-        {
-            LstTickets.ItemsSource = null;
-            LstTickets.ItemsSource = _supportService.GetAll().ToList();
-        }
-
-        private void LoadSelectedTicket()
-        {
-            if (LstTickets.SelectedItem is not SupportTicket t)
-            {
-                TxtTicketDetail.Text = "";
-                TxtTicketReply.Text = "";
-                return;
-            }
-            TxtTicketDetail.Text = $"[{t.TypeLabel}] {t.Subject}\n\n{t.Message}\n\nDurum: {t.StatusLabel}";
-            TxtTicketReply.Text = t.AdminReply;
-        }
-
-        private void BtnReplyTicket_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstTickets.SelectedItem is not SupportTicket t || _currentUser == null) return;
-            if (string.IsNullOrWhiteSpace(TxtTicketReply.Text)) return;
-            _supportService.Reply(t.Id, _currentUser.Id, TxtTicketReply.Text);
-            ServiceLocator.NotifyDataChanged();
-            RefreshTickets();
-        }
-
-        private void BtnCloseTicket_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstTickets.SelectedItem is SupportTicket t)
-            {
-                _supportService.Close(t.Id);
-                ServiceLocator.NotifyDataChanged();
-                RefreshTickets();
-            }
-        }
-
-        private void BtnReopenTicket_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstTickets.SelectedItem is SupportTicket t)
-            {
-                _supportService.Reopen(t.Id);
-                ServiceLocator.NotifyDataChanged();
-                RefreshTickets();
-            }
         }
 
         private void RefreshDashboard()
         {
-            var games = _gameService.GetAll().ToList();
+            var games = _gameService.GetAll();
+            var patches = games.Where(g => g.Type == GameType.Patch).ToList();
             var users = _userService.GetAll().ToList();
-            TxtStatGames.Text = games.Count.ToString();
+            var vipUsers = users.Where(u => u.IsVip).ToList();
+            var announcements = _announcementService.GetAll().ToList();
+            var activeAnnouncements = announcements.Where(a => a.IsActive).ToList();
+
+            TxtStatGames.Text = games.Count(g => g.Type == GameType.Game).ToString();
             TxtStatUsers.Text = users.Count.ToString();
-            TxtStatDownloads.Text = games.Sum(g => g.DownloadCount).ToString("N0");
-            TxtStatVip.Text = users.Count(u => u.IsVip).ToString();
-            TxtStatActive.Text = DownloadTracker.ActiveCount.ToString();
+            TxtStatDownloads.Text = users.Sum(u => u.TotalDownloadCount).ToString();
+            TxtStatAnnouncements.Text = activeAnnouncements.Count.ToString();
+            TxtStatVip.Text = vipUsers.Count.ToString();
+
+            // Son eklenen içerikler
+            var recentContent = games.OrderByDescending(g => g.CreatedDate).Take(5).Select(g => new
+            {
+                g.Name,
+                TypeLabel = g.Type == GameType.Patch ? "Yama" : "Oyun",
+                AddedDate = g.CreatedDate
+            }).ToList();
+            RecentContentList.ItemsSource = recentContent;
         }
 
         private void RefreshLists()
         {
+            App.Log("AdminUserControl.RefreshLists - Starting to refresh lists");
+
+            var allGames = _gameService.GetAll().ToList();
+            App.Log($"AdminUserControl.RefreshLists - Retrieved {allGames.Count} games from database");
+
             LstGames.ItemsSource = null;
-            LstGames.ItemsSource = _gameService.GetAll().ToList();
+            LstGames.ItemsSource = allGames;
+            App.Log($"AdminUserControl.RefreshLists - LstGames.ItemsSource set with {allGames.Count} games");
+
+            var allAnnouncements = _announcementService.GetAll();
+            App.Log($"AdminUserControl.RefreshLists - Retrieved {allAnnouncements.Count()} announcements");
+
             LstAnns.ItemsSource = null;
-            LstAnns.ItemsSource = _announcementService.GetAll();
+            LstAnns.ItemsSource = allAnnouncements;
+            App.Log($"AdminUserControl.RefreshLists - LstAnns.ItemsSource set with {allAnnouncements.Count()} announcements");
+        }
+
+        private void RefreshPatches()
+        {
+            App.Log("AdminUserControl.RefreshPatches - Starting to refresh patches list");
+
+            var patches = _gameService.GetAll().Where(g => g.Type == GameType.Patch).ToList();
+            App.Log($"AdminUserControl.RefreshPatches - Retrieved {patches.Count} patches from database");
+
+            LstPatches.ItemsSource = null;
+            LstPatches.ItemsSource = patches;
+            App.Log($"AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with {patches.Count} patches");
+        }
+
+        private void RefreshSlider()
+        {
+            App.Log("AdminUserControl.RefreshSlider - Starting to refresh slider list");
+
+            var sliderItems = _gameService.GetAll().Where(g => g.IsFeatured).ToList();
+            App.Log($"AdminUserControl.RefreshSlider - Retrieved {sliderItems.Count} featured items from database");
+
+            LstSlider.ItemsSource = null;
+            LstSlider.ItemsSource = sliderItems;
+            App.Log($"AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with {sliderItems.Count} items");
         }
 
         private void RefreshUsers()
         {
             LstUsers.ItemsSource = null;
             LstUsers.ItemsSource = _userService.GetAll();
-        }
-
-        private void RefreshTop10()
-        {
-            LstTop10.ItemsSource = null;
-            var all = _gameService.GetAll();
-            var top = all.Where(g => g.IsTop10).OrderByDescending(g => g.DownloadCount).ToList();
-            if (!top.Any()) top = all.OrderByDescending(g => g.DownloadCount).Take(10).ToList();
-            LstTop10.ItemsSource = top;
         }
 
         private void RefreshMemberships()
@@ -222,7 +250,16 @@ namespace RenPyTRLauncher.Views
             TxtTierName.Text = tier.Name;
             TxtTierPrice.Text = tier.PriceLabel;
             TxtTierUrl.Text = tier.PurchaseUrl;
-            TxtTierFeatures.Text = string.Join(Environment.NewLine, tier.Features);
+        }
+
+        private void BtnAddMedia_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Medya ekleme özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BtnCheckMedia_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Link kontrol özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void BtnSaveTier_Click(object sender, RoutedEventArgs e)
@@ -232,8 +269,6 @@ namespace RenPyTRLauncher.Views
                 tier.Name = TxtTierName.Text;
                 tier.PriceLabel = TxtTierPrice.Text;
                 tier.PurchaseUrl = TxtTierUrl.Text;
-                tier.Features = TxtTierFeatures.Text
-                    .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 _membershipService.Update(tier);
             }
             else
@@ -243,8 +278,6 @@ namespace RenPyTRLauncher.Views
                     Name = TxtTierName.Text,
                     PriceLabel = TxtTierPrice.Text,
                     PurchaseUrl = TxtTierUrl.Text,
-                    Features = TxtTierFeatures.Text
-                        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList(),
                     SortOrder = _membershipService.GetAll().Count() + 1
                 });
             }
@@ -270,17 +303,6 @@ namespace RenPyTRLauncher.Views
             _settingsService.Set(AppSettingKeys.SupportUrl, TxtSupportUrl.Text);
             ServiceLocator.NotifyDataChanged();
             MessageBox.Show("Bağlantı ayarları kaydedildi.", "Ayarlar", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void BtnTop10Remove_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstTop10.SelectedItem is Game g)
-            {
-                g.IsTop10 = false;
-                _gameService.Update(g);
-                ServiceLocator.NotifyDataChanged();
-                RefreshAll();
-            }
         }
 
         private void BtnAddGame_Click(object sender, RoutedEventArgs e)
@@ -313,7 +335,59 @@ namespace RenPyTRLauncher.Views
         {
             if (LstGames.SelectedItem is Game g)
             {
+                System.Diagnostics.Debug.WriteLine($"AdminUserControl.BtnEditGame_Click - Selected Game.Id: {g.Id}, Game.Name: {g.Name}, g.GetHashCode(): {g.GetHashCode()}");
+                System.Diagnostics.Debug.WriteLine($"AdminUserControl.BtnEditGame_Click - About to open EditGameWindow with game object");
                 new EditGameWindow(g, _gameService).ShowDialog();
+                RefreshAll();
+            }
+        }
+
+        private void BtnAddPatch_Click(object sender, RoutedEventArgs e)
+        {
+            var patch = new Game { Type = GameType.Patch, Id = Guid.NewGuid() };
+            System.Diagnostics.Debug.WriteLine($"AdminUserControl.BtnAddPatch_Click - Created new patch with Id: {patch.Id}");
+            new EditGameWindow(patch, _gameService).ShowDialog();
+            ServiceLocator.NotifyDataChanged();
+            RefreshAll();
+        }
+
+        private void BtnDeletePatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstPatches.SelectedItem is Game g)
+            {
+                _gameService.Remove(g.Id);
+                ServiceLocator.NotifyDataChanged();
+                RefreshAll();
+            }
+        }
+
+        private void BtnEditPatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstPatches.SelectedItem is Game g)
+            {
+                new EditGameWindow(g, _gameService).ShowDialog();
+                RefreshAll();
+            }
+        }
+
+        private void BtnAddToSlider_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstSlider.SelectedItem is Game g)
+            {
+                g.IsFeatured = true;
+                _gameService.Update(g);
+                ServiceLocator.NotifyDataChanged();
+                RefreshAll();
+            }
+        }
+
+        private void BtnRemoveFromSlider_Click(object sender, RoutedEventArgs e)
+        {
+            if (LstSlider.SelectedItem is Game g)
+            {
+                g.IsFeatured = false;
+                _gameService.Update(g);
+                ServiceLocator.NotifyDataChanged();
                 RefreshAll();
             }
         }
@@ -352,71 +426,6 @@ namespace RenPyTRLauncher.Views
             TxtAnnMsg.Text = a.Message;
             TxtAnnColor.Text = a.AccentColor;
             ChkAnnPinned.IsChecked = a.IsPinned;
-        }
-
-        private void RefreshCategories()
-        {
-            LstCategories.ItemsSource = null;
-            LstCategories.ItemsSource = _categoryService.GetAll().ToList();
-        }
-
-        private void BtnAddCategory_Click(object sender, RoutedEventArgs e)
-        {
-            new EditCategoryWindow(null, _categoryService).ShowDialog();
-            ServiceLocator.NotifyDataChanged();
-            RefreshCategories();
-        }
-
-        private void BtnEditCategory_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstCategories.SelectedItem is GameCategory cat)
-            {
-                new EditCategoryWindow(cat, _categoryService).ShowDialog();
-                ServiceLocator.NotifyDataChanged();
-                RefreshCategories();
-            }
-        }
-
-        private void BtnDeleteCategory_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstCategories.SelectedItem is GameCategory cat)
-            {
-                _categoryService.Remove(cat.Id);
-                ServiceLocator.NotifyDataChanged();
-                RefreshCategories();
-            }
-        }
-
-        private void RefreshHelpGuides()
-        {
-            LstHelpGuides.ItemsSource = null;
-            LstHelpGuides.ItemsSource = _helpService.GetAll().ToList();
-        }
-
-        private void BtnAddHelp_Click(object sender, RoutedEventArgs e)
-        {
-            var typeTag = (CmbHelpType.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "Text";
-            var type = Enum.TryParse<HelpGuideType>(typeTag, out var parsed) ? parsed : HelpGuideType.Text;
-            _helpService.Add(new HelpGuide
-            {
-                Title = TxtHelpTitle.Text,
-                Content = TxtHelpContent.Text,
-                VideoUrl = TxtHelpVideoUrl.Text,
-                Type = type,
-                SortOrder = _helpService.GetAll().Count() + 1
-            });
-            ServiceLocator.NotifyDataChanged();
-            RefreshHelpGuides();
-        }
-
-        private void BtnDeleteHelp_Click(object sender, RoutedEventArgs e)
-        {
-            if (LstHelpGuides.SelectedItem is HelpGuide g)
-            {
-                _helpService.Remove(g.Id);
-                ServiceLocator.NotifyDataChanged();
-                RefreshHelpGuides();
-            }
         }
 
         private void BtnDeleteAnn_Click(object sender, RoutedEventArgs e)
@@ -482,12 +491,27 @@ namespace RenPyTRLauncher.Views
 
         private void BtnExtendVip_Click(object sender, RoutedEventArgs e)
         {
-            if (LstUsers.SelectedItem is User u)
+            if (LstUsers.SelectedItem is not User u)
             {
-                var newEnd = (u.VipEndDate ?? DateTime.UtcNow).AddDays(30);
-                _userService.GrantVip(u.Id, newEnd);
-                ServiceLocator.NotifyDataChanged();
-                RefreshUsers();
+                MessageBox.Show("Lütfen önce bir kullanıcı seçin.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var dialog = new InputDialog("Kaç gün uzatmak istiyorsunuz?", "30");
+            if (dialog.ShowDialog() == true)
+            {
+                if (int.TryParse(dialog.Result, out int days) && days > 0)
+                {
+                    var newEnd = (u.VipEndDate ?? DateTime.UtcNow).AddDays(days);
+                    _userService.GrantVip(u.Id, newEnd);
+                    ServiceLocator.NotifyDataChanged();
+                    RefreshUsers();
+                    MessageBox.Show($"{u.Username} kullanıcısının VIP süresi {days} gün uzatıldı.\nYeni bitiş tarihi: {newEnd:dd.MM.yyyy}", "Başarılı", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Geçerli bir gün sayısı girin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -529,6 +553,28 @@ namespace RenPyTRLauncher.Views
                 ServiceLocator.NotifyDataChanged();
                 RefreshUsers();
             }
+        }
+
+        private void BtnQuickAddAnnouncement_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage("Announcements");
+            TxtAnnTitle.Text = "";
+            TxtAnnMsg.Text = "";
+            TxtAnnColor.Text = "#9B59FF";
+            ChkAnnPinned.IsChecked = false;
+            TxtAnnTitle.Focus();
+        }
+
+        private void BtnQuickSearchUser_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage("Users");
+            LstUsers.Focus();
+        }
+
+        private void BtnQuickGiveVip_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage("Users");
+            LstUsers.Focus();
         }
     }
 }

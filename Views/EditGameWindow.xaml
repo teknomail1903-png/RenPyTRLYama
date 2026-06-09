@@ -61,6 +61,9 @@
                     <TextBox x:Name="TxtVersion"/>
                     <TextBlock Text="Yama Versiyonu"/>
                     <TextBox x:Name="TxtPatchVersion"/>
+                    <TextBlock x:Name="LblGameSelection" Text="Oyun Seç" Visibility="Collapsed"/>
+                    <ComboBox x:Name="CmbGameSelection" Visibility="Collapsed" Background="#222228" Foreground="White" BorderBrush="#333" Padding="8,6" Margin="0,0,0,10"/>
+                    <TextBlock x:Name="LblNoGameWarning" Text="⚠️ Önce bir oyun eklemelisiniz." Foreground="#E74C3C" Visibility="Collapsed" Margin="0,0,0,10"/>
                     <TextBlock Text="Kategoriler"/>
                     <ListBox x:Name="LstCategories" SelectionMode="Multiple" Height="100" Background="#222228"
                              Foreground="White" BorderBrush="#333" Margin="0,0,0,10"/>

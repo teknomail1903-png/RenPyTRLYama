@@ -46,9 +46,14 @@ namespace RenPyTRLauncher.Data
                 v => EfValueConverters.GuidListToDb(v),
                 v => EfValueConverters.GuidListFromDb(v));
 
+            var gameTypeConverter = new ValueConverter<GameType, string>(
+                v => v.ToString(),
+                v => Enum.Parse<GameType>(v));
+
             modelBuilder.Entity<Game>().Property(g => g.Categories).HasConversion(stringListConverter);
             modelBuilder.Entity<Game>().Property(g => g.ScreenshotPaths).HasConversion(stringListConverter);
             modelBuilder.Entity<Game>().Property(g => g.DownloadLinks).HasConversion(stringListConverter);
+            modelBuilder.Entity<Game>().Property(g => g.Type).HasConversion(gameTypeConverter).HasDefaultValue(GameType.Game);
 
             modelBuilder.Entity<User>().Property(u => u.FavoriteGameIds).HasConversion(guidListConverter);
             modelBuilder.Entity<User>().Property(u => u.DownloadedPatchIds).HasConversion(guidListConverter);

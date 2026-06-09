@@ -5,316 +5,482 @@
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="CardBg" Color="#1A1A22"/>
-        <SolidColorBrush x:Key="Accent" Color="#9B59FF"/>
+        <SolidColorBrush x:Key="AdminPrimary" Color="#E74C3C"/>
+        <SolidColorBrush x:Key="AdminSecondary" Color="#E67E22"/>
+        <SolidColorBrush x:Key="AdminGold" Color="#FFD700"/>
+        <SolidColorBrush x:Key="SidebarBg" Color="#121216"/>
+        
+        <!-- Admin Stat Card Styles -->
         <Style x:Key="StatCard" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource CardBg}"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="Margin" Value="0,0,12,12"/>
-            <Setter Property="MinWidth" Value="160"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="Padding" Value="24"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" Opacity="0.3" BlurRadius="20" ShadowDepth="4"/>
+                </Setter.Value>
+            </Setter>
         </Style>
+        
         <Style x:Key="AdminLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#888"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#AAA"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
         </Style>
+        
         <Style x:Key="AdminValue" TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontSize" Value="36"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="0,4,0,0"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+        </Style>
+        
+        <!-- Admin Sidebar Button Style -->
+        <Style x:Key="SidebarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="18,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#2A2A35"/>
+                                <Setter Property="Foreground" Value="{StaticResource AdminPrimary}"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#E74C3C" Opacity="0.3" BlurRadius="15" ShadowDepth="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Active Sidebar Button Style -->
+        <Style x:Key="SidebarButtonActive" TargetType="Button" BasedOn="{StaticResource SidebarButton}">
+            <Setter Property="Background" Value="#E74C3C22"/>
+            <Setter Property="Foreground" Value="{StaticResource AdminPrimary}"/>
+            <Setter Property="BorderThickness" Value="3,0,0,0"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AdminPrimary}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="8" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#E74C3C33"/>
+                                <Setter Property="Foreground" Value="{StaticResource AdminPrimary}"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#E74C3C" Opacity="0.4" BlurRadius="20" ShadowDepth="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Quick Action Button Style -->
+        <Style x:Key="QuickActionButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AdminPrimary}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#C0392B"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#E74C3C" Opacity="0.5" BlurRadius="15" ShadowDepth="3"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- System Status Card Style -->
+        <Style x:Key="StatusCard" TargetType="Border">
+            <Setter Property="Background" Value="#1A1A22"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="#27AE60"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#27AE60" Opacity="0.2" BlurRadius="15" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Admin Badge Style -->
+        <Style x:Key="AdminBadge" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource AdminGold}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFD700" Opacity="0.5" BlurRadius="12" ShadowDepth="3"/>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="8">
-        <TabControl Background="Transparent" BorderThickness="0">
-            <TabItem Header="📊 Dashboard">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="12">
-                        <TextBlock Text="Dashboard" FontSize="22" Foreground="White" FontWeight="Bold" Margin="0,0,0,16"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource SidebarBg}" BorderBrush="#2A2A30" BorderThickness="0,0,1,0">
+            <StackPanel Margin="16,20">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
+                    <TextBlock Text="🛡" FontSize="24" VerticalAlignment="Center" Foreground="{StaticResource AdminPrimary}"/>
+                    <TextBlock Text="Admin Panel" Foreground="White" FontSize="18" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button x:Name="BtnDashboard" Style="{StaticResource SidebarButtonActive}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📊" FontSize="18" Foreground="#E74C3C"/>
+                        <TextBlock Text="Dashboard" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnGames" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🎮" FontSize="18" Foreground="#E67E22"/>
+                        <TextBlock Text="Oyun Yönetimi" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnPatches" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🇹🇷" FontSize="18" Foreground="#27AE60"/>
+                        <TextBlock Text="Türkçe Yamalar" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnSlider" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🎞" FontSize="18" Foreground="#3498DB"/>
+                        <TextBlock Text="Slider" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnAnnouncements" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📢" FontSize="18" Foreground="#9B59FF"/>
+                        <TextBlock Text="Duyuru Yönetimi" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnUsers" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="👥" FontSize="18" Foreground="#1ABC9C"/>
+                        <TextBlock Text="Kullanıcı Yönetimi" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnVipMembers" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="💎" FontSize="18" Foreground="{StaticResource AdminGold}"/>
+                        <TextBlock Text="VIP Yönetimi" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnMediaLibrary" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🖼" FontSize="18" Foreground="#E91E63"/>
+                        <TextBlock Text="Medya Kütüphanesi" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnSettings" Style="{StaticResource SidebarButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="⚙" FontSize="18" Foreground="#7F8C8D"/>
+                        <TextBlock Text="Sistem Ayarları" Margin="12,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24">
+                <!-- Dashboard Page -->
+                <Grid x:Name="PageDashboard">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <TextBlock Text="Dashboard" FontSize="32" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <Border Style="{StaticResource AdminBadge}" Margin="16,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="👑 YÖNETİCİ" Foreground="Black" FontSize="14" FontWeight="Bold"/>
+                            </Border>
+                        </StackPanel>
+                        
+                        <!-- Statistics Cards -->
                         <WrapPanel x:Name="DashboardStats">
                             <Border Style="{StaticResource StatCard}">
                                 <StackPanel>
                                     <TextBlock Text="🎮 Toplam Oyun" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock x:Name="TxtStatGames" Style="{StaticResource AdminValue}"/>
+                                    <TextBlock x:Name="TxtStatGames" Style="{StaticResource AdminValue}" Foreground="{StaticResource AdminPrimary}"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatCard}">
                                 <StackPanel>
                                     <TextBlock Text="👥 Toplam Kullanıcı" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock x:Name="TxtStatUsers" Style="{StaticResource AdminValue}"/>
+                                    <TextBlock x:Name="TxtStatUsers" Style="{StaticResource AdminValue}" Foreground="{StaticResource AdminSecondary}"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatCard}">
                                 <StackPanel>
-                                    <TextBlock Text="⬇ Toplam İndirme" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock x:Name="TxtStatDownloads" Style="{StaticResource AdminValue}"/>
+                                    <TextBlock Text="⬇️ Toplam İndirme" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatDownloads" Style="{StaticResource AdminValue}" Foreground="#3498DB"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatCard}">
                                 <StackPanel>
-                                    <TextBlock Text="💎 VIP Üye" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock x:Name="TxtStatVip" Style="{StaticResource AdminValue}"/>
+                                    <TextBlock Text="📢 Aktif Duyuru" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatAnnouncements" Style="{StaticResource AdminValue}" Foreground="#9B59FF"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatCard}">
                                 <StackPanel>
-                                    <TextBlock Text="📥 Aktif İndirme" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock x:Name="TxtStatActive" Style="{StaticResource AdminValue}"/>
+                                    <TextBlock Text="💎 VIP Kullanıcı" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtStatVip" Style="{StaticResource AdminValue}" Foreground="{StaticResource AdminGold}"/>
                                 </StackPanel>
                             </Border>
                         </WrapPanel>
-                    </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-
-            <TabItem x:Name="TabGames" Header="🎮 Oyun Yönetimi">
-                <StackPanel Margin="12">
-                    <Button x:Name="BtnAddGame" Content="+ Oyun Ekle" Width="140" Height="36" Margin="0,0,0,10"/>
-                    <ListBox x:Name="LstGames" DisplayMemberPath="Name" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,10">
-                        <Button x:Name="BtnEditGame" Content="Düzenle" Width="100" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnDeleteGame" Content="Sil" Width="100"/>
-                    </StackPanel>
-                </StackPanel>
-            </TabItem>
-
-            <TabItem x:Name="TabUsers" Header="👥 Kullanıcı Yönetimi">
-                <StackPanel Margin="12">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <ListBox x:Name="LstUsers" DisplayMemberPath="Username" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
-                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                            <Button x:Name="BtnUserAdd" Content="Ekle" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnUserEdit" Content="Düzenle" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnUserDelete" Content="Sil" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnGrantVip" Content="VIP Ver" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnMakeAdmin" Content="Admin Yap" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeAdmin" Content="Admin Kaldır" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnMakeMod" Content="Mod Yap" Width="110" Margin="0,0,0,8"/>
-                            <Button x:Name="BtnRevokeMod" Content="Mod Kaldır" Width="110"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </TabItem>
-
-            <TabItem x:Name="TabSupport" Header="🆘 Destek Talepleri">
-                <Grid Margin="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="320"/>
-                    </Grid.ColumnDefinitions>
-                    <ListBox x:Name="LstTickets" Height="400" Background="#1A1A22" Foreground="White" BorderThickness="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="4">
-                                    <TextBlock>
-                                        <Run Text="{Binding TypeLabel, Mode=OneWay}" Foreground="#9B59FF"/>
-                                        <Run Text=" — "/>
-                                        <Run Text="{Binding Subject, Mode=OneWay}" FontWeight="SemiBold"/>
-                                        <Run Text=" ["/>
-                                        <Run Text="{Binding StatusLabel, Mode=OneWay}"/>
-                                        <Run Text="]"/>
-                                    </TextBlock>
-                                    <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#666" FontSize="11"/>
+                        
+                        <!-- Quick Actions -->
+                        <TextBlock Text="Hızlı İşlemler" FontSize="20" Foreground="White" FontWeight="Bold" Margin="0,24,0,16"/>
+                        <WrapPanel>
+                            <Button x:Name="BtnQuickAddGame" Content="➕ Oyun Ekle" Style="{StaticResource QuickActionButton}" Margin="0,0,12,12"/>
+                            <Button x:Name="BtnQuickAddAnnouncement" Content="📢 Duyuru Oluştur" Style="{StaticResource QuickActionButton}" Margin="0,0,12,12"/>
+                            <Button x:Name="BtnQuickSearchUser" Content="👤 Kullanıcı Ara" Style="{StaticResource QuickActionButton}" Margin="0,0,12,12"/>
+                            <Button x:Name="BtnQuickGiveVip" Content="💎 VIP Ver" Style="{StaticResource QuickActionButton}" Margin="0,0,12,12" Background="{StaticResource AdminGold}" Foreground="Black"/>
+                        </WrapPanel>
+                        
+                        <!-- System Status -->
+                        <TextBlock Text="Sistem Durumu" FontSize="20" Foreground="White" FontWeight="Bold" Margin="0,24,0,16"/>
+                        <WrapPanel>
+                            <Border Style="{StaticResource StatusCard}">
+                                <StackPanel>
+                                    <TextBlock Text="🟢 Veritabanı Durumu" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock Text="Aktif" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
                                 </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                        <TextBlock Text="Talep Detayı" Foreground="White" FontWeight="Bold" Margin="0,0,0,8"/>
-                        <TextBlock x:Name="TxtTicketDetail" Foreground="#CCC" TextWrapping="Wrap" Height="120" Margin="0,0,0,10"/>
-                        <TextBlock Text="Admin Yanıtı" Foreground="#888" FontSize="12"/>
-                        <TextBox x:Name="TxtTicketReply" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,10"/>
-                        <Button x:Name="BtnReplyTicket" Content="Yanıtla" Width="110" Margin="0,0,0,8"/>
-                        <Button x:Name="BtnCloseTicket" Content="Kapat" Width="110" Margin="0,0,0,8"/>
-                        <Button x:Name="BtnReopenTicket" Content="Yeniden Aç" Width="110"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-
-            <TabItem x:Name="TabMemberships" Header="💎 Üyelik Kartları">
-                <StackPanel Margin="12">
-                    <TextBlock Text="VIP üyelik planlarını buradan yönetin." Foreground="#888" Margin="0,0,0,10"/>
-                    <ListBox x:Name="LstMemberships" Height="200" Background="#1A1A22" Foreground="White" BorderThickness="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Icon}" Margin="0,0,8,0"/>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text=" — " Foreground="#666"/>
-                                    <TextBlock Text="{Binding PriceLabel}" Foreground="{StaticResource Accent}"/>
+                            </Border>
+                            <Border Style="{StaticResource StatusCard}">
+                                <StackPanel>
+                                    <TextBlock Text="🟢 Sunucu Durumu" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock Text="Online" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
                                 </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Grid Margin="0,12,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                            <TextBlock Text="Ad" Foreground="White" FontSize="12"/>
-                            <TextBox x:Name="TxtTierName" Margin="0,4,0,8"/>
-                            <TextBlock Text="Fiyat Etiketi" Foreground="White" FontSize="12"/>
-                            <TextBox x:Name="TxtTierPrice" Margin="0,4,0,8"/>
-                            <TextBlock Text="Satın Al URL" Foreground="White" FontSize="12"/>
-                            <TextBox x:Name="TxtTierUrl" Margin="0,4,0,8"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="Özellikler (satır başına bir)" Foreground="White" FontSize="12"/>
-                            <TextBox x:Name="TxtTierFeatures" Height="100" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,8"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Button x:Name="BtnSaveTier" Content="Kaydet" Width="100" Margin="0,0,8,0"/>
-                                <Button x:Name="BtnDeleteTier" Content="Sil" Width="100"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </TabItem>
-
-            <TabItem x:Name="TabTop10" Header="🏆 Top10 Yönetimi">
-                <StackPanel Margin="12">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,8">
-                        <Button x:Name="BtnTop10Refresh" Content="Yenile" Width="100" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnTop10Remove" Content="Kaldır" Width="100"/>
-                    </StackPanel>
-                    <ListBox x:Name="LstTop10" Height="360" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AlternationCount="1000">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="#1A1A22" CornerRadius="10" Margin="8" Padding="8" Width="200" Height="240">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="120"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid>
-                                            <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
-                                            <Border Background="#00000088" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="6" Padding="6,3" CornerRadius="6">
-                                                <TextBlock Foreground="White" FontWeight="Bold">
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="# {0}">
-                                                            <Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}" Path="(ItemsControl.AlternationIndex)"/>
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </Border>
-                                        </Grid>
-                                        <StackPanel Grid.Row="1" Margin="4">
-                                            <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
-                                            <TextBlock Foreground="#888" FontSize="11">
-                                                <Run Text="⬇ "/><Run Text="{Binding DownloadCount}"/>
+                            </Border>
+                            <Border Style="{StaticResource StatusCard}">
+                                <StackPanel>
+                                    <TextBlock Text="🟢 Güncelleme Sistemi" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock Text="Hazır" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
+                                </StackPanel>
+                            </Border>
+                        </WrapPanel>
+                        
+                        <!-- Recent Content -->
+                        <TextBlock Text="Son Eklenen İçerikler" FontSize="20" Foreground="White" FontWeight="Bold" Margin="0,24,0,16"/>
+                        <ItemsControl x:Name="RecentContentList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#1A1A22" CornerRadius="12" Padding="20" Margin="0,0,0,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="16"/>
+                                            <TextBlock Foreground="#888" FontSize="13" Margin="0,4,0,0">
+                                                <Run Text="{Binding TypeLabel, Mode=OneWay}"/><Run Text=" • "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=OneWay}"/>
                                             </TextBlock>
                                         </StackPanel>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </TabItem>
-
-            <TabItem x:Name="TabAnnouncements" Header="📢 Duyuru Yönetimi">
-                <StackPanel Margin="12">
-                    <ListBox x:Name="LstAnns" DisplayMemberPath="Title" Height="160" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
-                    <TextBlock Text="Başlık" Foreground="White" Margin="0,10,0,2"/>
-                    <TextBox x:Name="TxtAnnTitle"/>
-                    <TextBlock Text="Mesaj" Foreground="White" Margin="0,8,0,2"/>
-                    <TextBox x:Name="TxtAnnMsg" Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    <TextBlock Text="Renk (#hex)" Foreground="White" Margin="0,8,0,2"/>
-                    <TextBox x:Name="TxtAnnColor" Text="#9B59FF"/>
-                    <CheckBox x:Name="ChkAnnPinned" Content="📌 Sabitle (Ana sayfada öncelikli)" Foreground="White" Margin="0,8,0,0"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,10">
-                        <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="120" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnUpdateAnn" Content="Güncelle" Width="100" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnDeleteAnn" Content="Duyuru Sil" Width="120"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
+                </Grid>
 
-            <TabItem x:Name="TabCategories" Header="📁 Kategoriler">
-                <StackPanel Margin="12">
-                    <Button x:Name="BtnAddCategory" Content="+ Kategori Ekle" Width="140" Height="36" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-                    <ListBox x:Name="LstCategories" Height="280" Background="#1A1A22" Foreground="White" BorderThickness="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Icon}" Margin="0,0,8,0"/>
-                                    <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold"/>
-                                    <TextBlock Text=" — " Foreground="#666"/>
-                                    <TextBlock Text="{Binding Name}" Foreground="#888"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Orientation="Horizontal" Margin="0,10">
-                        <Button x:Name="BtnEditCategory" Content="Düzenle" Width="100" Margin="0,0,8,0"/>
-                        <Button x:Name="BtnDeleteCategory" Content="Sil" Width="100"/>
+                <!-- Games Page -->
+                <Grid x:Name="PageGames" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🎮 Oyun Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Button x:Name="BtnAddGame" Content="+ Oyun Ekle" Width="160" Height="44" Margin="0,0,0,16" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold" FontSize="14"/>
+                        <ListBox x:Name="LstGames" DisplayMemberPath="Name" Height="320" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                            <Button x:Name="BtnEditGame" Content="Düzenle" Width="130" Height="40" Margin="0,0,12,0" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnDeleteGame" Content="Sil" Width="130" Height="40" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </TabItem>
+                </Grid>
 
-            <TabItem x:Name="TabHelp" Header="📚 Rehber Yönetimi">
-                <Grid Margin="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                        <ListBox x:Name="LstHelpGuides" Height="200" Background="#1A1A22" Foreground="White" BorderThickness="0">
+                <!-- Patches Page -->
+                <Grid x:Name="PagePatches" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🇹🇷 Türkçe Yama Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Button x:Name="BtnAddPatch" Content="+ Yama Ekle" Width="160" Height="44" Margin="0,0,0,16" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold" FontSize="14"/>
+                        <ListBox x:Name="LstPatches" DisplayMemberPath="Name" Height="320" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                            <Button x:Name="BtnEditPatch" Content="Düzenle" Width="130" Height="40" Margin="0,0,12,0" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnDeletePatch" Content="Sil" Width="130" Height="40" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Slider Page -->
+                <Grid x:Name="PageSlider" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🎞 Slider Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <TextBlock Text="Ana sayfa slider'ında görünecek içerikleri buradan yönetin." Foreground="#888" Margin="0,0,0,16"/>
+                        <ListBox x:Name="LstSlider" DisplayMemberPath="Name" Height="320" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                            <Button x:Name="BtnAddToSlider" Content="Ekle" Width="130" Height="40" Margin="0,0,12,0" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnRemoveFromSlider" Content="Kaldır" Width="130" Height="40" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Announcements Page -->
+                <Grid x:Name="PageAnnouncements" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="📢 Duyuru Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <ListBox x:Name="LstAnns" DisplayMemberPath="Title" Height="220" Background="#1A1A22" Foreground="White" BorderThickness="0" Margin="0,0,0,16"/>
+                        <TextBlock Text="Başlık" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtAnnTitle" Margin="0,6,0,12"/>
+                        <TextBlock Text="Mesaj" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtAnnMsg" Height="70" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,6,0,12"/>
+                        <TextBlock Text="Renk (#hex)" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtAnnColor" Text="#9B59FF" Margin="0,6,0,12"/>
+                        <CheckBox x:Name="ChkAnnPinned" Content="📌 Sabitle" Foreground="White" Margin="0,12,0,16"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="BtnAddAnn" Content="Duyuru Ekle" Width="150" Height="42" Margin="0,0,12,0" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnUpdateAnn" Content="Güncelle" Width="130" Height="42" Margin="0,0,12,0" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnDeleteAnn" Content="Sil" Width="130" Height="42" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Users Page -->
+                <Grid x:Name="PageUsers" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="👥 Kullanıcı Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="LstUsers" DisplayMemberPath="Username" Height="320" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                            <StackPanel Grid.Column="1" Margin="16,0,0,0">
+                                <Button x:Name="BtnUserAdd" Content="Ekle" Width="140" Height="42" Margin="0,0,0,10" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                <Button x:Name="BtnUserEdit" Content="Düzenle" Width="140" Height="42" Margin="0,0,0,10" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                <Button x:Name="BtnUserDelete" Content="Sil" Width="140" Height="42" Margin="0,0,0,10" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                <Button x:Name="BtnGrantVip" Content="VIP Ver" Width="140" Height="42" Margin="0,0,0,10" Background="{StaticResource AdminGold}" Foreground="Black" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                <Button x:Name="BtnRevokeVip" Content="VIP Kaldır" Width="140" Height="42" Margin="0,0,0,10" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                <Button x:Name="BtnExtendVip" Content="Süre Uzat" Width="140" Height="42" Margin="0,0,0,10" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <!-- VIP Members Page -->
+                <Grid x:Name="PageVipMembers" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="💎 VIP Üyeler" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <TextBlock Text="VIP üyelik planlarını buradan yönetin." Foreground="#888" Margin="0,0,0,16"/>
+                        <ListBox x:Name="LstMemberships" Height="220" Background="#1A1A22" Foreground="White" BorderThickness="0" Margin="0,0,0,16">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding TypeIcon}" Margin="0,0,6,0"/>
-                                        <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Icon}" Margin="0,0,10,0" FontSize="18"/>
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="15"/>
+                                        <TextBlock Text=" — " Foreground="#666" FontSize="14"/>
+                                        <TextBlock Text="{Binding PriceLabel}" Foreground="{StaticResource AdminGold}" FontWeight="SemiBold" FontSize="14"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <Button x:Name="BtnDeleteHelp" Content="Sil" Width="80"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1">
-                        <TextBlock Text="Başlık" Foreground="White" FontSize="12"/>
-                        <TextBox x:Name="TxtHelpTitle" Margin="0,4,0,8"/>
-                        <TextBlock Text="İçerik" Foreground="White" FontSize="12"/>
-                        <TextBox x:Name="TxtHelpContent" Height="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,4,0,8"/>
-                        <TextBlock Text="Video URL (video rehberler için)" Foreground="White" FontSize="12"/>
-                        <TextBox x:Name="TxtHelpVideoUrl" Margin="0,4,0,8"/>
-                        <TextBlock Text="Tür" Foreground="White" FontSize="12"/>
-                        <ComboBox x:Name="CmbHelpType" Margin="0,4,0,8">
-                            <ComboBoxItem Content="Yazılı Rehber" Tag="Text"/>
-                            <ComboBoxItem Content="Video Rehber" Tag="Video"/>
-                            <ComboBoxItem Content="SSS" Tag="FAQ"/>
-                            <ComboBoxItem Content="Araç" Tag="Tool"/>
-                        </ComboBox>
-                        <Button x:Name="BtnAddHelp" Content="Rehber Ekle" Width="120" Height="32"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                <TextBlock Text="Ad" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                                <TextBox x:Name="TxtTierName" Margin="0,6,0,12"/>
+                                <TextBlock Text="Fiyat Etiketi" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                                <TextBox x:Name="TxtTierPrice" Margin="0,6,0,12"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="Satın Al URL" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                                <TextBox x:Name="TxtTierUrl" Margin="0,6,0,12"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="BtnSaveTier" Content="Kaydet" Width="110" Height="42" Margin="0,0,12,0" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                    <Button x:Name="BtnDeleteTier" Content="Sil" Width="110" Height="42" Background="#C0392B" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </Grid>
-            </TabItem>
 
-            <TabItem x:Name="TabSettings" Header="⚙ Bağlantı Ayarları">
-                <StackPanel Margin="12" MaxWidth="500">
-                    <TextBlock Text="Launcher bağlantı ayarları" Foreground="White" FontWeight="Bold" Margin="0,0,0,12"/>
-                    <TextBlock Text="Web Sitesi URL" Foreground="#888" FontSize="12"/>
-                    <TextBox x:Name="TxtWebsiteUrl" Margin="0,4,0,10"/>
-                    <TextBlock Text="Discord URL" Foreground="#888" FontSize="12"/>
-                    <TextBox x:Name="TxtDiscordUrl" Margin="0,4,0,10"/>
-                    <TextBlock Text="Duyurular URL" Foreground="#888" FontSize="12"/>
-                    <TextBox x:Name="TxtAnnouncementsUrl" Margin="0,4,0,10"/>
-                    <TextBlock Text="Destek URL" Foreground="#888" FontSize="12"/>
-                    <TextBox x:Name="TxtSupportUrl" Margin="0,4,0,10"/>
-                    <Button x:Name="BtnSaveSettings" Content="Ayarları Kaydet" Width="160" Height="36" Margin="0,8,0,0"/>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+                <!-- Media Library Page -->
+                <Grid x:Name="PageMediaLibrary" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🖼 Medya Kütüphanesi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <TextBlock Text="Resim URL" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtMediaUrl" Margin="0,6,0,12"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="BtnAddMedia" Content="Ekle" Width="130" Height="42" Margin="0,0,12,0" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                            <Button x:Name="BtnCheckMedia" Content="Link Kontrol Et" Width="150" Height="42" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
+                        </StackPanel>
+                        <TextBlock Text="Önizleme" Foreground="White" FontSize="13" FontWeight="Medium" Margin="0,20,0,8"/>
+                        <Border x:Name="MediaPreview" Background="#1A1A22" CornerRadius="12" Height="220" Margin="0,0,0,16">
+                            <TextBlock Text="Resim önizlemesi burada görünecek" Foreground="#666" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+                        </Border>
+                        <TextBlock Text="Medya Listesi" Foreground="White" FontSize="13" FontWeight="Medium" Margin="0,0,0,8"/>
+                        <ListBox x:Name="LstMedia" Height="220" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Settings Page -->
+                <Grid x:Name="PageSettings" Visibility="Collapsed">
+                    <StackPanel MaxWidth="550">
+                        <TextBlock Text="⚙ Sistem Ayarları" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <TextBlock Text="Web Sitesi URL" Foreground="#AAA" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtWebsiteUrl" Margin="0,6,0,14"/>
+                        <TextBlock Text="Discord URL" Foreground="#AAA" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtDiscordUrl" Margin="0,6,0,14"/>
+                        <TextBlock Text="Duyurular URL" Foreground="#AAA" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtAnnouncementsUrl" Margin="0,6,0,14"/>
+                        <TextBlock Text="Destek URL" Foreground="#AAA" FontSize="13" FontWeight="Medium"/>
+                        <TextBox x:Name="TxtSupportUrl" Margin="0,6,0,14"/>
+                        <Button x:Name="BtnSaveSettings" Content="Ayarları Kaydet" Width="180" Height="44" Margin="0,16,0,0" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold" FontSize="14"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

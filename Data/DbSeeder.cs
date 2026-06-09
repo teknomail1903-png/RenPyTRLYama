@@ -35,7 +35,9 @@ namespace RenPyTRLauncher.Data
                         PatchNotes = "v1.0 — İlk Türkçe yama sürümü.\n- Ana hikaye çevirisi tamamlandı\n- Arayüz Türkçeleştirildi",
                         DownloadLinks = new System.Collections.Generic.List<string> { "Resmi Site|https://renpytr.com", "Discord|https://discord.gg/renpytr" },
                         CreatedDate = DateTime.UtcNow.AddDays(-30),
-                        UpdatedDate = DateTime.UtcNow.AddDays(-2)
+                        UpdatedDate = DateTime.UtcNow.AddDays(-2),
+                        Type = GameType.Game,
+                        ParentGameId = Guid.Empty
                     },
                     new Game
                     {
@@ -49,7 +51,9 @@ namespace RenPyTRLauncher.Data
                         DownloadCount = 980,
                         PatchVersion = "v0.9.4-tr",
                         CreatedDate = DateTime.UtcNow.AddDays(-14),
-                        UpdatedDate = DateTime.UtcNow.AddDays(-1)
+                        UpdatedDate = DateTime.UtcNow.AddDays(-1),
+                        Type = GameType.Game,
+                        ParentGameId = Guid.Empty
                     },
                     new Game
                     {
@@ -63,7 +67,9 @@ namespace RenPyTRLauncher.Data
                         DownloadCount = 760,
                         PatchVersion = "v1.0-tr",
                         CreatedDate = DateTime.UtcNow.AddDays(-7),
-                        UpdatedDate = DateTime.UtcNow.AddDays(-3)
+                        UpdatedDate = DateTime.UtcNow.AddDays(-3),
+                        Type = GameType.Game,
+                        ParentGameId = Guid.Empty
                     },
                     new Game
                     {
@@ -77,7 +83,9 @@ namespace RenPyTRLauncher.Data
                         DownloadCount = 540,
                         PatchVersion = "v0.8-tr",
                         CreatedDate = DateTime.UtcNow.AddDays(-5),
-                        UpdatedDate = DateTime.UtcNow.AddDays(-4)
+                        UpdatedDate = DateTime.UtcNow.AddDays(-4),
+                        Type = GameType.Game,
+                        ParentGameId = Guid.Empty
                     });
             }
 
@@ -230,7 +238,67 @@ namespace RenPyTRLauncher.Data
                     new UserActivity { UserId = argionUser.Id, Description = "Gold VIP üyeliği aktif", Icon = "💎", OccurredAt = DateTime.UtcNow.AddDays(-1) });
             }
 
-            db.SaveChanges();
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("SaveChanges öncesi - ChangeTracker Entries:");
+                foreach (var entry in db.ChangeTracker.Entries())
+                {
+                    System.Diagnostics.Debug.WriteLine($"Entity: {entry.Entity.GetType().Name}, State: {entry.State}");
+                }
+
+                Console.WriteLine("SaveChanges öncesi - ChangeTracker Entries:");
+                foreach (var entry in db.ChangeTracker.Entries())
+                {
+                    Console.WriteLine($"Entity={entry.Entity.GetType().Name} State={entry.State}");
+                }
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    App.Log($"SEED ERROR: {ex.Message}");
+
+                    if (ex.InnerException != null)
+                        App.Log($"INNER ERROR: {ex.InnerException.Message}");
+
+                    App.Log(ex.StackTrace);
+
+                    throw;
+                }
+
+                System.Diagnostics.Debug.WriteLine("SaveChanges başarılı");
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                System.Diagnostics.Debug.WriteLine("DB UPDATE ERROR");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("INNER EXCEPTION:");
+                    System.Diagnostics.Debug.WriteLine(ex.InnerException.Message);
+                    System.Diagnostics.Debug.WriteLine(ex.InnerException.ToString());
+                    App.Log($"INNER EXCEPTION: {ex.InnerException.Message}");
+                    App.Log($"INNER EXCEPTION: {ex.InnerException.ToString()}");
+                }
+
+                System.Windows.MessageBox.Show($"DB UPDATE ERROR:\n{ex.Message}\n\nINNER: {ex.InnerException?.Message}\n\nINNER: {ex.InnerException?.ToString()}", "DbSeeder Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"SaveChanges Error: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Inner Exception ToString: {ex.InnerException.ToString()}");
+                }
+                System.Diagnostics.Debug.WriteLine($"Stack Trace: {ex.ToString()}");
+                System.Windows.MessageBox.Show($"SaveChanges Error: {ex.Message}\n\nInner: {ex.InnerException?.Message}", "DbSeeder Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                throw;
+            }
         }
 
         private static void SeedCategories(AppDbContext db)

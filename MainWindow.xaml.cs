@@ -137,6 +137,8 @@ namespace RenPyTRLauncher
 
             _sidebarMap["PageOyunlar"] = BtnOyunlar;
 
+            _sidebarMap["PageTurkceYamalar"] = BtnTurkceYamalar;
+
             _sidebarMap["PageFavoriler"] = BtnFavoriler;
 
             _sidebarMap["PageKategori"] = BtnKategori;
@@ -153,6 +155,8 @@ namespace RenPyTRLauncher
             BtnAnaSayfa.Click += (_, _) => SetActivePage("PageAnaSayfa");
 
             BtnOyunlar.Click += (_, _) => SetActivePage("PageOyunlar");
+
+            BtnTurkceYamalar.Click += (_, _) => SetActivePage("PageTurkceYamalar");
 
             BtnFavoriler.Click += (_, _) => SetActivePage("PageFavoriler");
 
@@ -203,6 +207,25 @@ namespace RenPyTRLauncher
             };
 
             BtnChangeAvatar.Click += BtnChangeAvatar_Click;
+
+            BtnProfileAccountSettings.Click += (_, _) =>
+            {
+                if (viewModel.CurrentUser == null) return;
+                new EditProfileWindow(viewModel.CurrentUser).ShowDialog();
+                ServiceLocator.NotifyDataChanged();
+            };
+
+            BtnProfileMyFavorites.Click += (_, _) =>
+            {
+                SetActivePage("PageFavoriler");
+            };
+
+            BtnProfileNotifications.Click += (_, _) =>
+            {
+                MessageBox.Show("Bildirimler özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+            };
+
+            BtnProfileLogout.Click += BtnLogout_Click;
 
         }
 
@@ -676,21 +699,35 @@ namespace RenPyTRLauncher
 
         {
 
-            if (!AuthorizationService.CanAccessAdminPanel(viewModel.CurrentUser))
-
+            try
             {
+                App.Log("ShowAdmin Start");
 
-                MessageBox.Show("Bu alana erişim yetkiniz yok.", "Yetkisiz", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (!AuthorizationService.CanAccessAdminPanel(viewModel.CurrentUser))
 
-                return;
+                {
 
+                    MessageBox.Show("Bu alana erişim yetkiniz yok.", "Yetkisiz", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                    return;
+
+                }
+
+                App.Log("Creating AdminUserControl");
+                AdminHost.Content = new AdminUserControl(viewModel.CurrentUser);
+
+                AdminHost.Visibility = Visibility.Visible;
+
+                HideAllPages();
+
+                App.Log("ShowAdmin End");
             }
-
-            AdminHost.Content = new AdminUserControl(viewModel.CurrentUser);
-
-            AdminHost.Visibility = Visibility.Visible;
-
-            HideAllPages();
+            catch (Exception ex)
+            {
+                App.Log($"ShowAdmin Error: {ex.Message}");
+                App.Log($"ShowAdmin StackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Admin paneli açılırken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             HighlightSidebar(null);
 
@@ -717,6 +754,8 @@ namespace RenPyTRLauncher
                 case "PageAnaSayfa": PageAnaSayfa.Visibility = Visibility.Visible; break;
 
                 case "PageOyunlar": PageOyunlar.Visibility = Visibility.Visible; break;
+
+                case "PageTurkceYamalar": PageTurkceYamalar.Visibility = Visibility.Visible; break;
 
                 case "PageFavoriler": PageFavoriler.Visibility = Visibility.Visible; break;
 
@@ -780,6 +819,8 @@ namespace RenPyTRLauncher
 
             PageOyunlar.Visibility = Visibility.Collapsed;
 
+            PageTurkceYamalar.Visibility = Visibility.Collapsed;
+
             PageFavoriler.Visibility = Visibility.Collapsed;
 
             PageKategori.Visibility = Visibility.Collapsed;
@@ -831,19 +872,33 @@ namespace RenPyTRLauncher
 
         {
 
+            App.Log("BtnLogout_Click - Logout process started");
+
             if (MessageBox.Show("Oturumu kapatmak istediğinize emin misiniz?", "Çıkış",
 
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+
+            {
+
+                App.Log("BtnLogout_Click - User cancelled logout");
+                return;
+            }
 
 
 
+            App.Log("BtnLogout_Click - Calling AuthService.Logout()");
             ServiceLocator.AuthService?.Logout();
 
+            App.Log("BtnLogout_Click - Creating and showing LoginWindow");
             var login = new LoginWindow();
 
             login.Show();
 
+            App.Log("BtnLogout_Click - Closing MainWindow and shutting down application");
             Close();
+
+            // Ensure application shuts down completely to prevent double-click issue
+            Application.Current.Shutdown();
 
         }
 

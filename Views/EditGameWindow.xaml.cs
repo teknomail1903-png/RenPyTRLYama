@@ -16,15 +16,19 @@ namespace RenPyTRLauncher.Views
         {
             InitializeComponent();
             _gameService = gameService;
+            System.Diagnostics.Debug.WriteLine($"EditGameWindow Constructor - Received game parameter: {game != null}, game.GetHashCode(): {game?.GetHashCode()}");
             if (game == null)
             {
                 _game = new Game();
+                _game.Id = Guid.NewGuid(); // Generate new Guid only for new games
                 _isNew = true;
+                System.Diagnostics.Debug.WriteLine($"EditGameWindow opened - New game. Generated Id: {_game.Id}, _game.GetHashCode(): {_game.GetHashCode()}");
             }
             else
             {
                 _game = game;
                 _isNew = false;
+                System.Diagnostics.Debug.WriteLine($"EditGameWindow opened - Edit game. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _game.GetHashCode(): {_game.GetHashCode()}, game.GetHashCode(): {game.GetHashCode()}, Reference equality: {_game == game}");
             }
 
             TxtName.Text = _game.Name;
@@ -51,6 +55,9 @@ namespace RenPyTRLauncher.Views
             TxtScreenshots.Text = string.Join(Environment.NewLine, _game.ScreenshotPaths);
             TxtDownloadLinks.Text = string.Join(Environment.NewLine, _game.DownloadLinks);
 
+            // Setup game selection ComboBox for patches
+            SetupGameSelection();
+
             BtnCancel.Click += (s, e) => this.Close();
             BtnSave.Click += BtnSave_Click;
 
@@ -59,6 +66,68 @@ namespace RenPyTRLauncher.Views
             var btnPatch = this.FindName("BtnBrowsePatch") as System.Windows.Controls.Button;
             if (btnPatch != null) btnPatch.Click += BtnBrowsePatch_Click;
             BtnAddScreenshot.Click += BtnAddScreenshot_Click;
+        }
+
+        private void SetupGameSelection()
+        {
+            var lblGameSelection = this.FindName("LblGameSelection") as System.Windows.Controls.TextBlock;
+            var cmbGameSelection = this.FindName("CmbGameSelection") as System.Windows.Controls.ComboBox;
+            var lblNoGameWarning = this.FindName("LblNoGameWarning") as System.Windows.Controls.TextBlock;
+
+            if (lblGameSelection == null || cmbGameSelection == null || lblNoGameWarning == null) return;
+
+            // Show game selection only for patches
+            if (_game.Type == GameType.Patch)
+            {
+                lblGameSelection.Visibility = Visibility.Visible;
+                cmbGameSelection.Visibility = Visibility.Visible;
+
+                // Load games from database (only games, not patches)
+                var games = _gameService.GetAll().Where(g => g.Type == GameType.Game).ToList();
+                System.Diagnostics.Debug.WriteLine($"SetupGameSelection - Loaded {games.Count} games from database");
+
+                if (games.Count == 0)
+                {
+                    lblNoGameWarning.Visibility = Visibility.Visible;
+                    cmbGameSelection.IsEnabled = false;
+                    BtnSave.IsEnabled = false;
+                    System.Diagnostics.Debug.WriteLine($"SetupGameSelection - No games found, Save button disabled");
+                }
+                else
+                {
+                    lblNoGameWarning.Visibility = Visibility.Collapsed;
+                    cmbGameSelection.ItemsSource = games;
+                    cmbGameSelection.DisplayMemberPath = "Name";
+                    cmbGameSelection.SelectedValuePath = "Id";
+                    
+                    // If editing an existing patch, select its parent game
+                    if (!_isNew && _game.ParentGameId != Guid.Empty)
+                    {
+                        var parentGame = games.FirstOrDefault(g => g.Id == _game.ParentGameId);
+                        if (parentGame != null)
+                        {
+                            cmbGameSelection.SelectedItem = parentGame;
+                        }
+                    }
+
+                    cmbGameSelection.SelectionChanged += (s, e) =>
+                    {
+                        BtnSave.IsEnabled = cmbGameSelection.SelectedItem != null;
+                    };
+
+                    // Initially disable Save until a game is selected
+                    if (cmbGameSelection.SelectedItem == null)
+                    {
+                        BtnSave.IsEnabled = false;
+                    }
+                }
+            }
+            else
+            {
+                lblGameSelection.Visibility = Visibility.Collapsed;
+                cmbGameSelection.Visibility = Visibility.Collapsed;
+                lblNoGameWarning.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void BtnAddScreenshot_Click(object? sender, RoutedEventArgs e)
@@ -83,6 +152,32 @@ namespace RenPyTRLauncher.Views
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine($"BtnSave_Click - Before save. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _isNew: {_isNew}, _game.GetHashCode(): {_game.GetHashCode()}");
+
+            // For patches, validate game selection
+            if (_game.Type == GameType.Patch)
+            {
+                var cmbGameSelection = this.FindName("CmbGameSelection") as System.Windows.Controls.ComboBox;
+                if (cmbGameSelection != null && cmbGameSelection.SelectedItem is Game selectedGame)
+                {
+                    _game.ParentGameId = selectedGame.Id;
+                    System.Diagnostics.Debug.WriteLine($"BtnSave_Click - Patch parent game selected: {selectedGame.Id}, {selectedGame.Name}");
+
+                    // Verify the selected game exists in database
+                    var gameInDb = _gameService.GetById(selectedGame.Id);
+                    if (gameInDb == null)
+                    {
+                        MessageBox.Show("Seçilen oyun bulunamadı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                else if (_isNew)
+                {
+                    MessageBox.Show("Lütfen bir oyun seçin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+
             _game.Name = TxtName.Text ?? _game.Name;
             _game.Description = TxtDesc.Text ?? _game.Description;
             _game.Version = TxtVersion.Text ?? _game.Version;
@@ -103,11 +198,17 @@ namespace RenPyTRLauncher.Views
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 
+            System.Diagnostics.Debug.WriteLine($"BtnSave_Click - After field updates. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _game.GetHashCode(): {_game.GetHashCode()}");
+
             if (_isNew)
+            {
                 _gameService.Add(_game);
+                System.Diagnostics.Debug.WriteLine($"BtnSave_Click - After Add. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _game.GetHashCode(): {_game.GetHashCode()}");
+            }
             else
             {
                 _gameService.Update(_game);
+                System.Diagnostics.Debug.WriteLine($"BtnSave_Click - After Update. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _game.GetHashCode(): {_game.GetHashCode()}");
                 ServiceLocator.NotificationService?.NotifyAllUsers(
                     "Yama Güncellendi",
                     $"{_game.Name} için yeni yama: {_game.PatchVersion}",

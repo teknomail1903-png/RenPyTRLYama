@@ -18,28 +18,532 @@
         <local:CountToVisibilityConverter x:Key="CountToVis"/>
         <local:RoleToVisibilityConverter x:Key="RoleToVis"/>
         <local:StringNotEmptyToVisibilityConverter x:Key="StrNotEmpty"/>
-        
-        <!-- Game Card Style -->
-        <Style x:Key="GameCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="#1A1A22"/>
-            <Setter Property="CornerRadius" Value="12"/>
-            <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="280"/>
-            <Setter Property="Margin" Value="0,0,16,16"/>
+
+        <!-- Card Shadow Effect -->
+        <DropShadowEffect x:Key="CardShadow" Color="Black" Opacity="0.3" BlurRadius="20" ShadowDepth="4"/>
+
+        <!-- Sidebar Button Style -->
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E8E8F0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="Border" Property="Background" Value="#2A2A35"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sidebar Active Button Style -->
+        <Style x:Key="SidebarActiveButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9B59FF33"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="18,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="LeftIndicator" Width="4" Background="#9B59FF" CornerRadius="0,4,4,0" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+                            <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}" Margin="8,0,0,0">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Logout Button Style -->
+        <Style x:Key="SidebarLogoutButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E74C3C22"/>
+            <Setter Property="Foreground" Value="#E74C3C"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1.05" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                                           To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                                           To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter TargetName="Border" Property="Background" Value="#E74C3C"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VIP Card Base Style -->
+        <Style x:Key="VipCardBaseStyle" TargetType="Border">
+            <Setter Property="Width" Value="280"/>
+            <Setter Property="MinHeight" Value="380"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Margin" Value="0,0,24,24"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Bronze VIP Card Style -->
+        <Style x:Key="VipCardBronzeStyle" TargetType="Border" BasedOn="{StaticResource VipCardBaseStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#CD7F32" Offset="0"/>
+                        <GradientStop Color="#8B4513" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#CD7F32"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Color="#000" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                    <DropShadowEffect Color="#CD7F32" Opacity="0.4" BlurRadius="20" ShadowDepth="4"/>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#222228"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Color="#9B59FF" Opacity="0.4" BlurRadius="12" ShadowDepth="4"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.05" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.05" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Silver VIP Card Style -->
+        <Style x:Key="VipCardSilverStyle" TargetType="Border" BasedOn="{StaticResource VipCardBaseStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#C0C0C0" Offset="0"/>
+                        <GradientStop Color="#A8A8A8" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#C0C0C0"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#C0C0C0" Opacity="0.5" BlurRadius="25" ShadowDepth="4"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.05" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.05" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Gold VIP Card Style -->
+        <Style x:Key="VipCardGoldStyle" TargetType="Border" BasedOn="{StaticResource VipCardBaseStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FFD700" Offset="0"/>
+                        <GradientStop Color="#FFA500" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#FFD700"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFD700" Opacity="0.6" BlurRadius="30" ShadowDepth="6"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.08" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.08" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Diamond VIP Card Style -->
+        <Style x:Key="VipCardDiamondStyle" TargetType="Border" BasedOn="{StaticResource VipCardBaseStyle}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#00E5FF" Offset="0"/>
+                        <GradientStop Color="#9B59FF" Offset="0.5"/>
+                        <GradientStop Color="#00E5FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#00E5FF"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#00E5FF" Opacity="0.7" BlurRadius="35" ShadowDepth="8"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.1" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.1" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#9B59FF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#8E44AD"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#7D3C98"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Badge Base Style -->
+        <Style x:Key="BadgeBaseStyle" TargetType="Border">
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="0,0,6,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Turkish Status Badges -->
+        <Style x:Key="TurkishSupportedBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#27AE60" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TurkishPatchBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#E67E22"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E67E22" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="EnglishBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#3498DB"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#3498DB" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TranslationInProgressBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#F39C12"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#F39C12" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Steam Status Badges -->
+        <Style x:Key="SteamAvailableBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#1E90FF"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#1E90FF" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SteamComingSoonBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#FFD700"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFD700" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SteamNotAvailableBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#7F8C8D"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#7F8C8D" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- VIP Badge -->
+        <Style x:Key="VipBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#FFD700"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FFD700" Opacity="0.4" BlurRadius="10" ShadowDepth="3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Update Status Badges -->
+        <Style x:Key="UpdatedBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#27AE60" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="UpdateAvailableBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#E74C3C" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="OutdatedBadge" TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+            <Setter Property="Background" Value="#95A5A6"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#95A5A6" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Badge Text Style -->
+        <Style x:Key="BadgeTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- Game Card Style -->
+        <Style x:Key="GameCardStyle" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1E1E28" Offset="0"/>
+                        <GradientStop Color="#16161E" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Width" Value="240"/>
+            <Setter Property="Height" Value="320"/>
+            <Setter Property="Margin" Value="0,0,20,20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#000000" Opacity="0.5" BlurRadius="25" ShadowDepth="8"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#2D2D3A"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.06" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.06" Duration="0:0:0.3"/>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                               To="#9B59FF" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)"
+                                               To="35" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)"
+                                               To="0.7" Duration="0:0:0.3"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.ShadowDepth)"
+                                               To="12" Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.25"/>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                               To="#2D2D3A" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)"
+                                               To="25" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)"
+                                               To="0.5" Duration="0:0:0.25"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.ShadowDepth)"
+                                               To="8" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -52,21 +556,116 @@
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <Border Grid.Column="0" Background="#121216" BorderBrush="#2A2A30" BorderThickness="0,0,1,0">
-            <StackPanel Margin="16,20">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,24">
-                    <TextBlock Text="🎮" FontSize="24" VerticalAlignment="Center"/>
-                    <TextBlock Text="RenPyTR" Foreground="White" FontSize="20" FontWeight="Bold" Margin="12,0,0,0" VerticalAlignment="Center"/>
+        <Border Grid.Column="0" BorderThickness="0,0,1,0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#121216" Offset="0"/>
+                    <GradientStop Color="#1A1A22" Offset="0.5"/>
+                    <GradientStop Color="#121216" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2A2A30" Offset="0"/>
+                    <GradientStop Color="#9B59FF44" Offset="0.5"/>
+                    <GradientStop Color="#2A2A30" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Effect>
+                <DropShadowEffect Color="#9B59FF" Opacity="0.15" BlurRadius="20" ShadowDepth="0"/>
+            </Border.Effect>
+            <StackPanel Margin="20,24">
+                <!-- Logo -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,32">
+                    <Border Width="48" Height="48" CornerRadius="12" Background="#9B59FF22">
+                        <TextBlock Text="🎮" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" Margin="16,0,0,0">
+                        <TextBlock Text="RenPyTR" Foreground="White" FontSize="22" FontWeight="Bold"/>
+                        <TextBlock Text="Launcher" Foreground="#9B59FF" FontSize="13" FontWeight="SemiBold"/>
+                    </StackPanel>
                 </StackPanel>
-                <Button x:Name="BtnAnaSayfa" Content="🏠 Ana Sayfa" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnOyunlar" Content="🎮 Oyunlar" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnFavoriler" Content="❤️ Favoriler" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnKategori" Content="📂 Kategoriler" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnVip" Content="� VIP" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnProfil" Content="� Profil" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnAyarlar" Content="⚙️ Ayarlar" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14"/>
-                <Button x:Name="BtnAdmin" Content="🛡 Admin" Margin="0,4" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#CCC" BorderThickness="0" FontSize="14" Visibility="Collapsed"/>
-                <Button x:Name="BtnLogout" Content="🚪 Çıkış" Margin="0,24,0,0" Padding="16,10" HorizontalContentAlignment="Left" Background="Transparent" Foreground="#E74C3C" BorderThickness="0" FontSize="14"/>
+
+                <!-- Menu Items -->
+                <Button x:Name="BtnAnaSayfa" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🏠" FontSize="18" Foreground="#3498DB"/>
+                        <TextBlock Text=" Ana Sayfa" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnOyunlar" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🎮" FontSize="18" Foreground="#9B59FF"/>
+                        <TextBlock Text=" Oyunlar" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnTurkceYamalar" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🇹🇷" FontSize="18" Foreground="#E74C3C"/>
+                        <TextBlock Text=" Türkçe Yamalar" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnFavoriler" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="❤️" FontSize="18" Foreground="#E74C3C"/>
+                        <TextBlock Text=" Favoriler" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnKategori" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="📂" FontSize="18" Foreground="#95A5A6"/>
+                        <TextBlock Text=" Kategoriler" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnVip" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="💎" FontSize="18" Foreground="#FFD700"/>
+                        <TextBlock Text=" VIP" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnProfil" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="👤" FontSize="18" Foreground="#1ABC9C"/>
+                        <TextBlock Text=" Profil" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnAyarlar" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="⚙️" FontSize="18" Foreground="#F39C12"/>
+                        <TextBlock Text=" Ayarlar" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="BtnAdmin" Margin="0,4" Style="{StaticResource SidebarButtonStyle}" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🛠" FontSize="18" Foreground="#FFD700"/>
+                        <TextBlock Text=" Admin Paneli" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Spacer -->
+                <Border Height="1" Background="#2A2A35" Margin="0,24,0,24"/>
+
+                <!-- User Info -->
+                <Border Background="#1A1A22" CornerRadius="12" Padding="16" Margin="0,0,0,12">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="👤" FontSize="16" Foreground="#1ABC9C"/>
+                            <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='Kullanıcı'}" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="8,0,0,0" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🏷" FontSize="16" Foreground="#9B59FF"/>
+                            <TextBlock Text="{Binding CurrentUser.Role, FallbackValue='Üye'}" Foreground="#888" FontSize="13" Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Logout Button -->
+                <Button x:Name="BtnLogout" Style="{StaticResource SidebarLogoutButtonStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🚪" FontSize="18"/>
+                        <TextBlock Text=" Çıkış Yap" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </Border>
 
@@ -149,26 +748,64 @@
 
                 <!-- ANA SAYFA -->
                 <StackPanel x:Name="PageAnaSayfa">
-                    <!-- Featured Slider -->
-                    <Border Background="#1A1A22" CornerRadius="16" Height="280" Margin="0,0,0,32" Visibility="Visible">
+                    <!-- Search and Filter Bar -->
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#1A1A22" CornerRadius="12" Padding="16,12">
+                            <Grid>
+                                <TextBlock Text="🔍 Oyun ara..." Foreground="#666" FontSize="14" VerticalAlignment="Center" IsHitTestVisible="False" Margin="0,0,0,0"/>
+                                <TextBox x:Name="TxtSearch" Background="Transparent" BorderThickness="0" Foreground="White" FontSize="14" Padding="0" VerticalAlignment="Center" CaretBrush="#9B59FF"/>
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="12,0,0,0">
+                            <Button Content="🎮 Tümü" Background="#1A1A22" Foreground="White" BorderThickness="0" Padding="16,10" Margin="0,0,8,0" Cursor="Hand" FontSize="13"/>
+                            <Button Content="🇹🇷 Yamalar" Background="Transparent" Foreground="#888" BorderThickness="1" BorderBrush="#333" Padding="16,10" Margin="0,0,8,0" Cursor="Hand" FontSize="13"/>
+                            <Button Content="❤️ Favoriler" Background="Transparent" Foreground="#888" BorderThickness="1" BorderBrush="#333" Padding="16,10" Cursor="Hand" FontSize="13"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Featured Hero Banner -->
+                    <Border CornerRadius="16" Height="320" Margin="0,0,0,32">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#1A0A2E" Offset="0"/>
+                                <GradientStop Color="#2D1B4E" Offset="0.5"/>
+                                <GradientStop Color="#9B59FF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
                         <Grid>
-                            <Border Background="#2A2A35" CornerRadius="16"/>
-                            <Grid Margin="24">
+                            <Grid Margin="32">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.2*"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="✨ ÖNE ÇIKAN" Foreground="#9B59FF" FontSize="14" FontWeight="Bold" Margin="0,0,0,12"/>
-                                    <TextBlock Text="Oyun Adı" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,0,0,8"/>
-                                    <TextBlock Text="Kısa açıklama buraya gelecek. Oyun hakkında bilgi." Foreground="#B0B0B8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,16"/>
+                                    <Border Background="#9B59FF33" CornerRadius="6" Padding="12,6" HorizontalAlignment="Left" Margin="0,0,0,16">
+                                        <TextBlock Text="⭐ ÖNE ÇIKAN" Foreground="#9B59FF" FontSize="12" FontWeight="Bold"/>
+                                    </Border>
+                                    <TextBlock Text="Summer Memories" Foreground="White" FontSize="42" FontWeight="Bold" Margin="0,0,0,12" TextWrapping="Wrap"/>
+                                    <TextBlock Text="En popüler Türkçe yama oyunu. Hikaye modu, gelişmiş grafikler ve daha fazlası." Foreground="#E0E0E8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,24" MaxWidth="500"/>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="İleri" Background="#9B59FF" Foreground="White" BorderThickness="0" Padding="20,10" Cursor="Hand" Margin="0,0,12,0"/>
-                                        <Button Content="Geri" Background="#1A1A22" Foreground="White" BorderThickness="0" Padding="20,10" Cursor="Hand"/>
+                                        <Button Content="🎮 Şimdi Oyna" Background="#9B59FF" Foreground="White" BorderThickness="0" Padding="24,12" Cursor="Hand" FontSize="15" FontWeight="SemiBold" Margin="0,0,12,0"/>
+                                        <Button Content="ℹ️ Detaylar" Background="Transparent" Foreground="White" BorderThickness="2" BorderBrush="#FFFFFF44" Padding="24,12" Cursor="Hand" FontSize="15"/>
                                     </StackPanel>
                                 </StackPanel>
-                                <Border Grid.Column="1" Width="320" Height="200" CornerRadius="12" Background="#222228" VerticalAlignment="Center">
-                                    <TextBlock Text="🎮" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                <Border Grid.Column="1" Width="380" Height="260" CornerRadius="16" Background="#00000033" VerticalAlignment="Center" Margin="24,0,0,0">
+                                    <Grid>
+                                        <Border Background="#2A2A35" CornerRadius="16"/>
+                                        <TextBlock Text="🎮" FontSize="80" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.3"/>
+                                        <Border VerticalAlignment="Bottom" Height="80" CornerRadius="0,0,16,16">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00000088" Offset="0"/>
+                                                    <GradientStop Color="Transparent" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+                                    </Grid>
                                 </Border>
                             </Grid>
                         </Grid>
@@ -189,8 +826,15 @@
                     </Border>
 
                     <!-- Yeni Eklenenler -->
-                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="✨ Yeni Eklenenler" Margin="0,0,0,16"/>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,32">
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" FontSize="24" FontWeight="Bold" Foreground="White" Text="✨ Yeni Eklenenler"/>
+                        <Button Grid.Column="1" Content="Tümünü Gör →" Foreground="#9B59FF" Background="Transparent" BorderThickness="0" FontSize="13" Cursor="Hand"/>
+                    </Grid>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,40">
                         <ItemsControl ItemsSource="{Binding Recent}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
@@ -200,33 +844,65 @@
                                     <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="220"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <ContentControl Grid.Row="0" Content="{Binding}">
                                                 <ContentControl.ContentTemplate>
                                                     <DataTemplate>
                                                         <Grid>
-                                                            <Border Background="#2A2A35"/>
-                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Border Background="#252530" CornerRadius="18,18,0,0"/>
+                                                            <TextBlock Text="🎮" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.15"/>
                                                             <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
-                                                            <!-- Status Badge -->
-                                                            <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
-                                                                <TextBlock Text="Yeni Eklendi" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            <!-- Gradient Overlay -->
+                                                            <Border VerticalAlignment="Bottom" Height="100" CornerRadius="0,0,18,0">
+                                                                <Border.Background>
+                                                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                                        <GradientStop Color="#16161E" Offset="0"/>
+                                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                                    </LinearGradientBrush>
+                                                                </Border.Background>
                                                             </Border>
+                                                            <!-- Badges Container -->
+                                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12">
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="10" Padding="8,5" Margin="0,0,0,6"
+                                                                        Visibility="{Binding IsVip, Converter={StaticResource BoolToVis}}"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="💎 VIP" Foreground="#1A1A22" FontSize="10" FontWeight="Bold"/>
+                                                                </Border>
+                                                                <!-- Steam Badge -->
+                                                                <Border Background="#1E90FF" CornerRadius="10" Padding="8,5" Margin="0,0,0,6"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="🟦 Steam" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Turkish Status Badge -->
+                                                                <Border Background="#27AE60" CornerRadius="10" Padding="8,5"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="🇹🇷 Türkçe" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                            </StackPanel>
                                                             <!-- Favorite Heart -->
-                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
-                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            <Border Background="#00000088" CornerRadius="28" Padding="14" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="22"/>
                                                             </Border>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ContentControl.ContentTemplate>
                                             </ContentControl>
-                                            <StackPanel Grid.Row="1" Margin="12,10">
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
-                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
-                                                    <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                            <StackPanel Grid.Row="1" Margin="18,16">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" FontSize="17" TextTrimming="CharacterEllipsis" Margin="0,0,0,8" LineHeight="1.3"/>
+                                                <TextBlock Foreground="#A0A0B0" FontSize="13" Margin="0,0,0,12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="40">
+                                                    <Run Text="{Binding Description}" Foreground="#808090"/>
                                                 </TextBlock>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Border Background="#2D2D3A" CornerRadius="8" Padding="10,6" Margin="0,0,8,0">
+                                                        <TextBlock Text="📅" Foreground="#9B59FF" FontSize="12"/>
+                                                    </Border>
+                                                    <TextBlock Foreground="#808090" FontSize="12" VerticalAlignment="Center">
+                                                        <Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
@@ -236,8 +912,15 @@
                     </ScrollViewer>
 
                     <!-- Güncellenenler -->
-                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="� Güncellenenler" Margin="0,0,0,16"/>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,32">
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" FontSize="24" FontWeight="Bold" Foreground="White" Text="🔄 Güncellenenler"/>
+                        <Button Grid.Column="1" Content="Tümünü Gör →" Foreground="#9B59FF" Background="Transparent" BorderThickness="0" FontSize="13" Cursor="Hand"/>
+                    </Grid>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,40">
                         <ItemsControl ItemsSource="{Binding UpdatedGames}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
@@ -247,37 +930,232 @@
                                     <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="220"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <ContentControl Grid.Row="0" Content="{Binding}">
                                                 <ContentControl.ContentTemplate>
                                                     <DataTemplate>
                                                         <Grid>
-                                                            <Border Background="#2A2A35"/>
-                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Border Background="#252530" CornerRadius="18,18,0,0"/>
+                                                            <TextBlock Text="🎮" FontSize="64" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.15"/>
                                                             <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
-                                                            <!-- Status Badge -->
-                                                            <Border Background="#E67E22" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
-                                                                <TextBlock Text="🔄 Güncellendi" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            <!-- Gradient Overlay -->
+                                                            <Border VerticalAlignment="Bottom" Height="100" CornerRadius="0,0,18,0">
+                                                                <Border.Background>
+                                                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                                        <GradientStop Color="#16161E" Offset="0"/>
+                                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                                    </LinearGradientBrush>
+                                                                </Border.Background>
                                                             </Border>
-                                                            <!-- VIP Badge -->
-                                                            <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
-                                                                <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
-                                                            </Border>
+                                                            <!-- Badges Container -->
+                                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12">
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="10" Padding="8,5" Margin="0,0,0,6"
+                                                                        Visibility="{Binding IsVip, Converter={StaticResource BoolToVis}}"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="💎 VIP" Foreground="#1A1A22" FontSize="10" FontWeight="Bold"/>
+                                                                </Border>
+                                                                <!-- Steam Badge -->
+                                                                <Border Background="#1E90FF" CornerRadius="10" Padding="8,5" Margin="0,0,0,6"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="🟦 Steam" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Turkish Status Badge -->
+                                                                <Border Background="#27AE60" CornerRadius="10" Padding="8,5"
+                                                                        Effect="{StaticResource CardShadow}">
+                                                                    <TextBlock Text="🇹🇷 Türkçe" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                            </StackPanel>
                                                             <!-- Favorite Heart -->
-                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
-                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            <Border Background="#00000088" CornerRadius="28" Padding="14" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="22"/>
                                                             </Border>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ContentControl.ContentTemplate>
                                             </ContentControl>
-                                            <StackPanel Grid.Row="1" Margin="12,10">
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
-                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
-                                                    <Run Text="📅 "/><Run Text="{Binding UpdatedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                            <StackPanel Grid.Row="1" Margin="18,16">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" FontSize="17" TextTrimming="CharacterEllipsis" Margin="0,0,0,8" LineHeight="1.3"/>
+                                                <TextBlock Foreground="#A0A0B0" FontSize="13" Margin="0,0,0,12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="40">
+                                                    <Run Text="{Binding Description}" Foreground="#808090"/>
                                                 </TextBlock>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Border Background="#2D2D3A" CornerRadius="8" Padding="10,6" Margin="0,0,8,0">
+                                                        <TextBlock Text="📅" Foreground="#9B59FF" FontSize="12"/>
+                                                    </Border>
+                                                    <TextBlock Foreground="#808090" FontSize="12" VerticalAlignment="Center">
+                                                        <Run Text="{Binding UpdatedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                <WrapPanel Orientation="Horizontal">
+                                                    <!-- Turkish Status Badge -->
+                                                    <Border>
+                                                        <Border.Style>
+                                                            <Style TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding TurkishStatus}" Value="TurkishSupported">
+                                                                        <Setter Property="Background" Value="#27AE60"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#27AE60" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TurkishStatus}" Value="TurkishPatchAvailable">
+                                                                        <Setter Property="Background" Value="#E67E22"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#E67E22" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TurkishStatus}" Value="English">
+                                                                        <Setter Property="Background" Value="#3498DB"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#3498DB" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding TurkishStatus}" Value="TranslationInProgress">
+                                                                        <Setter Property="Background" Value="#F39C12"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#F39C12" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock>
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource BadgeTextStyle}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding TurkishStatus}" Value="TurkishSupported">
+                                                                            <Setter Property="Text" Value="🇹🇷 Türkçe Destekli"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding TurkishStatus}" Value="TurkishPatchAvailable">
+                                                                            <Setter Property="Text" Value="🔧 Türkçe Yama Var"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding TurkishStatus}" Value="English">
+                                                                            <Setter Property="Text" Value="🌍 İngilizce"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding TurkishStatus}" Value="TranslationInProgress">
+                                                                            <Setter Property="Text" Value="🚧 Çeviri Devam Ediyor"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Border>
+                                                    <!-- Steam Status Badge -->
+                                                    <Border>
+                                                        <Border.Style>
+                                                            <Style TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding SteamStatus}" Value="Available">
+                                                                        <Setter Property="Background" Value="#1E90FF"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#1E90FF" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding SteamStatus}" Value="ComingSoon">
+                                                                        <Setter Property="Background" Value="#FFD700"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#FFD700" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding SteamStatus}" Value="NotAvailable">
+                                                                        <Setter Property="Background" Value="#7F8C8D"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#7F8C8D" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock>
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource BadgeTextStyle}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding SteamStatus}" Value="Available">
+                                                                            <Setter Property="Text" Value="🟦 Steam'de Mevcut"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding SteamStatus}" Value="ComingSoon">
+                                                                            <Setter Property="Text" Value="🟨 Yakında Steam'de"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding SteamStatus}" Value="NotAvailable">
+                                                                            <Setter Property="Text" Value="⚫ Steam'de Yok"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Border>
+                                                    <!-- VIP Badge -->
+                                                    <Border Style="{StaticResource VipBadge}" Visibility="{Binding IsVip, Converter={StaticResource BoolToVis}}">
+                                                        <TextBlock Style="{StaticResource BadgeTextStyle}" Text="💎 VIP"/>
+                                                    </Border>
+                                                    <!-- Update Status Badge -->
+                                                    <Border>
+                                                        <Border.Style>
+                                                            <Style TargetType="Border" BasedOn="{StaticResource BadgeBaseStyle}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding UpdateStatus}" Value="Updated">
+                                                                        <Setter Property="Background" Value="#27AE60"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#27AE60" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding UpdateStatus}" Value="UpdateAvailable">
+                                                                        <Setter Property="Background" Value="#E74C3C"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#E74C3C" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding UpdateStatus}" Value="Outdated">
+                                                                        <Setter Property="Background" Value="#95A5A6"/>
+                                                                        <Setter Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="#95A5A6" Opacity="0.3" BlurRadius="8" ShadowDepth="2"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock>
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource BadgeTextStyle}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding UpdateStatus}" Value="Updated">
+                                                                            <Setter Property="Text" Value="✅ Güncel"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding UpdateStatus}" Value="UpdateAvailable">
+                                                                            <Setter Property="Text" Value="🔄 Güncelleme Var"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding UpdateStatus}" Value="Outdated">
+                                                                            <Setter Property="Text" Value="⚠️ Eski"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Border>
+                                                </WrapPanel>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
@@ -287,7 +1165,14 @@
                     </ScrollViewer>
 
                     <!-- Tamamlananlar -->
-                    <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Text="🏁 Tamamlananlar" Margin="0,0,0,16"/>
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" FontSize="24" FontWeight="Bold" Foreground="White" Text="🏁 Tamamlananlar"/>
+                        <Button Grid.Column="1" Content="Tümünü Gör →" Foreground="#9B59FF" Background="Transparent" BorderThickness="0" FontSize="13" Cursor="Hand"/>
+                    </Grid>
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                         <ItemsControl ItemsSource="{Binding CompletedGames}">
                             <ItemsControl.ItemsPanel>
@@ -298,37 +1183,49 @@
                                     <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="160"/>
+                                                <RowDefinition Height="200"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <ContentControl Grid.Row="0" Content="{Binding}">
                                                 <ContentControl.ContentTemplate>
                                                     <DataTemplate>
                                                         <Grid>
-                                                            <Border Background="#2A2A35"/>
-                                                            <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                            <Border Background="#2A2A35" CornerRadius="16,16,0,0"/>
+                                                            <TextBlock Text="🎮" FontSize="56" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.25"/>
                                                             <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                            <!-- Gradient Overlay -->
+                                                            <Border VerticalAlignment="Bottom" Height="80" CornerRadius="0,0,16,0">
+                                                                <Border.Background>
+                                                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                                        <GradientStop Color="#1A1A22EE" Offset="0"/>
+                                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                                    </LinearGradientBrush>
+                                                                </Border.Background>
+                                                            </Border>
                                                             <!-- Status Badge -->
-                                                            <Border Background="#27AE60" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
-                                                                <TextBlock Text="🏁 Tamamlandı" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            <Border Background="#27AE60" CornerRadius="8" Padding="10,6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12">
+                                                                <TextBlock Text="TAMAM" Foreground="White" FontSize="11" FontWeight="Bold"/>
                                                             </Border>
                                                             <!-- VIP Badge -->
-                                                            <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
-                                                                <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                            <Border Background="#FFD700" CornerRadius="8" Padding="10,6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,36,0,0" Visibility="Collapsed">
+                                                                <TextBlock Text="💎 VIP" Foreground="White" FontSize="11" FontWeight="Bold"/>
                                                             </Border>
                                                             <!-- Favorite Heart -->
-                                                            <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
-                                                                <TextBlock Text="🤍" FontSize="16"/>
+                                                            <Border Background="#00000066" CornerRadius="24" Padding="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="12" Cursor="Hand">
+                                                                <TextBlock Text="🤍" FontSize="20"/>
                                                             </Border>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ContentControl.ContentTemplate>
                                             </ContentControl>
-                                            <StackPanel Grid.Row="1" Margin="12,10">
-                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
-                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                            <StackPanel Grid.Row="1" Margin="16,14">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="16" TextTrimming="CharacterEllipsis" Margin="0,0,0,6"/>
+                                                <TextBlock Foreground="#888" FontSize="12" Margin="0,0,0,10">
                                                     <Run Text="📅 "/><Run Text="{Binding CompletedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
                                                 </TextBlock>
+                                                <Border Background="#2A2A35" CornerRadius="6" Padding="8,4" HorizontalAlignment="Left">
+                                                    <TextBlock Text="🇹🇷 Türkçe Yama" Foreground="#27AE60" FontSize="11" FontWeight="SemiBold"/>
+                                                </Border>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
@@ -373,6 +1270,64 @@
                                                                 </Border>
                                                                 <!-- VIP Badge -->
                                                                 <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
+                                                                    <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- Favorite Heart -->
+                                                                <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                    <TextBlock Text="🤍" FontSize="16"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ContentControl.ContentTemplate>
+                                                </ContentControl>
+                                                <StackPanel Grid.Row="1" Margin="12,10">
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </WrapPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- TÜRKÇE YAMALAR -->
+                <Grid x:Name="PageTurkceYamalar" Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock Text="🇹🇷 Türkçe Yamalar" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <TextBlock Foreground="#888" FontSize="14" Margin="0,0,0,16">
+                            <Run Text="{Binding PatchCount, Mode=OneWay}"/><Run Text=" yama bulundu"/>
+                        </TextBlock>
+                        <WrapPanel>
+                            <ItemsControl ItemsSource="{Binding FilteredPatches}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="160"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <ContentControl Grid.Row="0" Content="{Binding}">
+                                                    <ContentControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+                                                                <Border Background="#2A2A35"/>
+                                                                <TextBlock Text="🇹🇷" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                                <!-- Status Badge -->
+                                                                <Border Background="#E67E22" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                    <TextBlock Text="🇹🇷 Yama" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                </Border>
+                                                                <!-- VIP Badge -->
+                                                                <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="{Binding IsVip, Converter={StaticResource BoolToVis}}">
                                                                     <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
                                                                 </Border>
                                                                 <!-- Favorite Heart -->
@@ -526,23 +1481,115 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Width="280" MinHeight="360" CornerRadius="16" Margin="0,0,24,24"
-                                                    Background="#1A1A22">
+                                            <Border>
+                                                <Border.Style>
+                                                    <Style TargetType="Border" BasedOn="{StaticResource VipCardBaseStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Name}" Value="Bronze Kart">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#CD7F32" Offset="0"/>
+                                                                            <GradientStop Color="#8B4513" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="BorderBrush" Value="#CD7F32"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#CD7F32" Opacity="0.4" BlurRadius="20" ShadowDepth="4"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Name}" Value="Silver Kart">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#C0C0C0" Offset="0"/>
+                                                                            <GradientStop Color="#A8A8A8" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="BorderBrush" Value="#C0C0C0"/>
+                                                                <Setter Property="BorderThickness" Value="2"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#C0C0C0" Opacity="0.5" BlurRadius="25" ShadowDepth="4"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Name}" Value="Gold Kart">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#FFD700" Offset="0"/>
+                                                                            <GradientStop Color="#FFA500" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="BorderBrush" Value="#FFD700"/>
+                                                                <Setter Property="BorderThickness" Value="3"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#FFD700" Opacity="0.6" BlurRadius="30" ShadowDepth="6"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Name}" Value="Diamond Kart">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#00E5FF" Offset="0"/>
+                                                                            <GradientStop Color="#9B59FF" Offset="0.5"/>
+                                                                            <GradientStop Color="#00E5FF" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="BorderBrush" Value="#00E5FF"/>
+                                                                <Setter Property="BorderThickness" Value="3"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#00E5FF" Opacity="0.7" BlurRadius="35" ShadowDepth="8"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Name}" Value="Sınırsız Kart">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#9B59FF" Offset="0"/>
+                                                                            <GradientStop Color="#8E44AD" Offset="0.5"/>
+                                                                            <GradientStop Color="#9B59FF" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="BorderBrush" Value="#9B59FF"/>
+                                                                <Setter Property="BorderThickness" Value="3"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#9B59FF" Opacity="0.8" BlurRadius="40" ShadowDepth="10"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel Margin="24">
-                                                    <TextBlock Text="{Binding Icon}" FontSize="40" Margin="0,0,0,12"/>
-                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
-                                                    <TextBlock Text="{Binding PriceLabel}" Foreground="#9B59FF" FontSize="24" FontWeight="Bold" Margin="0,0,0,16"/>
+                                                    <TextBlock Text="{Binding Icon}" FontSize="48" Margin="0,0,0,16" HorizontalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,12" TextAlignment="Center"/>
+                                                    <TextBlock Text="{Binding PriceLabel}" Foreground="White" FontSize="26" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center"/>
                                                     <ItemsControl ItemsSource="{Binding Features}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Foreground="#B0B0B8" FontSize="14" Margin="0,4">
+                                                                <TextBlock Foreground="White" FontSize="15" Margin="0,6" TextAlignment="Center">
                                                                     <Run Text="✓ "/><Run Text="{Binding Mode=OneWay}"/>
                                                                 </TextBlock>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>
                                                     <Button Content="Satın Al" Tag="{Binding PurchaseUrl}" Click="PurchaseMembership_Click"
-                                                            Background="#9B59FF" Foreground="White" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Margin="0,20,0,0" Height="44" FontSize="14"/>
+                                                            Background="White" Foreground="Black" BorderThickness="0" FontWeight="Bold" Cursor="Hand" Margin="0,24,0,0" Height="48" FontSize="15"/>
                                                 </StackPanel>
                                             </Border>
                                         </DataTemplate>
@@ -554,139 +1601,278 @@
 
                 <!-- PROFİL -->
                 <Grid x:Name="PageProfil" Visibility="Collapsed">
-                    <StackPanel>
-                        <TextBlock Text="👤 Profil" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
-                        <Border CornerRadius="16" Height="160" Margin="0,0,0,32">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#2D1B69" Offset="0"/>
-                                    <GradientStop Color="#9B59FF" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <Grid Margin="32">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Width="96" Height="96">
-                                    <Ellipse Fill="{Binding CurrentUser.AvatarPath, Converter={StaticResource AvatarImage}}" Stroke="White" StrokeThickness="3"/>
-                                    <Image Source="{Binding CurrentUser.AvatarPath, Converter={StaticResource SafeImage}}" Stretch="UniformToFill">
-                                        <Image.Clip>
-                                            <EllipseGeometry Center="48,48" RadiusX="48" RadiusY="48"/>
-                                        </Image.Clip>
-                                    </Image>
-                                </Grid>
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0,0,0">
-                                    <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='Anonim'}" Foreground="White" FontSize="28" FontWeight="Bold"/>
-                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6" Margin="0,0,10,0">
-                                            <TextBlock Text="{Binding CurrentUser.MembershipLevel, FallbackValue='Ücretsiz'}" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
-                                        </Border>
-                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6" Margin="0,0,10,0"
-                                                Visibility="{Binding IsVipUser, Converter={StaticResource BoolToVis}}">
-                                            <TextBlock Text="💎 VIP" Foreground="#FFD700" FontSize="14" FontWeight="SemiBold"/>
-                                        </Border>
-                                        <Border Background="#33FFFFFF" CornerRadius="8" Padding="10,6">
-                                            <TextBlock Text="{Binding RoleDisplay}" Foreground="White" FontSize="14"/>
-                                        </Border>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
-                                        <Button x:Name="BtnEditProfile" Content="✏️ Profili Düzenle" Height="36" Margin="0,0,10,0" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
-                                        <Button x:Name="BtnChangeAvatar" Content="📷 Avatar Değiştir" Height="36" Margin="0,0,10,0" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
-                                        <Button x:Name="BtnChangePassword" Content="🔐 Şifre Değiştir" Height="36" Padding="14,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-
-                        <UniformGrid Columns="3" Margin="0,0,0,32">
-                            <Border Background="#1A1A22" CornerRadius="12" Margin="0,0,12,0" Padding="20">
-                                <StackPanel>
-                                    <TextBlock Text="⬇ Toplam İndirme" Foreground="#888" FontSize="13"/>
-                                    <TextBlock Text="{Binding CurrentUserTotalDownloads}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#1A1A22" CornerRadius="12" Margin="6,0" Padding="20">
-                                <StackPanel>
-                                    <TextBlock Text="❤️ Favoriler" Foreground="#888" FontSize="13"/>
-                                    <TextBlock Text="{Binding FavoriteGames.Count}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
-                                </StackPanel>
-                            </Border>
-                            <Border Background="#1A1A22" CornerRadius="12" Margin="12,0,0,0" Padding="20">
-                                <StackPanel>
-                                    <TextBlock Text="🏅 Rozetler" Foreground="#888" FontSize="13"/>
-                                    <TextBlock Text="{Binding CurrentUser.Badges.Count, FallbackValue=0}" Foreground="White" FontSize="32" FontWeight="Bold" Margin="0,6,0,0"/>
-                                </StackPanel>
-                            </Border>
-                        </UniformGrid>
-
-                        <TextBlock Text="❤️ Favoriler" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,16"/>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,24">
-                            <ItemsControl ItemsSource="{Binding FavoriteGames}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="FavoriteGame_Click" Tag="{Binding}">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="160"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <ContentControl Grid.Row="0" Content="{Binding}">
-                                                    <ContentControl.ContentTemplate>
-                                                        <DataTemplate>
-                                                            <Grid>
-                                                                <Border Background="#2A2A35"/>
-                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
-                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
-                                                                <!-- Status Badge -->
-                                                                <Border Background="#9B59FF" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
-                                                                    <TextBlock Text="✨ Yeni" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
-                                                                </Border>
-                                                                <!-- VIP Badge -->
-                                                                <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="Collapsed">
-                                                                    <TextBlock Text="💎 VIP" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
-                                                                </Border>
-                                                                <!-- Favorite Heart -->
-                                                                <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
-                                                                    <TextBlock Text="❤️" FontSize="16"/>
-                                                                </Border>
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ContentControl.ContentTemplate>
-                                                </ContentControl>
-                                                <StackPanel Grid.Row="1" Margin="12,10">
-                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
-                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
-                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </ScrollViewer>
-
-                        <TextBlock Text="📋 Son Aktiviteler" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,0,0,16"/>
-                        <ItemsControl ItemsSource="{Binding RecentActivities}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="#1A1A22" CornerRadius="10" Padding="16" Margin="0,0,0,8">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="24">
+                            <!-- Top Profile Card -->
+                            <Border CornerRadius="20" Margin="0,0,0,32" Effect="{StaticResource CardShadow}">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#1A1A2E" Offset="0"/>
+                                        <GradientStop Color="#16213E" Offset="0.5"/>
+                                        <GradientStop Color="#0F3460" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid Margin="32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Width="120" Height="120">
+                                        <Ellipse Fill="#2D2D3A" Stroke="#9B59FF" StrokeThickness="4"/>
+                                        <Image Source="{Binding CurrentUser.AvatarPath, Converter={StaticResource SafeImage}}" Stretch="UniformToFill">
+                                            <Image.Clip>
+                                                <EllipseGeometry Center="60,60" RadiusX="56" RadiusY="56"/>
+                                            </Image.Clip>
+                                        </Image>
+                                        <Ellipse Stroke="White" StrokeThickness="2" StrokeDashArray="4,2" Opacity="0.3"/>
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="24,0,0,0">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Icon}" FontSize="20" Margin="0,0,14,0"/>
-                                            <StackPanel>
-                                                <TextBlock Text="{Binding Description}" Foreground="White" FontSize="14"/>
-                                                <TextBlock Text="{Binding OccurredAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Foreground="#666" FontSize="12" Margin="0,4,0,0"/>
-                                            </StackPanel>
+                                            <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='Anonim'}" Foreground="White" FontSize="32" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+                                            <Border x:Name="VipBadgeBorder" CornerRadius="12" Padding="12,6" Margin="16,0,0,0" Visibility="{Binding IsVipUser, Converter={StaticResource BoolToVis}}">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Bronze">
+                                                                <Setter Property="Background" Value="#CD7F32"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#CD7F32" Opacity="0.4" BlurRadius="12" ShadowDepth="2"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Silver">
+                                                                <Setter Property="Background" Value="#C0C0C0"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#C0C0C0" Opacity="0.4" BlurRadius="12" ShadowDepth="2"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Gold">
+                                                                <Setter Property="Background" Value="#FFD700"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#FFD700" Opacity="0.4" BlurRadius="12" ShadowDepth="2"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Diamond">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                            <GradientStop Color="#B9F2FF" Offset="0"/>
+                                                                            <GradientStop Color="#00D4FF" Offset="1"/>
+                                                                        </LinearGradientBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect Color="#00D4FF" Opacity="0.4" BlurRadius="12" ShadowDepth="2"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <TextBlock x:Name="VipBadgeText" Text="💎 VIP" Foreground="Black" FontSize="14" FontWeight="Bold">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Bronze">
+                                                                    <Setter Property="Text" Value="🥉 BRONZE"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Silver">
+                                                                    <Setter Property="Text" Value="🥈 SILVER"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Gold">
+                                                                    <Setter Property="Text" Value="🥇 GOLD"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding CurrentUser.MembershipLevel}" Value="Diamond">
+                                                                    <Setter Property="Text" Value="💎 DIAMOND"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
                                         </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                                        <TextBlock Text="{Binding CurrentUser.Email, FallbackValue='email@example.com'}" Foreground="#AAA" FontSize="14" Margin="0,8,0,0"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                            <Border Background="#1A1A22" CornerRadius="8" Padding="10,6" Margin="0,0,8,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="📅" FontSize="14" Margin="0,0,6,0"/>
+                                                    <TextBlock Text="{Binding CurrentUser.CreatedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}" Foreground="#CCC" FontSize="13"/>
+                                                </StackPanel>
+                                            </Border>
+                                            <Border Background="#1A1A22" CornerRadius="8" Padding="10,6">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="👑" FontSize="14" Margin="0,0,6,0"/>
+                                                    <TextBlock Text="{Binding RoleDisplay}" Foreground="#CCC" FontSize="13"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                        <Button x:Name="BtnEditProfile" Content="✏️" Width="44" Height="44" Margin="0,0,0,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="18" ToolTip="Profili Düzenle"/>
+                                        <Button x:Name="BtnChangeAvatar" Content="📷" Width="44" Height="44" Margin="0,0,0,8" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="18" ToolTip="Avatar Değiştir"/>
+                                        <Button x:Name="BtnChangePassword" Content="🔐" Width="44" Height="44" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="18" ToolTip="Şifre Değiştir"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Statistics Cards -->
+                            <TextBlock Text="📊 İstatistikler" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <UniformGrid Columns="4" Margin="0,0,0,32">
+                                <Border Background="#1A1A22" CornerRadius="16" Margin="0,0,12,0" Padding="24" Effect="{StaticResource CardShadow}">
+                                    <StackPanel>
+                                        <TextBlock Text="🎮" FontSize="28" Margin="0,0,0,8"/>
+                                        <TextBlock Text="Toplam Oyun" Foreground="#888" FontSize="13"/>
+                                        <TextBlock Text="{Binding TotalGamesCount, FallbackValue=0}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#1A1A22" CornerRadius="16" Margin="6,0" Padding="24" Effect="{StaticResource CardShadow}">
+                                    <StackPanel>
+                                        <TextBlock Text="⬇️" FontSize="28" Margin="0,0,0,8"/>
+                                        <TextBlock Text="Toplam İndirme" Foreground="#888" FontSize="13"/>
+                                        <TextBlock Text="{Binding CurrentUserTotalDownloads}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#1A1A22" CornerRadius="16" Margin="6,0" Padding="24" Effect="{StaticResource CardShadow}">
+                                    <StackPanel>
+                                        <TextBlock Text="❤️" FontSize="28" Margin="0,0,0,8"/>
+                                        <TextBlock Text="Favoriler" Foreground="#888" FontSize="13"/>
+                                        <TextBlock Text="{Binding FavoriteGames.Count}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Background="#1A1A22" CornerRadius="16" Margin="12,0,0,0" Padding="24" Effect="{StaticResource CardShadow}">
+                                    <StackPanel>
+                                        <TextBlock Text="🏆" FontSize="28" Margin="0,0,0,8"/>
+                                        <TextBlock Text="Kazanılan Rozetler" Foreground="#888" FontSize="13"/>
+                                        <TextBlock Text="{Binding CurrentUser.Badges.Count, FallbackValue=0}" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </UniformGrid>
+
+                            <!-- Account Information -->
+                            <TextBlock Text="👤 Hesap Bilgileri" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <Border Background="#1A1A22" CornerRadius="16" Padding="28" Margin="0,0,0,32" Effect="{StaticResource CardShadow}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Kullanıcı Adı" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding CurrentUser.Username, FallbackValue='-'}" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                                        <TextBlock Text="E-Posta" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding CurrentUser.Email, FallbackValue='-'}" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                                        <TextBlock Text="Üyelik Türü" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding CurrentUser.MembershipLevel, FallbackValue='Ücretsiz'}" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="24,0,0,0">
+                                        <TextBlock Text="Son Giriş Tarihi" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding CurrentUser.LastLoginDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}', FallbackValue='-'}" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                                        <TextBlock Text="Kayıt Tarihi" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding CurrentUser.CreatedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,16"/>
+                                        <TextBlock Text="Hesap Durumu" Foreground="#888" FontSize="13" Margin="0,0,0,4"/>
+                                        <TextBlock Text="Aktif" Foreground="#27AE60" FontSize="16" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Quick Actions -->
+                            <TextBlock Text="⚡ Hızlı İşlemler" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <WrapPanel Margin="0,0,0,32">
+                                <Button x:Name="BtnProfileAccountSettings" Content="⚙️ Hesap Ayarları" Width="180" Height="48" Margin="0,0,12,12" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Style="{StaticResource ModernButtonStyle}"/>
+                                <Button x:Name="BtnProfileMyFavorites" Content="❤️ Favorilerim" Width="180" Height="48" Margin="0,0,12,12" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Style="{StaticResource ModernButtonStyle}"/>
+                                <Button x:Name="BtnProfileNotifications" Content="🔔 Bildirimler" Width="180" Height="48" Margin="0,0,12,12" Background="#1A1A22" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Style="{StaticResource ModernButtonStyle}"/>
+                                <Button x:Name="BtnProfileLogout" Content="🚪 Çıkış Yap" Width="180" Height="48" Margin="0,0,0,12" Background="#E74C3C" Foreground="White" BorderThickness="0" Cursor="Hand" FontSize="14" FontWeight="SemiBold" Style="{StaticResource ModernButtonStyle}"/>
+                            </WrapPanel>
+
+                            <!-- Account Security -->
+                            <TextBlock Text="🔒 Hesap Güvenliği" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <Border Background="#1A1A22" CornerRadius="16" Padding="28" Margin="0,0,0,32" Effect="{StaticResource CardShadow}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <Border Background="#27AE6022" CornerRadius="12" Padding="16" Margin="0,0,0,0">
+                                            <StackPanel>
+                                                <TextBlock Text="🔐" FontSize="24" Margin="0,0,0,8"/>
+                                                <TextBlock Text="Şifre Durumu" Foreground="#888" FontSize="13"/>
+                                                <TextBlock Text="Güçlü" Foreground="#27AE60" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                        <Border Background="#95A5A622" CornerRadius="12" Padding="16">
+                                            <StackPanel>
+                                                <TextBlock Text="🔑" FontSize="24" Margin="0,0,0,8"/>
+                                                <TextBlock Text="2FA Durumu" Foreground="#888" FontSize="13"/>
+                                                <TextBlock Text="Pasif" Foreground="#95A5A6" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Margin="12,0,0,0">
+                                        <Border Background="#3498DB22" CornerRadius="12" Padding="16">
+                                            <StackPanel>
+                                                <TextBlock Text="📍" FontSize="24" Margin="0,0,0,8"/>
+                                                <TextBlock Text="Son Giriş" Foreground="#888" FontSize="13"/>
+                                                <TextBlock Text="{Binding CurrentUser.LastLoginDate, StringFormat='{}{0:dd.MM}', FallbackValue='-'}" Foreground="#3498DB" FontSize="16" FontWeight="SemiBold" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- Favorites Section -->
+                            <TextBlock Text="❤️ Favorilerim" FontSize="24" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,24">
+                                <ItemsControl ItemsSource="{Binding FavoriteGames}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="FavoriteGame_Click" Tag="{Binding}" Margin="0,0,16,16">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="160"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <ContentControl Grid.Row="0" Content="{Binding}">
+                                                        <ContentControl.ContentTemplate>
+                                                            <DataTemplate>
+                                                                <Grid>
+                                                                    <Border Background="#2A2A35"/>
+                                                                    <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                    <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
+                                                                    <Border Background="#00000066" CornerRadius="20" Padding="8" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Cursor="Hand">
+                                                                        <TextBlock Text="❤️" FontSize="16"/>
+                                                                    </Border>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ContentControl.ContentTemplate>
+                                                    </ContentControl>
+                                                    <StackPanel Grid.Row="1" Margin="12,10">
+                                                        <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
+                                                        <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
+                                                            <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
 
                 <!-- FAVORİLER -->

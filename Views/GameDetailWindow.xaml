@@ -8,129 +8,231 @@
     <Window.Resources>
         <local:SafeImageConverter x:Key="SafeImage"/>
         <local:StringToBrushConverter x:Key="StringToBrush"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#66C0F4"/>
-        <SolidColorBrush x:Key="CardBrush" Color="#1B2838"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#9B59FF"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1A1A22"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="#2A2A35"/>
+        <DropShadowEffect x:Key="GlowEffect" Color="#9B59FF" Opacity="0.4" BlurRadius="15" ShadowDepth="0"/>
         <Style x:Key="PrimaryButton" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Padding" Value="24,14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="12" Padding="{TemplateBinding Padding}" Effect="{StaticResource GlowEffect}">
                             <ContentPresenter HorizontalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.05" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.05" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                    <Setter Property="Background" Value="#8E44AD"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource SecondaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#3A3A45"/>
+            <Setter Property="Padding" Value="24,14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1.05" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1.05" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)"
+                                               To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)"
+                                               To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                    <Setter Property="Background" Value="#3A3A45"/>
+                    <Setter Property="BorderBrush" Value="#9B59FF"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <!-- Hero banner -->
-            <Border Height="280" ClipToBounds="True">
+            <Border Height="320" ClipToBounds="True">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1A0A2E" Offset="0"/>
+                        <GradientStop Color="#2D1B4E" Offset="0.5"/>
+                        <GradientStop Color="#0D0D0F" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
                 <Grid>
-                    <Image x:Name="ImgHero" Stretch="UniformToFill" Opacity="0.45"/>
-                    <Border Background="#000000AA"/>
-                    <Grid Margin="32,24">
+                    <Image x:Name="ImgHero" Stretch="UniformToFill" Opacity="0.4"/>
+                    <Border Background="#00000066"/>
+                    <Grid Margin="40,32">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel VerticalAlignment="Bottom">
-                            <TextBlock x:Name="TxtName" Foreground="White" FontSize="36" FontWeight="Bold"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                <Border Background="#33FFFFFF" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
-                                    <TextBlock x:Name="TxtVersion" Foreground="White" FontSize="13"/>
+                            <TextBlock x:Name="TxtName" Foreground="White" FontSize="42" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <Border Background="#9B59FF33" CornerRadius="8" Padding="12,6" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtVersion" Foreground="#9B59FF" FontSize="14" FontWeight="SemiBold"/>
                                 </Border>
-                                <Border Background="#33FFFFFF" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
-                                    <TextBlock x:Name="TxtPatchVersion" Foreground="#66C0F4" FontSize="13"/>
+                                <Border Background="#33FFFFFF" CornerRadius="8" Padding="12,6" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtPatchVersion" Foreground="White" FontSize="14"/>
                                 </Border>
-                                <Border x:Name="BadgeVip" Background="#FFD70033" CornerRadius="4" Padding="8,4" Visibility="Collapsed">
-                                    <TextBlock Text="💎 VIP" Foreground="#FFD700" FontSize="13" FontWeight="SemiBold"/>
+                                <Border x:Name="BadgeVip" Background="#FFD70033" CornerRadius="8" Padding="12,6" Visibility="Collapsed">
+                                    <TextBlock Text="💎 VIP" Foreground="#FFD700" FontSize="14" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border x:Name="BadgeTurkish" CornerRadius="8" Padding="12,6" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtTurkish" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border x:Name="BadgeSteam" CornerRadius="8" Padding="12,6" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtSteam" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border x:Name="BadgeUpdate" CornerRadius="8" Padding="12,6" Margin="0,0,10,0">
+                                    <TextBlock x:Name="TxtUpdate" Foreground="White" FontSize="14" FontWeight="SemiBold"/>
                                 </Border>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                            <Button x:Name="BtnFavorite" Content="☆ Favorilere Ekle" Width="160" Height="40" Margin="0,0,8,0"
+                            <Button x:Name="BtnFavorite" Content="❤️ Favorilere Ekle" Width="180" Height="48" Margin="0,0,12,0"
                                     Background="#33FFFFFF" Foreground="White" BorderThickness="0" Cursor="Hand" Click="BtnFavorite_Click"/>
-                            <Button x:Name="BtnInstall" Content="🔧 Yamayı Kur" Style="{StaticResource PrimaryButton}" Height="40" Click="BtnInstall_Click"/>
+                            <Button x:Name="BtnDownloadGame" Content="⬇ Oyunu İndir" Style="{StaticResource SecondaryButton}" Height="48" Margin="0,0,12,0" Click="BtnDownloadGame_Click"/>
+                            <Button x:Name="BtnInstallPatch" Content="🇹🇷 Türkçe Yamayı İndir" Style="{StaticResource PrimaryButton}" Height="48" Click="BtnInstallPatch_Click"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
 
             <!-- Content below hero -->
-            <StackPanel Margin="32,300,32,32">
-                <TextBlock Text="Açıklama" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                <TextBlock x:Name="TxtDescription" Foreground="#C7D5E0" FontSize="14" TextWrapping="Wrap" Margin="0,0,0,24"/>
+            <StackPanel Margin="40,340,40,40">
+                <TextBlock Text="Açıklama" Foreground="#9B59FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                <Border Background="#1A1A22" CornerRadius="12" Padding="20" Margin="0,0,0,32">
+                    <TextBlock x:Name="TxtDescription" Foreground="#C7D5E0" FontSize="15" TextWrapping="Wrap"/>
+                </Border>
 
-                <TextBlock Text="Ekran Görüntüleri" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,24">
+                <TextBlock Text="Ekran Görüntüleri" Foreground="#9B59FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,0,32">
                     <ItemsControl x:Name="ScreenshotList">
                         <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate><StackPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Width="220" Height="124" CornerRadius="6" Margin="0,0,10,0" ClipToBounds="True" Background="#1B2838">
+                                <Border Width="280" Height="160" CornerRadius="12" Margin="0,0,16,16" ClipToBounds="True" Background="#1A1A22" Cursor="Hand">
                                     <Image Source="{Binding Converter={StaticResource SafeImage}}" Stretch="UniformToFill"/>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <TextBlock x:Name="TxtNoScreenshots" Text="Henüz ekran görüntüsü eklenmemiş." Foreground="#666" FontSize="13" Margin="0,-16,0,24" Visibility="Collapsed"/>
+                <TextBlock x:Name="TxtNoScreenshots" Text="Henüz ekran görüntüsü eklenmemiş." Foreground="#666" FontSize="14" Margin="0,-16,0,32" Visibility="Collapsed"/>
 
-                <Grid Margin="0,0,0,24">
+                <Grid Margin="0,0,0,32">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                        <TextBlock Text="Yama Notları" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                        <Border Background="{StaticResource CardBrush}" CornerRadius="8" Padding="16">
-                            <TextBlock x:Name="TxtPatchNotes" Foreground="#C7D5E0" FontSize="13" TextWrapping="Wrap"/>
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Text="Yama Notları" Foreground="#9B59FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <Border Background="#1A1A22" CornerRadius="12" Padding="20">
+                            <TextBlock x:Name="TxtPatchNotes" Foreground="#C7D5E0" FontSize="14" TextWrapping="Wrap"/>
                         </Border>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                        <TextBlock Text="İndirme Bağlantıları" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <StackPanel Grid.Column="1" Margin="16,0,0,0">
+                        <TextBlock Text="İndirme Bağlantıları" Foreground="#9B59FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
                         <ItemsControl x:Name="DownloadLinksList">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button Content="{Binding Label}" Tag="{Binding Url}" Click="DownloadLink_Click"
-                                            Background="#2A475E" Foreground="White" BorderThickness="0"
-                                            Padding="12,8" Margin="0,0,0,6" HorizontalContentAlignment="Left" Cursor="Hand"/>
+                                            Background="#2A2A35" Foreground="White" BorderThickness="1" BorderBrush="#3A3A45"
+                                            Padding="16,12" Margin="0,0,0,8" HorizontalContentAlignment="Left" Cursor="Hand" Height="48"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <TextBlock x:Name="TxtNoLinks" Text="Ek indirme bağlantısı yok." Foreground="#666" FontSize="13" Visibility="Collapsed"/>
+                        <TextBlock x:Name="TxtNoLinks" Text="Ek indirme bağlantısı yok." Foreground="#666" FontSize="14" Visibility="Collapsed"/>
                     </StackPanel>
                 </Grid>
 
-                <TextBlock Text="Kategoriler" Foreground="#66C0F4" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBlock Text="Kategoriler" Foreground="#9B59FF" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
                 <ItemsControl x:Name="CategoryTags">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#2A475E" CornerRadius="4" Padding="10,5" Margin="0,0,8,8">
-                                <TextBlock Text="{Binding}" Foreground="White" FontSize="12"/>
+                            <Border Background="#2A2A35" CornerRadius="8" Padding="14,8" Margin="0,0,10,10" Cursor="Hand">
+                                <TextBlock Text="{Binding}" Foreground="White" FontSize="13"/>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <StackPanel Orientation="Horizontal" Margin="0,24,0,0">
-                    <TextBlock Foreground="#888" FontSize="12">
+                <StackPanel Orientation="Horizontal" Margin="0,32,0,0">
+                    <TextBlock Foreground="#888" FontSize="13">
                         <Run Text="⬇ "/><Run x:Name="TxtDownloadCount" Text="0"/><Run Text=" indirme"/>
                     </TextBlock>
-                    <TextBlock Foreground="#888" FontSize="12" Margin="24,0,0,0">
+                    <TextBlock Foreground="#888" FontSize="13" Margin="32,0,0,0">
                         <Run Text="Son güncelleme: "/><Run x:Name="TxtUpdatedDate"/>
                     </TextBlock>
                 </StackPanel>
