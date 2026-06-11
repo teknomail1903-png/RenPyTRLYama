@@ -218,11 +218,15 @@ namespace RenPyTRLauncher.ViewModels
             _notificationService = ServiceLocator.NotificationService ?? new InMemoryNotificationService(_userService);
             _helpService = ServiceLocator.HelpService ?? new InMemoryHelpService();
 
+            App.Log("[MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: " + (ServiceLocator.UserService == null));
+            App.Log("[MAINVIEWMODEL] Constructor - Using in-memory fallback: " + (_userService is InMemoryUserService));
+
             ThemeService.LoadFromSettings(_settingsService);
             CurrentTheme = ThemeService.CurrentTheme;
 
             LoadCategoryFolders();
             CurrentUser = _authService.CurrentUser ?? _authService.TryRestoreSession();
+            App.Log("[MAINVIEWMODEL] Constructor - CurrentUser: " + (CurrentUser?.Username ?? "null") + ", Role: " + (CurrentUser?.Role ?? "null"));
             ServiceLocator.DataChanged += () => LoadData();
 
             LoadData();

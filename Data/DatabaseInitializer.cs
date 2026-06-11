@@ -9,36 +9,55 @@ namespace RenPyTRLauncher.Data
     {
         public static AppDbContext Initialize()
         {
+            App.Log("[STARTUP] DatabaseInitializer Initialize Start");
             var dbPath = Path.Combine(AppContext.BaseDirectory, "renpytrlauncher.db");
+            App.Log($"[STARTUP] Database path: {dbPath}");
             var db = new AppDbContext();
 
             try
             {
+                App.Log("[STARTUP] Calling Database.Migrate()");
                 db.Database.Migrate();
+                App.Log("[STARTUP] Database.Migrate() completed");
             }
-            catch
+            catch (Exception ex)
             {
+                App.Log($"[STARTUP] Database.Migrate() failed: {ex.Message}");
                 try
                 {
                     if (File.Exists(dbPath))
                     {
                         var backup = dbPath + ".bak_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                        App.Log($"[STARTUP] Creating backup: {backup}");
                         File.Copy(dbPath, backup, overwrite: true);
                         File.Delete(dbPath);
                     }
                     db.Dispose();
                     db = new AppDbContext();
+                    App.Log("[STARTUP] Retrying Database.Migrate()");
                     db.Database.Migrate();
+                    App.Log("[STARTUP] Retry Database.Migrate() completed");
                 }
-                catch
+                catch (Exception ex2)
                 {
-                    try { db.Database.EnsureCreated(); } catch { }
+                    App.Log($"[STARTUP] Retry failed: {ex2.Message}");
+                    try { db.Database.EnsureCreated(); App.Log("[STARTUP] Database.EnsureCreated() completed"); } catch { }
                 }
             }
 
+            App.Log("[STARTUP] Calling EnsureUserColumns");
             EnsureUserColumns(db);
+            App.Log("[STARTUP] EnsureUserColumns completed");
+            
+            App.Log("[STARTUP] Calling EnsureExtendedSchema");
             EnsureExtendedSchema(db);
+            App.Log("[STARTUP] EnsureExtendedSchema completed");
+            
+            App.Log("[STARTUP] Calling DbSeeder.SeedIfEmpty");
             DbSeeder.SeedIfEmpty(db);
+            App.Log("[STARTUP] DbSeeder.SeedIfEmpty completed");
+            
+            App.Log("[STARTUP] DatabaseInitializer Initialize End");
             return db;
         }
 
@@ -132,18 +151,6 @@ namespace RenPyTRLauncher.Data
                 EnsureColumn(db, "Games", "ParentGameId", "TEXT NOT NULL DEFAULT ''");
 
                 cmd.CommandText = @"
-                    CREATE TABLE IF NOT EXISTS SupportTickets (
-                        Id TEXT NOT NULL PRIMARY KEY,
-                        UserId TEXT NOT NULL,
-                        Subject TEXT NOT NULL DEFAULT '',
-                        Message TEXT NOT NULL DEFAULT '',
-                        Type INTEGER NOT NULL DEFAULT 0,
-                        Status INTEGER NOT NULL DEFAULT 0,
-                        AdminReply TEXT NOT NULL DEFAULT '',
-                        RepliedByUserId TEXT,
-                        CreatedAt TEXT NOT NULL,
-                        RepliedAt TEXT
-                    );
                     CREATE TABLE IF NOT EXISTS Categories (
                         Id TEXT NOT NULL PRIMARY KEY,
                         Name TEXT NOT NULL,
@@ -171,6 +178,27 @@ namespace RenPyTRLauncher.Data
                         VideoUrl TEXT NOT NULL DEFAULT '',
                         SortOrder INTEGER NOT NULL DEFAULT 0,
                         IsActive INTEGER NOT NULL DEFAULT 1
+                    );
+                    CREATE TABLE IF NOT EXISTS SupportTickets (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        UserId TEXT NOT NULL,
+                        Subject TEXT NOT NULL DEFAULT '',
+                        Message TEXT NOT NULL DEFAULT '',
+                        Type INTEGER NOT NULL DEFAULT 0,
+                        Status INTEGER NOT NULL DEFAULT 0,
+                        CreatedAt TEXT NOT NULL,
+                        UpdatedAt TEXT,
+                        IsReadByAdmin INTEGER NOT NULL DEFAULT 0,
+                        IsReadByUser INTEGER NOT NULL DEFAULT 1
+                    );
+                    CREATE TABLE IF NOT EXISTS SupportMessages (
+                        Id TEXT NOT NULL PRIMARY KEY,
+                        SupportTicketId TEXT NOT NULL,
+                        UserId TEXT NOT NULL,
+                        Message TEXT NOT NULL DEFAULT '',
+                        IsAdmin INTEGER NOT NULL DEFAULT 0,
+                        CreatedAt TEXT NOT NULL,
+                        IsRead INTEGER NOT NULL DEFAULT 0
                     );";
                 cmd.ExecuteNonQuery();
 

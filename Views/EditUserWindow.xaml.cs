@@ -60,6 +60,9 @@ namespace RenPyTRLauncher.Views
         {
             var username = TxtUsername.Text.Trim();
             var email = TxtEmail.Text.Trim();
+            var password = TxtPassword.Password;
+            var passwordConfirm = TxtPasswordConfirm.Password;
+
             if (username.Length < 3)
             {
                 MessageBox.Show("Kullanıcı adı en az 3 karakter olmalı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -73,9 +76,28 @@ namespace RenPyTRLauncher.Views
                     MessageBox.Show("Bu kullanıcı adı kullanılıyor.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+
+                if (string.IsNullOrEmpty(password))
+                {
+                    MessageBox.Show("Şifre alanı zorunludur.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (password.Length < 6)
+                {
+                    MessageBox.Show("Şifre en az 6 karakter olmalı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (password != passwordConfirm)
+                {
+                    MessageBox.Show("Şifreler eşleşmiyor.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 _user.Username = username;
                 _user.Email = email;
-                _user.PasswordHash = PasswordHasher.Hash("user123");
+                _user.PasswordHash = PasswordHasher.Hash(password);
                 _user.Role = CmbRole.SelectedItem?.ToString() ?? UserRole.User;
                 _user.MembershipLevel = CmbMembership.SelectedItem?.ToString() ?? "Ücretsiz";
                 _user.AvatarPath = TxtAvatar.Text;
@@ -89,6 +111,25 @@ namespace RenPyTRLauncher.Views
                 _user.Role = CmbRole.SelectedItem?.ToString() ?? UserRole.User;
                 _user.MembershipLevel = CmbMembership.SelectedItem?.ToString() ?? "Ücretsiz";
                 _user.AvatarPath = TxtAvatar.Text;
+
+                // Only update password if provided
+                if (!string.IsNullOrEmpty(password))
+                {
+                    if (password.Length < 6)
+                    {
+                        MessageBox.Show("Şifre en az 6 karakter olmalı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    if (password != passwordConfirm)
+                    {
+                        MessageBox.Show("Şifreler eşleşmiyor.", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    _user.PasswordHash = PasswordHasher.Hash(password);
+                }
+
                 AuthorizationService.SyncVipBadges(_user);
                 _userService.Update(_user);
             }

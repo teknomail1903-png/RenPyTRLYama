@@ -138,3 +138,229 @@
 [2026-06-09 19:59:32.482] TryRestoreSession successful - User ID: d67e8833-4f3b-48cf-bd4a-6a9c6edf8d9e, Username: argion
 [2026-06-09 20:44:51.516] TryRestoreSession attempt
 [2026-06-09 20:44:51.606] TryRestoreSession successful - User ID: d67e8833-4f3b-48cf-bd4a-6a9c6edf8d9e, Username: argion
+[2026-06-10 05:55:58.452] TryRestoreSession attempt
+[2026-06-10 05:55:58.538] TryRestoreSession successful - User ID: d67e8833-4f3b-48cf-bd4a-6a9c6edf8d9e, Username: argion
+[2026-06-10 05:59:00.048] TryRestoreSession attempt
+[2026-06-10 05:59:00.148] TryRestoreSession failed - User not found: d67e8833-4f3b-48cf-bd4a-6a9c6edf8d9e
+[2026-06-10 05:59:14.869] Login attempt - Username/Email: Argion, RememberMe: False
+[2026-06-10 05:59:15.200] Login successful - User ID: 4916f83f-3f5a-4b04-840d-188ce035779f, Username: argion
+[2026-06-10 12:13:45.581] TryRestoreSession attempt
+[2026-06-10 12:13:45.692] TryRestoreSession successful - User ID: 4916f83f-3f5a-4b04-840d-188ce035779f, Username: argion
+[2026-06-10 12:14:38.670] TryRestoreSession attempt
+[2026-06-10 12:14:38.768] TryRestoreSession failed - User not found: 4916f83f-3f5a-4b04-840d-188ce035779f
+[2026-06-10 12:14:54.374] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-10 12:14:54.719] Login successful - User ID: 0c276641-53dc-4345-bf2b-8cc092713efe, Username: argion
+[2026-06-10 12:19:16.726] TryRestoreSession attempt
+[2026-06-10 12:19:16.867] TryRestoreSession successful - User ID: 0c276641-53dc-4345-bf2b-8cc092713efe, Username: argion
+[2026-06-10 13:46:16.348] TryRestoreSession attempt
+[2026-06-10 13:46:16.448] TryRestoreSession failed - User not found: 0c276641-53dc-4345-bf2b-8cc092713efe
+[2026-06-10 13:46:53.323] TryRestoreSession attempt
+[2026-06-10 13:46:53.325] TryRestoreSession failed - No session found
+[2026-06-10 13:52:42.340] TryRestoreSession attempt
+[2026-06-10 13:52:42.350] TryRestoreSession failed - No session found
+[2026-06-10 13:53:31.676] TryRestoreSession attempt
+[2026-06-10 13:53:31.678] TryRestoreSession failed - No session found
+[2026-06-10 14:19:52.210] TryRestoreSession attempt
+[2026-06-10 14:19:52.224] TryRestoreSession failed - No session found
+[2026-06-10 14:25:04.087] TryRestoreSession attempt
+[2026-06-10 14:25:04.097] TryRestoreSession failed - No session found
+[2026-06-10 22:28:07.788] TryRestoreSession attempt
+[2026-06-10 22:28:07.839] TryRestoreSession failed - No session found
+[2026-06-10 22:45:23.605] TryRestoreSession attempt
+[2026-06-10 22:45:23.615] TryRestoreSession failed - No session found
+[2026-06-10 22:45:33.556] Login attempt - Username/Email: dddddddddd, RememberMe: False
+[2026-06-10 22:45:33.628] Login failed - Invalid credentials for: dddddddddd
+[2026-06-10 22:55:32.614] TryRestoreSession attempt
+[2026-06-10 22:55:32.624] TryRestoreSession failed - No session found
+[2026-06-10 22:57:56.818] TryRestoreSession attempt
+[2026-06-10 22:57:56.828] TryRestoreSession failed - No session found
+[2026-06-10 23:02:57.271] TryRestoreSession attempt
+[2026-06-10 23:02:57.281] TryRestoreSession failed - No session found
+[2026-06-10 23:03:29.131] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-10 23:03:29.665] Login successful - User ID: ba0f10e8-9ef2-4f64-9531-38aa92115815, Username: argion
+[2026-06-11 00:01:41.758] TryRestoreSession attempt
+[2026-06-11 00:01:41.848] TryRestoreSession successful - User ID: ba0f10e8-9ef2-4f64-9531-38aa92115815, Username: argion
+[2026-06-11 00:02:17.258] TryRestoreSession attempt
+[2026-06-11 00:02:17.344] TryRestoreSession successful - User ID: ba0f10e8-9ef2-4f64-9531-38aa92115815, Username: argion
+[2026-06-11 00:03:14.419] TryRestoreSession attempt
+[2026-06-11 00:03:14.504] TryRestoreSession successful - User ID: ba0f10e8-9ef2-4f64-9531-38aa92115815, Username: argion
+[2026-06-11 01:27:45.107] TryRestoreSession attempt
+[2026-06-11 01:27:45.216] TryRestoreSession failed - User not found: ba0f10e8-9ef2-4f64-9531-38aa92115815
+[2026-06-11 01:28:01.461] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 01:28:01.756] Login failed - Invalid credentials for: argion
+[2026-06-11 01:28:08.894] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 01:28:09.159] Login successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 01:32:12.216] TryRestoreSession attempt
+[2026-06-11 01:32:12.325] TryRestoreSession successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 01:38:36.305] TryRestoreSession attempt
+[2026-06-11 01:38:36.406] TryRestoreSession successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 01:47:31.083] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 01:47:31.393] Login successful - User ID: 1476c8f1-3dba-4400-a6c5-8dd6acbda389, Username: argion
+[2026-06-11 01:47:32.037] TryRestoreSession attempt
+[2026-06-11 01:47:32.050] TryRestoreSession failed - User not found: 1476c8f1-3dba-4400-a6c5-8dd6acbda389
+[2026-06-11 01:47:32.054] TryRestoreSession attempt
+[2026-06-11 01:47:32.055] TryRestoreSession failed - No session found
+[2026-06-11 01:57:58.496] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 01:57:58.797] Login successful - User ID: 5f79944e-20ae-42b3-9273-4b52cbee39bb, Username: argion
+[2026-06-11 01:57:59.431] TryRestoreSession attempt
+[2026-06-11 01:57:59.443] TryRestoreSession failed - User not found: 5f79944e-20ae-42b3-9273-4b52cbee39bb
+[2026-06-11 01:57:59.448] TryRestoreSession attempt
+[2026-06-11 01:57:59.449] TryRestoreSession failed - No session found
+[2026-06-11 02:02:57.654] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 02:02:57.994] Login successful - User ID: cc9113ad-0c41-41bc-af67-9509fbe54dc9, Username: argion
+[2026-06-11 02:02:58.838] TryRestoreSession attempt
+[2026-06-11 02:02:58.850] TryRestoreSession failed - User not found: cc9113ad-0c41-41bc-af67-9509fbe54dc9
+[2026-06-11 02:02:58.855] TryRestoreSession attempt
+[2026-06-11 02:02:58.855] TryRestoreSession failed - No session found
+[2026-06-11 02:18:22.006] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 02:18:22.454] Login successful - User ID: 5565ac0d-6e07-4a7c-b6d4-2bf84dc815de, Username: argion
+[2026-06-11 02:18:23.192] TryRestoreSession attempt
+[2026-06-11 02:18:23.206] TryRestoreSession failed - User not found: 5565ac0d-6e07-4a7c-b6d4-2bf84dc815de
+[2026-06-11 02:18:23.211] TryRestoreSession attempt
+[2026-06-11 02:18:23.212] TryRestoreSession failed - No session found
+[2026-06-11 02:21:17.006] TryRestoreSession attempt
+[2026-06-11 02:21:17.017] TryRestoreSession failed - No session found
+[2026-06-11 05:22:14.073] TryRestoreSession attempt
+[2026-06-11 05:22:14.106] TryRestoreSession failed - No session found
+[2026-06-11 05:32:54.860] TryRestoreSession attempt
+[2026-06-11 05:32:54.873] TryRestoreSession failed - No session found
+[2026-06-11 09:41:35.412] TryRestoreSession attempt
+[2026-06-11 09:41:35.435] TryRestoreSession failed - No session found
+[2026-06-11 09:41:54.192] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 09:41:54.958] Login successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 09:42:26.473] TryRestoreSession attempt
+[2026-06-11 09:42:26.588] TryRestoreSession successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 09:46:02.129] Login attempt - Username/Email: test, RememberMe: False
+[2026-06-11 09:46:02.132] Login failed - Invalid credentials for: test
+[2026-06-11 09:46:10.815] Login attempt - Username/Email: test1, RememberMe: False
+[2026-06-11 09:46:10.816] Login failed - Invalid credentials for: test1
+[2026-06-11 09:46:33.985] Login attempt - Username/Email: Argion, RememberMe: False
+[2026-06-11 09:46:34.198] Login failed - Invalid credentials for: Argion
+[2026-06-11 09:46:42.690] Login attempt - Username/Email: Argion, RememberMe: False
+[2026-06-11 09:46:43.100] Login successful - User ID: 85db7b8b-fae2-477e-bb05-6a420c78d32a, Username: argion
+[2026-06-11 09:46:44.183] TryRestoreSession attempt
+[2026-06-11 09:46:44.198] TryRestoreSession failed - User not found: 85db7b8b-fae2-477e-bb05-6a420c78d32a
+[2026-06-11 09:46:44.202] TryRestoreSession attempt
+[2026-06-11 09:46:44.203] TryRestoreSession failed - No session found
+[2026-06-11 09:50:31.239] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 09:50:31.537] Login successful - User ID: d9c8f1ed-f458-4e65-913a-813a16950c58, Username: argion
+[2026-06-11 09:50:32.314] TryRestoreSession attempt
+[2026-06-11 09:50:32.332] TryRestoreSession failed - User not found: d9c8f1ed-f458-4e65-913a-813a16950c58
+[2026-06-11 09:50:32.337] TryRestoreSession attempt
+[2026-06-11 09:50:32.338] TryRestoreSession failed - No session found
+[2026-06-11 09:51:28.674] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 09:51:28.974] Login successful - User ID: bc3c4abd-0a30-445e-8a8f-2a1a097868de, Username: argion
+[2026-06-11 09:51:29.557] TryRestoreSession attempt
+[2026-06-11 09:51:29.568] TryRestoreSession failed - User not found: bc3c4abd-0a30-445e-8a8f-2a1a097868de
+[2026-06-11 09:51:29.573] TryRestoreSession attempt
+[2026-06-11 09:51:29.574] TryRestoreSession failed - No session found
+[2026-06-11 10:00:15.407] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 10:00:15.927] Login successful - User ID: 87fc7261-5cc7-4068-a2d1-1d8ec87bb85d, Username: argion
+[2026-06-11 10:00:16.589] TryRestoreSession attempt
+[2026-06-11 10:00:16.602] TryRestoreSession failed - User not found: 87fc7261-5cc7-4068-a2d1-1d8ec87bb85d
+[2026-06-11 10:00:16.606] TryRestoreSession attempt
+[2026-06-11 10:00:16.607] TryRestoreSession failed - No session found
+[2026-06-11 11:09:11.124] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 11:09:11.532] Login successful - User ID: 2252b874-1b38-49cb-b0dc-4001e052476d, Username: argion
+[2026-06-11 11:09:12.573] TryRestoreSession attempt
+[2026-06-11 11:09:12.587] TryRestoreSession failed - User not found: 2252b874-1b38-49cb-b0dc-4001e052476d
+[2026-06-11 11:09:12.591] TryRestoreSession attempt
+[2026-06-11 11:09:12.592] TryRestoreSession failed - No session found
+[2026-06-11 11:54:53.896] Login attempt - Username/Email: admin, RememberMe: False
+[2026-06-11 11:54:53.900] Login failed - Invalid credentials for: admin
+[2026-06-11 11:55:00.686] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 11:55:00.987] Login successful - User ID: 0d7b7365-1329-4ac0-9771-f13799329420, Username: argion
+[2026-06-11 11:55:01.583] TryRestoreSession attempt
+[2026-06-11 11:55:01.599] TryRestoreSession failed - User not found: 0d7b7365-1329-4ac0-9771-f13799329420
+[2026-06-11 11:55:01.603] TryRestoreSession attempt
+[2026-06-11 11:55:01.604] TryRestoreSession failed - No session found
+[2026-06-11 11:59:33.132] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 11:59:33.416] Login successful - User ID: 551bf766-b485-4fe0-8080-f83dc34b30ff, Username: argion
+[2026-06-11 11:59:33.977] TryRestoreSession attempt
+[2026-06-11 11:59:33.988] TryRestoreSession failed - User not found: 551bf766-b485-4fe0-8080-f83dc34b30ff
+[2026-06-11 11:59:33.992] TryRestoreSession attempt
+[2026-06-11 11:59:33.993] TryRestoreSession failed - No session found
+[2026-06-11 12:07:56.171] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 12:07:56.536] Login successful - User ID: 56d14c7e-47d8-4b0b-9fdf-ff421def502c, Username: argion
+[2026-06-11 12:07:57.348] TryRestoreSession attempt
+[2026-06-11 12:07:57.361] TryRestoreSession failed - User not found: 56d14c7e-47d8-4b0b-9fdf-ff421def502c
+[2026-06-11 12:07:57.367] TryRestoreSession attempt
+[2026-06-11 12:07:57.368] TryRestoreSession failed - No session found
+[2026-06-11 12:35:06.182] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 12:35:06.469] Login successful - User ID: 63fe9693-702b-461c-a45f-c4e8cf82e532, Username: argion
+[2026-06-11 12:35:07.064] TryRestoreSession attempt
+[2026-06-11 12:35:07.076] TryRestoreSession failed - User not found: 63fe9693-702b-461c-a45f-c4e8cf82e532
+[2026-06-11 12:35:07.080] TryRestoreSession attempt
+[2026-06-11 12:35:07.081] TryRestoreSession failed - No session found
+[2026-06-11 13:47:12.402] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 13:47:12.766] Login successful - User ID: ebd79401-f109-43ba-b2a3-8e5c32cff425, Username: argion
+[2026-06-11 13:47:13.578] TryRestoreSession attempt
+[2026-06-11 13:47:13.593] TryRestoreSession failed - User not found: ebd79401-f109-43ba-b2a3-8e5c32cff425
+[2026-06-11 13:47:13.600] TryRestoreSession attempt
+[2026-06-11 13:47:13.602] TryRestoreSession failed - No session found
+[2026-06-11 13:49:05.474] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 13:49:05.945] Login successful - User ID: 633e0c4d-c80f-4c12-8eb0-c82a9ed05515, Username: argion
+[2026-06-11 13:49:06.584] TryRestoreSession attempt
+[2026-06-11 13:49:06.596] TryRestoreSession failed - User not found: 633e0c4d-c80f-4c12-8eb0-c82a9ed05515
+[2026-06-11 13:49:06.601] TryRestoreSession attempt
+[2026-06-11 13:49:06.602] TryRestoreSession failed - No session found
+[2026-06-11 14:08:48.505] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 14:08:48.817] Login successful - User ID: 1a773a37-f0ac-4ceb-a833-aa9fad5ce07a, Username: argion
+[2026-06-11 14:08:49.507] TryRestoreSession attempt
+[2026-06-11 14:08:49.519] TryRestoreSession failed - User not found: 1a773a37-f0ac-4ceb-a833-aa9fad5ce07a
+[2026-06-11 14:08:49.523] TryRestoreSession attempt
+[2026-06-11 14:08:49.525] TryRestoreSession failed - No session found
+[2026-06-11 14:27:23.774] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 14:27:24.357] Login successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 14:32:19.008] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 14:32:19.849] Login successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 15:10:35.811] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 15:10:36.723] Login successful - User ID: d4b681a3-7191-4422-8432-83352ddcdb35, Username: argion
+[2026-06-11 15:18:25.517] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 15:18:26.035] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 15:37:03.737] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 15:37:04.210] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 15:46:26.207] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 15:46:26.649] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 15:47:41.379] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 15:47:41.823] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 16:36:27.498] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 16:36:27.812] Login failed - Invalid credentials for: argion
+[2026-06-11 16:36:31.968] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 16:36:32.398] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 17:35:22.334] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 17:35:22.804] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 17:36:51.284] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 17:36:51.633] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 17:56:31.889] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 17:56:32.338] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 17:58:43.123] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 17:58:43.596] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 18:11:00.836] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 18:11:01.296] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 18:14:56.996] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 18:14:57.442] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 18:39:14.508] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 18:39:14.950] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 18:41:27.354] Logout - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 19:33:31.166] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 19:33:31.747] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 19:37:19.571] Logout - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 19:57:21.267] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 19:57:21.840] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 19:57:36.615] Logout - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 19:59:27.698] Logout - User ID: , Username: 
+[2026-06-11 20:00:10.738] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 20:00:11.184] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 20:00:20.330] Logout - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 20:22:46.473] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-11 20:22:46.932] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 20:22:54.705] Logout - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 20:35:40.326] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 20:35:40.778] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 21:01:53.947] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 21:01:54.505] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 23:03:16.436] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-11 23:03:17.062] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-11 23:19:30.329] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-11 23:19:30.784] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion

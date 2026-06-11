@@ -86,6 +86,45 @@ namespace RenPyTRLauncher.Migrations
                 b.HasKey("Id");
                 b.ToTable("Users");
             });
+
+            modelBuilder.Entity("RenPyTRLauncher.Models.SupportMessage", b =>
+            {
+                b.Property<Guid>("Id").HasColumnType("TEXT");
+                b.Property<DateTime>("CreatedAt").HasColumnType("TEXT");
+                b.Property<bool>("IsAdmin").HasColumnType("INTEGER");
+                b.Property<bool>("IsRead").HasColumnType("INTEGER");
+                b.Property<string>("Message").IsRequired().HasColumnType("TEXT");
+                b.Property<Guid>("SupportTicketId").HasColumnType("TEXT");
+                b.Property<Guid>("UserId").HasColumnType("TEXT");
+
+                b.HasKey("Id");
+
+                b.HasIndex("SupportTicketId");
+
+                b.HasIndex("UserId");
+
+                b.ToTable("SupportMessages");
+            });
+
+            modelBuilder.Entity("RenPyTRLauncher.Models.SupportTicket", b =>
+            {
+                b.Property<Guid>("Id").HasColumnType("TEXT");
+                b.Property<DateTime>("CreatedAt").HasColumnType("TEXT");
+                b.Property<bool>("IsReadByAdmin").HasColumnType("INTEGER");
+                b.Property<bool>("IsReadByUser").HasColumnType("INTEGER");
+                b.Property<string>("Message").IsRequired().HasColumnType("TEXT");
+                b.Property<int>("Status").HasColumnType("INTEGER");
+                b.Property<string>("Subject").IsRequired().HasColumnType("TEXT");
+                b.Property<int>("Type").HasColumnType("INTEGER");
+                b.Property<DateTime?>("UpdatedAt").HasColumnType("TEXT");
+                b.Property<Guid>("UserId").HasColumnType("TEXT");
+
+                b.HasKey("Id");
+
+                b.HasIndex("UserId");
+
+                b.ToTable("SupportTickets");
+            });
 #pragma warning restore 612, 618
         }
     }

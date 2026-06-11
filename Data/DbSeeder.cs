@@ -12,6 +12,9 @@ namespace RenPyTRLauncher.Data
         public static readonly Guid BeingADikId = Guid.Parse("a1000002-0000-4000-8000-000000000002");
         public static readonly Guid MilfyCityId = Guid.Parse("a1000003-0000-4000-8000-000000000003");
         public static readonly Guid LuckyParadoxId = Guid.Parse("a1000004-0000-4000-8000-000000000004");
+        public static readonly Guid ArgionUserId = Guid.Parse("b1000001-0000-4000-8000-000000000001");
+        public static readonly Guid User1Id = Guid.Parse("b1000002-0000-4000-8000-000000000002");
+        public static readonly Guid ModeratorId = Guid.Parse("b1000003-0000-4000-8000-000000000003");
 
         public static void SeedIfEmpty(AppDbContext db)
         {
@@ -93,6 +96,7 @@ namespace RenPyTRLauncher.Data
             {
                 var argion = new User
                 {
+                    Id = ArgionUserId,
                     Username = "argion",
                     Email = "argion@example.com",
                     PasswordHash = Services.PasswordHasher.Hash("admin123"),
@@ -112,6 +116,7 @@ namespace RenPyTRLauncher.Data
                 db.Users.Add(argion);
                 db.Users.Add(new User
                 {
+                    Id = User1Id,
                     Username = "user1",
                     Email = "user1@example.com",
                     PasswordHash = Services.PasswordHasher.Hash("user123"),
@@ -122,6 +127,7 @@ namespace RenPyTRLauncher.Data
 
                 db.Users.Add(new User
                 {
+                    Id = ModeratorId,
                     Username = "moderator",
                     Email = "mod@example.com",
                     PasswordHash = Services.PasswordHasher.Hash("mod123"),
@@ -263,7 +269,7 @@ namespace RenPyTRLauncher.Data
                     if (ex.InnerException != null)
                         App.Log($"INNER ERROR: {ex.InnerException.Message}");
 
-                    App.Log(ex.StackTrace);
+                    App.Log(ex.StackTrace ?? "null stack trace");
 
                     throw;
                 }

@@ -1,68 +1,658 @@
-[2026-06-09 19:55:03.529] DispatcherUnhandledException: 'System.Windows.Markup.StaticResourceHolder' öğesinde değer sağlama işlemi özel durum döndürdü.
-[2026-06-09 19:55:03.532] DispatcherUnhandledException StackTrace:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.XamlReader.RewrapException(Exception e, Uri baseUri)
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
-   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
-   at System.Windows.Controls.ScrollContentPresenter.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
-   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.ScrollViewer.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Decorator.MeasureOverride(Size constraint)
-   at System.Windows.Documents.AdornerDecorator.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Window.MeasureOverrideHelper(Size constraint)
-   at System.Windows.Window.MeasureOverride(Size availableSize)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at System.Windows.Window.ShowDialog()
-   at RenPyTRLauncher.MainWindow.OpenGameDetail(Game game) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 476
-   at RenPyTRLauncher.MainWindow.GameCard_Click(Object sender, MouseButtonEventArgs e) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 442
+[2026-06-11 16:22:28.066] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 16:22:28.376] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 16:22:28.482] [STARTUP] App_OnStartup called
+[2026-06-11 16:22:28.483] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 16:22:28.491] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 16:22:28.492] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 16:22:28.719] [STARTUP] Calling Database.Migrate()
+[2026-06-11 16:22:30.661] [STARTUP] Database.Migrate() completed
+[2026-06-11 16:22:30.662] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 16:22:30.672] [STARTUP] EnsureUserColumns completed
+[2026-06-11 16:22:30.673] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 16:22:30.682] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 16:22:30.683] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 16:22:31.146] [STARTUP] AppBootstrap.InitializeServices failed: The type initializer for 'RenPyTRLauncher.Data.DbSeeder' threw an exception.
+[2026-06-11 16:22:31.171] [STARTUP] StackTrace:    at RenPyTRLauncher.Data.DbSeeder.SeedIfEmpty(AppDbContext db) in D:\RenPyTRLauncher\Data\DbSeeder.cs:line 226
+   at RenPyTRLauncher.Data.DatabaseInitializer.Initialize() in D:\RenPyTRLauncher\Data\DatabaseInitializer.cs:line 57
+   at RenPyTRLauncher.Services.AppBootstrap.InitializeServices() in D:\RenPyTRLauncher\Services\AppBootstrap.cs:line 9
+   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 79
+[2026-06-11 16:27:14.675] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 16:27:15.001] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 16:27:15.119] [STARTUP] App_OnStartup called
+[2026-06-11 16:27:15.120] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 16:27:15.128] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 16:27:15.129] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 16:27:15.375] [STARTUP] Calling Database.Migrate()
+[2026-06-11 16:27:17.655] [STARTUP] Database.Migrate() completed
+[2026-06-11 16:27:17.656] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 16:27:17.664] [STARTUP] EnsureUserColumns completed
+[2026-06-11 16:27:17.665] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 16:27:17.673] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 16:27:17.674] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 16:27:18.201] [STARTUP] AppBootstrap.InitializeServices failed: The type initializer for 'RenPyTRLauncher.Data.DbSeeder' threw an exception.
+[2026-06-11 16:27:18.226] [STARTUP] StackTrace:    at RenPyTRLauncher.Data.DbSeeder.SeedIfEmpty(AppDbContext db) in D:\RenPyTRLauncher\Data\DbSeeder.cs:line 226
+   at RenPyTRLauncher.Data.DatabaseInitializer.Initialize() in D:\RenPyTRLauncher\Data\DatabaseInitializer.cs:line 57
+   at RenPyTRLauncher.Services.AppBootstrap.InitializeServices() in D:\RenPyTRLauncher\Services\AppBootstrap.cs:line 9
+   at RenPyTRLauncher.App.App_OnStartup(Object sender, StartupEventArgs e) in D:\RenPyTRLauncher\App.xaml.cs:line 79
+[2026-06-11 16:36:09.174] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 16:36:09.483] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 16:36:09.590] [STARTUP] App_OnStartup called
+[2026-06-11 16:36:09.591] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 16:36:09.598] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 16:36:09.599] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 16:36:09.827] [STARTUP] Calling Database.Migrate()
+[2026-06-11 16:36:11.901] [STARTUP] Database.Migrate() completed
+[2026-06-11 16:36:11.902] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 16:36:11.909] [STARTUP] EnsureUserColumns completed
+[2026-06-11 16:36:11.910] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 16:36:11.917] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 16:36:11.918] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 16:36:13.108] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 16:36:13.108] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 16:36:13.112] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 16:36:27.487] [LOGIN] Button clicked
+[2026-06-11 16:36:27.488] [LOGIN] Checking _auth null status
+[2026-06-11 16:36:27.489] [LOGIN] AuthService NULL: False
+[2026-06-11 16:36:27.490] [LOGIN] Checking controls null status
+[2026-06-11 16:36:27.491] [LOGIN] Reading username
+[2026-06-11 16:36:27.492] [LOGIN] Username: argion
+[2026-06-11 16:36:27.493] [LOGIN] Reading password
+[2026-06-11 16:36:27.494] [LOGIN] Password length: 7
+[2026-06-11 16:36:27.495] [LOGIN] Remember me: False
+[2026-06-11 16:36:27.496] [LOGIN] Calling Authenticate
+[2026-06-11 16:36:27.813] [LOGIN] Authenticate result - Success: False, Message: Kullanıcı adı veya şifre hatalı.
+[2026-06-11 16:36:27.814] [LOGIN] ERROR: Login failed
+[2026-06-11 16:36:31.961] [LOGIN] Button clicked
+[2026-06-11 16:36:31.961] [LOGIN] Checking _auth null status
+[2026-06-11 16:36:31.962] [LOGIN] AuthService NULL: False
+[2026-06-11 16:36:31.963] [LOGIN] Checking controls null status
+[2026-06-11 16:36:31.964] [LOGIN] Reading username
+[2026-06-11 16:36:31.964] [LOGIN] Username: argion
+[2026-06-11 16:36:31.965] [LOGIN] Reading password
+[2026-06-11 16:36:31.966] [LOGIN] Password length: 8
+[2026-06-11 16:36:31.967] [LOGIN] Remember me: False
+[2026-06-11 16:36:31.967] [LOGIN] Calling Authenticate
+[2026-06-11 16:36:32.399] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 16:36:32.400] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 16:36:32.402] [STARTUP] MainWindow Constructor Start
+[2026-06-11 16:36:32.596] [STARTUP] InitializeComponent completed
+[2026-06-11 16:36:32.601] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 16:36:32.602] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 16:36:32.726] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 16:36:33.153] [STARTUP] MainViewModel created
+[2026-06-11 16:36:33.156] [STARTUP] DataContext set
+[2026-06-11 16:36:33.161] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 16:36:33.779] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 16:36:37.094] AdminUserControl Constructor Start
+[2026-06-11 16:36:37.160] AdminUserControl Constructor End
+[2026-06-11 16:36:37.174] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 16:36:37.175] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 16:36:37.180] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 16:36:37.182] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 16:36:37.183] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 16:36:37.184] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 16:36:37.186] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 16:36:37.187] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 16:36:37.189] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 16:36:37.191] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 16:36:37.192] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 17:34:51.746] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:34:52.088] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:34:52.194] [STARTUP] App_OnStartup called
+[2026-06-11 17:34:52.195] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:34:52.203] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:34:52.204] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:34:52.431] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:34:54.518] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:34:54.519] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:34:54.526] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:34:54.527] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:34:54.534] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:34:54.535] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:34:55.686] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:34:55.687] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:34:55.691] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:35:22.323] [LOGIN] Button clicked
+[2026-06-11 17:35:22.324] [LOGIN] Checking _auth null status
+[2026-06-11 17:35:22.325] [LOGIN] AuthService NULL: False
+[2026-06-11 17:35:22.325] [LOGIN] Checking controls null status
+[2026-06-11 17:35:22.326] [LOGIN] Reading username
+[2026-06-11 17:35:22.327] [LOGIN] Username: argion
+[2026-06-11 17:35:22.328] [LOGIN] Reading password
+[2026-06-11 17:35:22.330] [LOGIN] Password length: 8
+[2026-06-11 17:35:22.330] [LOGIN] Remember me: False
+[2026-06-11 17:35:22.331] [LOGIN] Calling Authenticate
+[2026-06-11 17:35:22.806] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 17:35:22.807] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 17:35:22.808] [STARTUP] MainWindow Constructor Start
+[2026-06-11 17:35:23.041] [STARTUP] InitializeComponent completed
+[2026-06-11 17:35:23.046] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 17:35:23.047] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 17:35:23.125] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 17:35:23.613] [STARTUP] MainViewModel created
+[2026-06-11 17:35:23.615] [STARTUP] DataContext set
+[2026-06-11 17:35:23.619] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 17:35:24.227] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 17:35:35.755] AdminUserControl Constructor Start
+[2026-06-11 17:35:35.821] AdminUserControl Constructor End
+[2026-06-11 17:35:35.837] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 17:35:35.839] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 17:35:35.844] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 17:35:35.846] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 17:35:35.847] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 17:35:35.849] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 17:35:35.850] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 17:35:35.851] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 17:35:35.852] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 17:35:35.854] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 17:35:35.855] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 17:36:00.515] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:36:00.807] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:36:00.925] [STARTUP] App_OnStartup called
+[2026-06-11 17:36:00.926] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:36:00.934] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:36:00.934] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:36:01.175] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:36:03.228] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:36:03.229] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:36:03.237] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:36:03.238] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:36:03.249] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:36:03.250] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:36:04.394] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:36:04.395] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:36:04.399] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:36:51.274] [LOGIN] Button clicked
+[2026-06-11 17:36:51.275] [LOGIN] Checking _auth null status
+[2026-06-11 17:36:51.276] [LOGIN] AuthService NULL: False
+[2026-06-11 17:36:51.276] [LOGIN] Checking controls null status
+[2026-06-11 17:36:51.277] [LOGIN] Reading username
+[2026-06-11 17:36:51.278] [LOGIN] Username: argion
+[2026-06-11 17:36:51.278] [LOGIN] Reading password
+[2026-06-11 17:36:51.280] [LOGIN] Password length: 8
+[2026-06-11 17:36:51.281] [LOGIN] Remember me: False
+[2026-06-11 17:36:51.281] [LOGIN] Calling Authenticate
+[2026-06-11 17:36:51.634] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 17:36:51.635] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 17:36:51.636] [STARTUP] MainWindow Constructor Start
+[2026-06-11 17:36:51.842] [STARTUP] InitializeComponent completed
+[2026-06-11 17:36:51.847] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 17:36:51.848] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 17:36:51.909] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 17:36:52.192] [STARTUP] MainViewModel created
+[2026-06-11 17:36:52.193] [STARTUP] DataContext set
+[2026-06-11 17:36:52.198] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 17:36:52.687] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 17:36:54.406] AdminUserControl Constructor Start
+[2026-06-11 17:36:54.437] AdminUserControl Constructor End
+[2026-06-11 17:36:54.451] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 17:36:54.452] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 17:36:54.453] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 17:36:54.454] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 17:36:54.456] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 17:36:54.457] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 17:36:54.459] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 17:36:54.460] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 17:36:54.461] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 17:36:54.463] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 17:36:54.464] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 17:37:29.218] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:37:29.514] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:37:29.617] [STARTUP] App_OnStartup called
+[2026-06-11 17:37:29.618] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:37:29.626] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:37:29.627] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:37:29.859] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:37:31.827] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:37:31.828] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:37:31.838] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:37:31.839] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:37:31.848] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:37:31.849] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:37:33.006] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:37:33.007] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:37:33.011] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:56:09.221] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:56:09.522] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:56:09.636] [STARTUP] App_OnStartup called
+[2026-06-11 17:56:09.636] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:56:09.644] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:56:09.645] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:56:09.875] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:56:11.842] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:56:11.843] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:56:11.850] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:56:11.851] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:56:11.858] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:56:11.859] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:56:12.959] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:56:12.960] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:56:12.964] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:56:31.878] [LOGIN] Button clicked
+[2026-06-11 17:56:31.879] [LOGIN] Checking _auth null status
+[2026-06-11 17:56:31.880] [LOGIN] AuthService NULL: False
+[2026-06-11 17:56:31.881] [LOGIN] Checking controls null status
+[2026-06-11 17:56:31.881] [LOGIN] Reading username
+[2026-06-11 17:56:31.883] [LOGIN] Username: argion
+[2026-06-11 17:56:31.883] [LOGIN] Reading password
+[2026-06-11 17:56:31.885] [LOGIN] Password length: 8
+[2026-06-11 17:56:31.886] [LOGIN] Remember me: True
+[2026-06-11 17:56:31.886] [LOGIN] Calling Authenticate
+[2026-06-11 17:56:32.340] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 17:56:32.340] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 17:56:32.342] [STARTUP] MainWindow Constructor Start
+[2026-06-11 17:56:32.532] [STARTUP] InitializeComponent completed
+[2026-06-11 17:56:32.537] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 17:56:32.538] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 17:56:32.614] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 17:56:33.034] [STARTUP] MainViewModel created
+[2026-06-11 17:56:33.036] [STARTUP] DataContext set
+[2026-06-11 17:56:33.041] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 17:56:33.558] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 17:56:50.926] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:56:51.241] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:56:51.348] [STARTUP] App_OnStartup called
+[2026-06-11 17:56:51.349] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:56:51.356] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:56:51.357] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:56:51.582] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:56:53.538] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:56:53.539] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:56:53.547] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:56:53.548] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:56:53.555] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:56:53.556] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:56:54.688] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:56:54.689] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:56:54.693] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:58:23.760] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:58:24.087] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:58:24.215] [STARTUP] App_OnStartup called
+[2026-06-11 17:58:24.216] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:58:24.225] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:58:24.226] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:58:24.461] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:58:26.633] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:58:26.634] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:58:26.642] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:58:26.643] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:58:26.650] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:58:26.651] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:58:27.861] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:58:27.862] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:58:27.866] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 17:58:43.112] [LOGIN] Button clicked
+[2026-06-11 17:58:43.113] [LOGIN] Checking _auth null status
+[2026-06-11 17:58:43.114] [LOGIN] AuthService NULL: False
+[2026-06-11 17:58:43.115] [LOGIN] Checking controls null status
+[2026-06-11 17:58:43.115] [LOGIN] Reading username
+[2026-06-11 17:58:43.117] [LOGIN] Username: argion
+[2026-06-11 17:58:43.117] [LOGIN] Reading password
+[2026-06-11 17:58:43.119] [LOGIN] Password length: 8
+[2026-06-11 17:58:43.120] [LOGIN] Remember me: True
+[2026-06-11 17:58:43.121] [LOGIN] Calling Authenticate
+[2026-06-11 17:58:43.598] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 17:58:43.599] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 17:58:43.600] [STARTUP] MainWindow Constructor Start
+[2026-06-11 17:58:43.799] [STARTUP] InitializeComponent completed
+[2026-06-11 17:58:43.804] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 17:58:43.805] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 17:58:43.894] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 17:58:44.329] [STARTUP] MainViewModel created
+[2026-06-11 17:58:44.333] [STARTUP] DataContext set
+[2026-06-11 17:58:44.339] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 17:58:44.866] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 17:58:58.355] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 17:58:58.651] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 17:58:58.759] [STARTUP] App_OnStartup called
+[2026-06-11 17:58:58.760] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 17:58:58.769] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 17:58:58.770] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 17:58:58.999] [STARTUP] Calling Database.Migrate()
+[2026-06-11 17:59:00.969] [STARTUP] Database.Migrate() completed
+[2026-06-11 17:59:00.970] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 17:59:00.977] [STARTUP] EnsureUserColumns completed
+[2026-06-11 17:59:00.978] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 17:59:00.988] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 17:59:00.989] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 17:59:02.138] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 17:59:02.139] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 17:59:02.142] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:10:35.633] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:10:35.932] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:10:36.047] [STARTUP] App_OnStartup called
+[2026-06-11 18:10:36.048] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:10:36.057] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:10:36.058] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:10:36.289] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:10:38.263] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:10:38.264] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:10:38.271] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:10:38.272] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:10:38.279] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:10:38.280] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:10:39.402] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:10:39.403] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:10:39.408] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:11:00.826] [LOGIN] Button clicked
+[2026-06-11 18:11:00.827] [LOGIN] Checking _auth null status
+[2026-06-11 18:11:00.827] [LOGIN] AuthService NULL: False
+[2026-06-11 18:11:00.828] [LOGIN] Checking controls null status
+[2026-06-11 18:11:00.829] [LOGIN] Reading username
+[2026-06-11 18:11:00.830] [LOGIN] Username: argion
+[2026-06-11 18:11:00.831] [LOGIN] Reading password
+[2026-06-11 18:11:00.832] [LOGIN] Password length: 8
+[2026-06-11 18:11:00.833] [LOGIN] Remember me: True
+[2026-06-11 18:11:00.834] [LOGIN] Calling Authenticate
+[2026-06-11 18:11:01.298] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 18:11:01.299] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 18:11:01.300] [STARTUP] MainWindow Constructor Start
+[2026-06-11 18:11:01.497] [STARTUP] InitializeComponent completed
+[2026-06-11 18:11:01.502] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 18:11:01.503] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 18:11:01.593] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 18:11:02.030] [STARTUP] MainViewModel created
+[2026-06-11 18:11:02.032] [STARTUP] DataContext set
+[2026-06-11 18:11:02.037] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 18:11:02.557] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 18:11:21.026] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:11:21.352] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:11:21.489] [STARTUP] App_OnStartup called
+[2026-06-11 18:11:21.490] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:11:21.502] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:11:21.503] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:11:21.755] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:11:23.896] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:11:23.897] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:11:23.906] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:11:23.907] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:11:23.918] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:11:23.919] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:11:25.174] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:11:25.176] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:11:25.180] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:14:34.973] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:14:35.283] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:14:35.406] [STARTUP] App_OnStartup called
+[2026-06-11 18:14:35.407] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:14:35.414] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:14:35.415] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:14:35.651] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:14:37.647] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:14:37.648] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:14:37.656] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:14:37.657] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:14:37.665] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:14:37.666] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:14:38.808] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:14:38.809] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:14:38.814] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:14:56.984] [LOGIN] Button clicked
+[2026-06-11 18:14:56.985] [LOGIN] Checking _auth null status
+[2026-06-11 18:14:56.986] [LOGIN] AuthService NULL: False
+[2026-06-11 18:14:56.987] [LOGIN] Checking controls null status
+[2026-06-11 18:14:56.988] [LOGIN] Reading username
+[2026-06-11 18:14:56.989] [LOGIN] Username: argion
+[2026-06-11 18:14:56.990] [LOGIN] Reading password
+[2026-06-11 18:14:56.992] [LOGIN] Password length: 8
+[2026-06-11 18:14:56.993] [LOGIN] Remember me: True
+[2026-06-11 18:14:56.993] [LOGIN] Calling Authenticate
+[2026-06-11 18:14:57.444] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 18:14:57.445] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 18:14:57.446] [STARTUP] MainWindow Constructor Start
+[2026-06-11 18:14:57.638] [STARTUP] InitializeComponent completed
+[2026-06-11 18:14:57.643] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 18:14:57.644] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 18:14:57.721] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 18:14:58.130] [STARTUP] MainViewModel created
+[2026-06-11 18:14:58.131] [STARTUP] DataContext set
+[2026-06-11 18:14:58.136] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 18:14:58.643] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 18:22:07.339] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:22:07.638] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:22:07.745] [STARTUP] App_OnStartup called
+[2026-06-11 18:22:07.746] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:22:07.754] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:22:07.755] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:22:07.978] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:22:09.959] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:22:09.960] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:22:09.967] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:22:09.968] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:22:09.975] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:22:09.976] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:22:11.151] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:22:11.152] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:22:11.156] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:22:32.194] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:22:32.498] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:22:32.603] [STARTUP] App_OnStartup called
+[2026-06-11 18:22:32.604] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:22:32.612] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:22:32.613] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:22:32.838] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:22:34.791] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:22:34.792] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:22:34.799] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:22:34.800] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:22:34.809] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:22:34.809] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:22:35.938] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:22:35.939] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:22:35.943] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:38:54.342] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:38:54.646] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:38:54.767] [STARTUP] App_OnStartup called
+[2026-06-11 18:38:54.768] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:38:54.775] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:38:54.776] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:38:55.005] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:38:56.958] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:38:56.959] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:38:56.966] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:38:56.967] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:38:56.975] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:38:56.975] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:38:58.100] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:38:58.101] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:38:58.105] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 18:39:14.497] [LOGIN] Button clicked
+[2026-06-11 18:39:14.498] [LOGIN] Checking _auth null status
+[2026-06-11 18:39:14.499] [LOGIN] AuthService NULL: False
+[2026-06-11 18:39:14.500] [LOGIN] Checking controls null status
+[2026-06-11 18:39:14.500] [LOGIN] Reading username
+[2026-06-11 18:39:14.502] [LOGIN] Username: argion
+[2026-06-11 18:39:14.502] [LOGIN] Reading password
+[2026-06-11 18:39:14.504] [LOGIN] Password length: 8
+[2026-06-11 18:39:14.505] [LOGIN] Remember me: False
+[2026-06-11 18:39:14.505] [LOGIN] Calling Authenticate
+[2026-06-11 18:39:14.952] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 18:39:14.953] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 18:39:14.954] [STARTUP] MainWindow Constructor Start
+[2026-06-11 18:39:15.127] [STARTUP] InitializeComponent completed
+[2026-06-11 18:39:15.132] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 18:39:15.133] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 18:39:15.215] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 18:39:15.633] [STARTUP] MainViewModel created
+[2026-06-11 18:39:15.634] [STARTUP] DataContext set
+[2026-06-11 18:39:15.639] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 18:39:16.192] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 18:41:16.846] AdminUserControl Constructor Start
+[2026-06-11 18:41:16.908] AdminUserControl Constructor End
+[2026-06-11 18:41:16.932] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 18:41:16.934] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 18:41:16.937] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 18:41:16.939] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 18:41:16.940] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 18:41:16.942] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 18:41:16.944] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 18:41:16.945] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 18:41:16.946] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 18:41:16.948] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 18:41:16.949] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 18:41:25.972] BtnLogout_Click - Logout process started
+[2026-06-11 18:41:27.349] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 18:41:27.355] BtnLogout_Click - Creating and showing LoginWindow
+[2026-06-11 18:41:27.509] BtnLogout_Click - Closing MainWindow and shutting down application
+[2026-06-11 18:41:56.334] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 18:41:56.676] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 18:41:56.799] [STARTUP] App_OnStartup called
+[2026-06-11 18:41:56.799] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 18:41:56.807] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 18:41:56.808] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 18:41:57.058] [STARTUP] Calling Database.Migrate()
+[2026-06-11 18:41:59.233] [STARTUP] Database.Migrate() completed
+[2026-06-11 18:41:59.234] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 18:41:59.242] [STARTUP] EnsureUserColumns completed
+[2026-06-11 18:41:59.243] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 18:41:59.250] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 18:41:59.251] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 18:42:00.463] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 18:42:00.464] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 18:42:00.468] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:00:43.896] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:00:44.196] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:00:44.305] [STARTUP] App_OnStartup called
+[2026-06-11 19:00:44.305] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:00:44.313] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:00:44.314] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:00:44.539] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:00:46.558] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:00:46.559] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:00:46.566] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:00:46.567] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:00:46.574] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:00:46.575] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 19:00:47.725] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 19:00:47.726] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 19:00:47.731] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:32:04.685] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:32:05.241] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:32:05.391] [STARTUP] App_OnStartup called
+[2026-06-11 19:32:05.392] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:32:05.403] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:32:05.404] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:32:05.694] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:32:08.313] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:32:08.314] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:32:08.323] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:32:08.324] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:32:08.332] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:32:08.333] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 19:32:09.810] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 19:32:09.811] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 19:32:09.846] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:33:13.268] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:33:13.592] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:33:13.700] [STARTUP] App_OnStartup called
+[2026-06-11 19:33:13.701] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:33:13.708] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:33:13.709] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:33:13.941] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:33:16.137] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:33:16.138] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:33:16.145] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:33:16.146] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:33:16.153] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:33:16.154] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 19:33:17.324] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 19:33:17.325] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 19:33:17.329] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:33:31.155] [LOGIN] Button clicked
+[2026-06-11 19:33:31.156] [LOGIN] Checking _auth null status
+[2026-06-11 19:33:31.157] [LOGIN] AuthService NULL: False
+[2026-06-11 19:33:31.158] [LOGIN] Checking controls null status
+[2026-06-11 19:33:31.159] [LOGIN] Reading username
+[2026-06-11 19:33:31.160] [LOGIN] Username: argion
+[2026-06-11 19:33:31.161] [LOGIN] Reading password
+[2026-06-11 19:33:31.163] [LOGIN] Password length: 8
+[2026-06-11 19:33:31.163] [LOGIN] Remember me: True
+[2026-06-11 19:33:31.164] [LOGIN] Calling Authenticate
+[2026-06-11 19:33:31.748] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 19:33:31.749] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 19:33:31.750] [STARTUP] MainWindow Constructor Start
+[2026-06-11 19:33:32.002] [STARTUP] InitializeComponent completed
+[2026-06-11 19:33:32.007] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 19:33:32.008] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 19:33:32.131] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 19:33:32.676] [STARTUP] MainViewModel created
+[2026-06-11 19:33:32.678] [STARTUP] DataContext set
+[2026-06-11 19:33:32.683] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 19:33:33.458] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 19:37:17.827] BtnLogout_Click - Logout process started
+[2026-06-11 19:37:19.568] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 19:37:19.645] BtnLogout_Click - Creating and showing LoginWindow
+[2026-06-11 19:37:19.848] BtnLogout_Click - Closing MainWindow and shutting down application
+[2026-06-11 19:37:45.319] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:37:45.621] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:37:45.738] [STARTUP] App_OnStartup called
+[2026-06-11 19:37:45.739] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:37:45.746] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:37:45.747] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:37:45.972] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:37:47.998] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:37:47.999] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:37:48.007] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:37:48.008] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:37:48.015] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:37:48.016] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 19:37:49.285] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 19:37:49.286] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 19:37:49.291] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:57:00.522] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:57:00.930] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:57:01.041] [STARTUP] App_OnStartup called
+[2026-06-11 19:57:01.042] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:57:01.050] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:57:01.051] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:57:01.302] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:57:03.462] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:57:03.463] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:57:03.471] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:57:03.471] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:57:03.479] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:57:03.480] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 19:57:04.677] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 19:57:04.678] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 19:57:04.682] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 19:57:21.255] [LOGIN] Button clicked
+[2026-06-11 19:57:21.256] [LOGIN] Checking _auth null status
+[2026-06-11 19:57:21.257] [LOGIN] AuthService NULL: False
+[2026-06-11 19:57:21.258] [LOGIN] Checking controls null status
+[2026-06-11 19:57:21.259] [LOGIN] Reading username
+[2026-06-11 19:57:21.260] [LOGIN] Username: argion
+[2026-06-11 19:57:21.261] [LOGIN] Reading password
+[2026-06-11 19:57:21.263] [LOGIN] Password length: 8
+[2026-06-11 19:57:21.263] [LOGIN] Remember me: False
+[2026-06-11 19:57:21.264] [LOGIN] Calling Authenticate
+[2026-06-11 19:57:21.841] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 19:57:21.842] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 19:57:21.844] [STARTUP] MainWindow Constructor Start
+[2026-06-11 19:57:22.070] [STARTUP] InitializeComponent completed
+[2026-06-11 19:57:22.175] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 19:57:22.176] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 19:57:22.340] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 19:57:22.819] [STARTUP] MainViewModel created
+[2026-06-11 19:57:22.821] [STARTUP] DataContext set
+[2026-06-11 19:57:22.826] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 19:57:23.677] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 19:57:34.306] BtnLogout_Click - Logout process started
+[2026-06-11 19:57:36.611] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 19:57:36.615] BtnLogout_Click - Creating and showing ModernLauncherWindow
+[2026-06-11 19:57:36.768] BtnLogout_Click - Closing MainWindow and shutting down application
+[2026-06-11 19:59:26.431] BtnLogout_Click - Logout process started
+[2026-06-11 19:59:27.697] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 19:59:27.699] BtnLogout_Click - Creating and showing ModernLauncherWindow
+[2026-06-11 19:59:27.807] BtnLogout_Click - Closing MainWindow and shutting down application
+[2026-06-11 19:59:28.024] [DISPATCHER EXCEPTION] Pencere kapatılırken Visibility Visible olarak ayarlanamaz veya Show, ShowDialog, Close veya WindowInteropHelper.EnsureHandle çağırılamaz.
+   at System.Windows.Window.VerifyNotClosing()
+   at System.Windows.Window.InternalClose(Boolean shutdown, Boolean ignoreCancel)
+   at RenPyTRLauncher.MainWindow.BtnLogout_Click(Object sender, RoutedEventArgs e) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 893
+   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+   at System.Windows.Controls.Primitives.ButtonBase.OnClick()
+   at System.Windows.Controls.Button.OnClick()
+   at System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
    at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
    at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
    at System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
@@ -77,98 +667,296 @@
    at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
    at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
    at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
-[2026-06-09 19:55:05.593] DispatcherUnhandledException: 'System.Windows.Markup.StaticResourceHolder' öğesinde değer sağlama işlemi özel durum döndürdü.
-[2026-06-09 19:55:05.595] DispatcherUnhandledException StackTrace:    at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
-   at System.Windows.Markup.XamlReader.RewrapException(Exception e, Uri baseUri)
-   at System.Windows.FrameworkTemplate.LoadTemplateXaml(XamlReader templateReader, XamlObjectWriter currentWriter)
-   at System.Windows.FrameworkTemplate.LoadOptimizedTemplateContent(DependencyObject container, IComponentConnector componentConnector, IStyleConnector styleConnector, List`1 affectedChildren, UncommonField`1 templatedNonFeChildrenField)
-   at System.Windows.FrameworkTemplate.LoadContent(DependencyObject container, List`1 affectedChildren)
-   at System.Windows.StyleHelper.ApplyTemplateContent(UncommonField`1 dataField, DependencyObject container, FrameworkElementFactory templateRoot, Int32 lastChildIndex, HybridDictionary childIndexFromChildID, FrameworkTemplate frameworkTemplate)
-   at System.Windows.FrameworkTemplate.ApplyTemplateContent(UncommonField`1 templateDataField, FrameworkElement container)
-   at System.Windows.FrameworkElement.ApplyTemplate()
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.StackPanel.StackMeasureHelper(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size constraint)
-   at System.Windows.Controls.StackPanel.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
-   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
-   at System.Windows.Controls.ScrollContentPresenter.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Grid.MeasureCell(Int32 cell, Boolean forceInfinityV)
-   at System.Windows.Controls.Grid.MeasureCellsGroup(Int32 cellsHead, Size referenceSize, Boolean ignoreDesiredSizeU, Boolean forceInfinityV, Boolean& hasDesiredSizeUChanged)
-   at System.Windows.Controls.Grid.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.ScrollViewer.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at MS.Internal.Helper.MeasureElementWithSingleChild(UIElement element, Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Decorator.MeasureOverride(Size constraint)
-   at System.Windows.Documents.AdornerDecorator.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Controls.Border.MeasureOverride(Size constraint)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Window.MeasureOverrideHelper(Size constraint)
-   at System.Windows.Window.MeasureOverride(Size availableSize)
-   at System.Windows.FrameworkElement.MeasureCore(Size availableSize)
-   at System.Windows.UIElement.Measure(Size availableSize)
-   at System.Windows.Interop.HwndSource.SetLayoutSize()
-   at System.Windows.Interop.HwndSource.set_RootVisualInternal(Visual value)
-   at System.Windows.Window.SetRootVisualAndUpdateSTC()
-   at System.Windows.Window.SetupInitialState(Double requestedTop, Double requestedLeft, Double requestedWidth, Double requestedHeight)
-   at System.Windows.Window.CreateSourceWindow(Boolean duringShow)
-   at System.Windows.Window.ShowHelper(Object booleanBox)
-   at System.Windows.Window.Show()
-   at System.Windows.Window.ShowDialog()
-   at RenPyTRLauncher.MainWindow.OpenGameDetail(Game game) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 476
-   at RenPyTRLauncher.MainWindow.GameCard_Click(Object sender, MouseButtonEventArgs e) in D:\RenPyTRLauncher\MainWindow.xaml.cs:line 442
-   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
-   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
-   at System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
-   at System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
-   at System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
-   at System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
-   at System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
-   at System.Windows.Input.InputManager.ProcessStagingArea()
-   at System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
-   at System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
-   at System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
-   at MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+[2026-06-11 19:59:40.550] [DISPATCHER EXCEPTION] Pencere kapatılırken Visibility Visible olarak ayarlanamaz veya Show, ShowDialog, Close veya WindowInteropHelper.EnsureHandle çağırılamaz.
+   at System.Windows.Window.VerifyNotClosing()
+   at System.Windows.Window.InternalClose(Boolean shutdown, Boolean ignoreCancel)
+   at System.Windows.Application.DoShutdown()
+   at System.Windows.Application.ShutdownImpl()
+   at System.Windows.Application.ShutdownCallback(Object arg)
    at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
    at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
-[2026-06-09 19:59:28.465] App Started
-[2026-06-09 19:59:28.511] Initializing Services...
-[2026-06-09 19:59:32.386] Services Loaded
-[2026-06-09 19:59:32.387] Database Initialized
-[2026-06-09 19:59:32.388] Checking for restored session...
-[2026-06-09 19:59:32.483] Session restored, opening MainWindow
-[2026-06-09 19:59:32.483] MainWindow Created
-[2026-06-09 19:59:34.632] MainWindow Shown
-[2026-06-09 20:44:48.035] App Started
-[2026-06-09 20:44:48.073] Initializing Services...
-[2026-06-09 20:44:51.512] Services Loaded
-[2026-06-09 20:44:51.513] Database Initialized
-[2026-06-09 20:44:51.514] Checking for restored session...
-[2026-06-09 20:44:51.607] Session restored, opening MainWindow
-[2026-06-09 20:44:51.608] MainWindow Created
-[2026-06-09 20:44:53.969] MainWindow Shown
+[2026-06-11 19:59:56.587] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 19:59:56.890] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 19:59:57.007] [STARTUP] App_OnStartup called
+[2026-06-11 19:59:57.008] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 19:59:57.016] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 19:59:57.016] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 19:59:57.250] [STARTUP] Calling Database.Migrate()
+[2026-06-11 19:59:59.225] [STARTUP] Database.Migrate() completed
+[2026-06-11 19:59:59.225] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 19:59:59.235] [STARTUP] EnsureUserColumns completed
+[2026-06-11 19:59:59.236] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 19:59:59.246] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 19:59:59.247] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 20:00:00.455] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 20:00:00.456] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 20:00:00.460] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 20:00:10.726] [LOGIN] Button clicked
+[2026-06-11 20:00:10.727] [LOGIN] Checking _auth null status
+[2026-06-11 20:00:10.728] [LOGIN] AuthService NULL: False
+[2026-06-11 20:00:10.729] [LOGIN] Checking controls null status
+[2026-06-11 20:00:10.730] [LOGIN] Reading username
+[2026-06-11 20:00:10.731] [LOGIN] Username: argion
+[2026-06-11 20:00:10.732] [LOGIN] Reading password
+[2026-06-11 20:00:10.734] [LOGIN] Password length: 8
+[2026-06-11 20:00:10.734] [LOGIN] Remember me: False
+[2026-06-11 20:00:10.735] [LOGIN] Calling Authenticate
+[2026-06-11 20:00:11.185] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 20:00:11.186] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 20:00:11.188] [STARTUP] MainWindow Constructor Start
+[2026-06-11 20:00:11.364] [STARTUP] InitializeComponent completed
+[2026-06-11 20:00:11.369] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 20:00:11.370] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 20:00:11.449] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 20:00:11.855] [STARTUP] MainViewModel created
+[2026-06-11 20:00:11.857] [STARTUP] DataContext set
+[2026-06-11 20:00:11.862] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 20:00:12.573] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 20:00:18.234] BtnLogout_Click - Logout process started
+[2026-06-11 20:00:20.327] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 20:00:20.331] BtnLogout_Click - Creating and showing ModernLauncherWindow
+[2026-06-11 20:00:20.454] BtnLogout_Click - Closing MainWindow and shutting down application
+[2026-06-11 20:22:29.768] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 20:22:30.077] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 20:22:30.184] [STARTUP] App_OnStartup called
+[2026-06-11 20:22:30.185] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 20:22:30.192] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 20:22:30.193] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 20:22:30.418] [STARTUP] Calling Database.Migrate()
+[2026-06-11 20:22:32.376] [STARTUP] Database.Migrate() completed
+[2026-06-11 20:22:32.377] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 20:22:32.385] [STARTUP] EnsureUserColumns completed
+[2026-06-11 20:22:32.386] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 20:22:32.393] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 20:22:32.394] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 20:22:33.535] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 20:22:33.536] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 20:22:33.540] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 20:22:46.462] [LOGIN] Button clicked
+[2026-06-11 20:22:46.463] [LOGIN] Checking _auth null status
+[2026-06-11 20:22:46.464] [LOGIN] AuthService NULL: False
+[2026-06-11 20:22:46.465] [LOGIN] Checking controls null status
+[2026-06-11 20:22:46.466] [LOGIN] Reading username
+[2026-06-11 20:22:46.467] [LOGIN] Username: argion
+[2026-06-11 20:22:46.468] [LOGIN] Reading password
+[2026-06-11 20:22:46.470] [LOGIN] Password length: 8
+[2026-06-11 20:22:46.470] [LOGIN] Remember me: False
+[2026-06-11 20:22:46.471] [LOGIN] Calling Authenticate
+[2026-06-11 20:22:46.933] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 20:22:46.934] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 20:22:46.936] [STARTUP] MainWindow Constructor Start
+[2026-06-11 20:22:47.100] [STARTUP] InitializeComponent completed
+[2026-06-11 20:22:47.105] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 20:22:47.106] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 20:22:47.182] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 20:22:47.622] [STARTUP] MainViewModel created
+[2026-06-11 20:22:47.624] [STARTUP] DataContext set
+[2026-06-11 20:22:47.629] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 20:22:48.294] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 20:22:53.142] BtnLogout_Click - Logout process started
+[2026-06-11 20:22:54.702] BtnLogout_Click - Calling AuthService.Logout()
+[2026-06-11 20:22:54.706] BtnLogout_Click - Creating and showing ModernLauncherWindow
+[2026-06-11 20:22:54.824] BtnLogout_Click - Setting logout flag and closing MainWindow
+[2026-06-11 20:30:28.487] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 20:30:28.794] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 20:30:28.901] [STARTUP] App_OnStartup called
+[2026-06-11 20:30:28.902] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 20:30:28.910] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 20:30:28.911] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 20:30:29.140] [STARTUP] Calling Database.Migrate()
+[2026-06-11 20:30:31.193] [STARTUP] Database.Migrate() completed
+[2026-06-11 20:30:31.194] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 20:30:31.202] [STARTUP] EnsureUserColumns completed
+[2026-06-11 20:30:31.202] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 20:30:31.209] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 20:30:31.210] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 20:30:32.391] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 20:30:32.392] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 20:30:32.396] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 20:35:40.315] [LOGIN] Button clicked
+[2026-06-11 20:35:40.316] [LOGIN] Checking _auth null status
+[2026-06-11 20:35:40.317] [LOGIN] AuthService NULL: False
+[2026-06-11 20:35:40.318] [LOGIN] Checking controls null status
+[2026-06-11 20:35:40.319] [LOGIN] Reading username
+[2026-06-11 20:35:40.320] [LOGIN] Username: argion
+[2026-06-11 20:35:40.321] [LOGIN] Reading password
+[2026-06-11 20:35:40.322] [LOGIN] Password length: 8
+[2026-06-11 20:35:40.323] [LOGIN] Remember me: True
+[2026-06-11 20:35:40.324] [LOGIN] Calling Authenticate
+[2026-06-11 20:35:40.780] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 20:35:40.781] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 20:35:40.782] [STARTUP] MainWindow Constructor Start
+[2026-06-11 20:35:40.974] [STARTUP] InitializeComponent completed
+[2026-06-11 20:35:40.980] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 20:35:40.980] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 20:35:41.058] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 20:35:41.464] [STARTUP] MainViewModel created
+[2026-06-11 20:35:41.467] [STARTUP] DataContext set
+[2026-06-11 20:35:41.471] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 20:35:42.163] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 20:38:05.619] AdminUserControl Constructor Start
+[2026-06-11 20:38:05.718] AdminUserControl Constructor End
+[2026-06-11 20:38:05.737] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 20:38:05.740] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 20:38:05.749] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 20:38:05.751] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 20:38:05.753] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 20:38:05.754] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 20:38:05.756] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 20:38:05.757] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 20:38:05.759] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 20:38:05.761] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 20:38:05.763] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 21:01:32.990] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 21:01:33.323] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 21:01:33.457] [STARTUP] App_OnStartup called
+[2026-06-11 21:01:33.458] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 21:01:33.466] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 21:01:33.467] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 21:01:33.735] [STARTUP] Calling Database.Migrate()
+[2026-06-11 21:01:36.028] [STARTUP] Database.Migrate() completed
+[2026-06-11 21:01:36.029] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 21:01:36.040] [STARTUP] EnsureUserColumns completed
+[2026-06-11 21:01:36.041] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 21:01:36.050] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 21:01:36.051] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 21:01:37.327] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 21:01:37.328] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 21:01:37.332] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 21:01:53.932] [LOGIN] Button clicked
+[2026-06-11 21:01:53.934] [LOGIN] Checking _auth null status
+[2026-06-11 21:01:53.935] [LOGIN] AuthService NULL: False
+[2026-06-11 21:01:53.936] [LOGIN] Checking controls null status
+[2026-06-11 21:01:53.937] [LOGIN] Reading username
+[2026-06-11 21:01:53.938] [LOGIN] Username: argion
+[2026-06-11 21:01:53.939] [LOGIN] Reading password
+[2026-06-11 21:01:53.941] [LOGIN] Password length: 8
+[2026-06-11 21:01:53.942] [LOGIN] Remember me: True
+[2026-06-11 21:01:53.943] [LOGIN] Calling Authenticate
+[2026-06-11 21:01:54.506] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 21:01:54.507] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 21:01:54.508] [STARTUP] MainWindow Constructor Start
+[2026-06-11 21:01:54.744] [STARTUP] InitializeComponent completed
+[2026-06-11 21:01:54.756] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 21:01:54.757] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 21:01:54.926] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 21:01:55.386] [STARTUP] MainViewModel created
+[2026-06-11 21:01:55.388] [STARTUP] DataContext set
+[2026-06-11 21:01:55.394] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 21:01:56.138] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 23:02:43.253] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 23:02:43.666] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 23:02:43.780] [STARTUP] App_OnStartup called
+[2026-06-11 23:02:43.781] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 23:02:43.789] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 23:02:43.789] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 23:02:44.016] [STARTUP] Calling Database.Migrate()
+[2026-06-11 23:02:46.069] [STARTUP] Database.Migrate() completed
+[2026-06-11 23:02:46.070] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 23:02:46.078] [STARTUP] EnsureUserColumns completed
+[2026-06-11 23:02:46.078] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 23:02:46.086] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 23:02:46.087] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 23:02:47.224] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 23:02:47.225] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 23:02:47.229] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 23:03:16.424] [LOGIN] Button clicked
+[2026-06-11 23:03:16.425] [LOGIN] Checking _auth null status
+[2026-06-11 23:03:16.426] [LOGIN] AuthService NULL: False
+[2026-06-11 23:03:16.427] [LOGIN] Checking controls null status
+[2026-06-11 23:03:16.427] [LOGIN] Reading username
+[2026-06-11 23:03:16.429] [LOGIN] Username: argion
+[2026-06-11 23:03:16.429] [LOGIN] Reading password
+[2026-06-11 23:03:16.431] [LOGIN] Password length: 8
+[2026-06-11 23:03:16.432] [LOGIN] Remember me: True
+[2026-06-11 23:03:16.433] [LOGIN] Calling Authenticate
+[2026-06-11 23:03:17.064] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 23:03:17.065] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 23:03:17.066] [STARTUP] MainWindow Constructor Start
+[2026-06-11 23:03:17.530] [STARTUP] InitializeComponent completed
+[2026-06-11 23:03:17.535] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 23:03:17.536] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 23:03:17.614] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 23:03:17.961] [STARTUP] MainViewModel created
+[2026-06-11 23:03:17.963] [STARTUP] DataContext set
+[2026-06-11 23:03:17.969] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 23:03:18.573] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 23:03:36.694] AdminUserControl Constructor Start
+[2026-06-11 23:03:36.890] AdminUserControl Constructor End
+[2026-06-11 23:03:36.903] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 23:03:36.904] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 23:03:36.905] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 23:03:36.907] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 23:03:36.909] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 23:03:36.911] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 23:03:36.913] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 23:03:36.914] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 23:03:36.915] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 23:03:36.917] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 23:03:36.918] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 23:19:04.797] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 23:19:05.134] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 23:19:05.255] [STARTUP] App_OnStartup called
+[2026-06-11 23:19:05.255] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 23:19:05.263] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 23:19:05.264] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 23:19:05.526] [STARTUP] Calling Database.Migrate()
+[2026-06-11 23:19:07.613] [STARTUP] Database.Migrate() completed
+[2026-06-11 23:19:07.613] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 23:19:07.621] [STARTUP] EnsureUserColumns completed
+[2026-06-11 23:19:07.622] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 23:19:07.630] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 23:19:07.631] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 23:19:08.815] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 23:19:08.816] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 23:19:08.820] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-11 23:19:30.318] [LOGIN] Button clicked
+[2026-06-11 23:19:30.319] [LOGIN] Checking _auth null status
+[2026-06-11 23:19:30.320] [LOGIN] AuthService NULL: False
+[2026-06-11 23:19:30.321] [LOGIN] Checking controls null status
+[2026-06-11 23:19:30.322] [LOGIN] Reading username
+[2026-06-11 23:19:30.323] [LOGIN] Username: Argion
+[2026-06-11 23:19:30.323] [LOGIN] Reading password
+[2026-06-11 23:19:30.325] [LOGIN] Password length: 8
+[2026-06-11 23:19:30.326] [LOGIN] Remember me: True
+[2026-06-11 23:19:30.327] [LOGIN] Calling Authenticate
+[2026-06-11 23:19:30.785] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-11 23:19:30.786] [LOGIN] Login successful, opening MainWindow
+[2026-06-11 23:19:30.788] [STARTUP] MainWindow Constructor Start
+[2026-06-11 23:19:31.148] [STARTUP] InitializeComponent completed
+[2026-06-11 23:19:31.153] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-11 23:19:31.154] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-11 23:19:31.230] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-11 23:19:31.550] [STARTUP] MainViewModel created
+[2026-06-11 23:19:31.552] [STARTUP] DataContext set
+[2026-06-11 23:19:31.558] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-11 23:19:32.087] [LOGIN] MainWindow opened, login window closed
+[2026-06-11 23:19:57.225] AdminUserControl Constructor Start
+[2026-06-11 23:19:57.353] AdminUserControl Constructor End
+[2026-06-11 23:19:57.367] AdminUserControl.RefreshLists - Starting to refresh lists
+[2026-06-11 23:19:57.369] AdminUserControl.RefreshLists - Retrieved 4 games from database
+[2026-06-11 23:19:57.370] AdminUserControl.RefreshLists - LstGames.ItemsSource set with 4 games
+[2026-06-11 23:19:57.371] AdminUserControl.RefreshLists - Retrieved 3 announcements
+[2026-06-11 23:19:57.373] AdminUserControl.RefreshLists - LstAnns.ItemsSource set with 3 announcements
+[2026-06-11 23:19:57.374] AdminUserControl.RefreshPatches - Starting to refresh patches list
+[2026-06-11 23:19:57.376] AdminUserControl.RefreshPatches - Retrieved 0 patches from database
+[2026-06-11 23:19:57.377] AdminUserControl.RefreshPatches - LstPatches.ItemsSource set with 0 patches
+[2026-06-11 23:19:57.378] AdminUserControl.RefreshSlider - Starting to refresh slider list
+[2026-06-11 23:19:57.380] AdminUserControl.RefreshSlider - Retrieved 1 featured items from database
+[2026-06-11 23:19:57.381] AdminUserControl.RefreshSlider - LstSlider.ItemsSource set with 1 items
+[2026-06-11 23:21:09.251] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-11 23:21:09.577] [APP CONSTRUCTOR] App constructor called
+[2026-06-11 23:21:09.709] [STARTUP] App_OnStartup called
+[2026-06-11 23:21:09.710] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-11 23:21:09.720] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-11 23:21:09.721] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-11 23:21:09.966] [STARTUP] Calling Database.Migrate()
+[2026-06-11 23:21:12.003] [STARTUP] Database.Migrate() completed
+[2026-06-11 23:21:12.004] [STARTUP] Calling EnsureUserColumns
+[2026-06-11 23:21:12.011] [STARTUP] EnsureUserColumns completed
+[2026-06-11 23:21:12.012] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-11 23:21:12.020] [STARTUP] EnsureExtendedSchema completed
+[2026-06-11 23:21:12.021] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-11 23:21:13.173] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-11 23:21:13.174] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-11 23:21:13.178] [STARTUP] AppBootstrap.InitializeServices completed

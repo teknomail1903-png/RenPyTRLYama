@@ -30,6 +30,8 @@ namespace RenPyTRLauncher
 
     {
 
+        private bool _isLoggingOut = false;
+
         private readonly MainViewModel viewModel;
 
         private readonly System.Collections.Generic.Dictionary<string, Button> _sidebarMap = new();
@@ -39,11 +41,15 @@ namespace RenPyTRLauncher
         public MainWindow()
 
         {
+            App.Log("[STARTUP] MainWindow Constructor Start");
             InitializeComponent();
+            App.Log("[STARTUP] InitializeComponent completed");
 
             viewModel = new MainViewModel();
+            App.Log("[STARTUP] MainViewModel created");
 
             DataContext = viewModel;
+            App.Log("[STARTUP] DataContext set");
 
             ServiceLocator.DataChanged += () => Dispatcher.Invoke(() =>
 
@@ -146,9 +152,13 @@ namespace RenPyTRLauncher
 
             _sidebarMap["PageVip"] = BtnVip;
 
+            _sidebarMap["PageDestek"] = BtnDestek;
+
             _sidebarMap["PageProfil"] = BtnProfil;
 
             _sidebarMap["PageAyarlar"] = BtnAyarlar;
+
+            _sidebarMap["Admin"] = BtnAdmin;
 
 
 
@@ -164,6 +174,8 @@ namespace RenPyTRLauncher
 
 
             BtnVip.Click += (_, _) => SetActivePage("PageVip");
+
+            BtnDestek.Click += (_, _) => SetActivePage("PageDestek");
 
             BtnProfil.Click += (_, _) => SetActivePage("PageProfil");
 
@@ -273,10 +285,9 @@ namespace RenPyTRLauncher
         private void UpdateRoleVisibility()
 
         {
-
-            BtnAdmin.Visibility = AuthorizationService.CanAccessAdminPanel(viewModel.CurrentUser)
-
-                ? Visibility.Visible : Visibility.Collapsed;
+            var canAccess = AuthorizationService.CanAccessAdminPanel(viewModel.CurrentUser);
+            App.Log($"[UPDATE ROLE] CanAccessAdminPanel: {canAccess}, CurrentUser: {viewModel.CurrentUser?.Username ?? "null"}, Role: {viewModel.CurrentUser?.Role ?? "null"}");
+            BtnAdmin.Visibility = canAccess ? Visibility.Visible : Visibility.Collapsed;
 
         }
 
@@ -698,11 +709,8 @@ namespace RenPyTRLauncher
         private void ShowAdmin()
 
         {
-
             try
             {
-                App.Log("ShowAdmin Start");
-
                 if (!AuthorizationService.CanAccessAdminPanel(viewModel.CurrentUser))
 
                 {
@@ -713,14 +721,11 @@ namespace RenPyTRLauncher
 
                 }
 
-                App.Log("Creating AdminUserControl");
                 AdminHost.Content = new AdminUserControl(viewModel.CurrentUser);
 
                 AdminHost.Visibility = Visibility.Visible;
 
                 HideAllPages();
-
-                App.Log("ShowAdmin End");
             }
             catch (Exception ex)
             {
@@ -729,7 +734,7 @@ namespace RenPyTRLauncher
                 MessageBox.Show($"Admin paneli açılırken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            HighlightSidebar(null);
+            HighlightSidebar("Admin");
 
         }
 
@@ -763,6 +768,8 @@ namespace RenPyTRLauncher
 
                 case "PageVip": PageVip.Visibility = Visibility.Visible; break;
 
+                case "PageDestek": PageDestek.Visibility = Visibility.Visible; break;
+
                 case "PageProfil": PageProfil.Visibility = Visibility.Visible; break;
 
                 case "PageAyarlar":
@@ -784,27 +791,23 @@ namespace RenPyTRLauncher
         private void HighlightSidebar(string? pageName)
 
         {
-
             var palette = ThemeService.GetPalette(ThemeService.CurrentTheme);
-
             var accent = palette.AccentBrush;
-
             var activeBg = new SolidColorBrush(palette.SidebarActiveBg);
-
             var inactiveFg = new SolidColorBrush(palette.TextMuted);
-
-
 
             foreach (var (key, btn) in _sidebarMap)
 
             {
-
                 var active = key == pageName;
-
                 btn.Background = active ? activeBg : Brushes.Transparent;
-
                 btn.Foreground = active ? accent : inactiveFg;
 
+                var indicator = btn.Template.FindName("LeftIndicator", btn) as Border;
+                if (indicator != null)
+                {
+                    indicator.Visibility = active ? Visibility.Visible : Visibility.Collapsed;
+                }
             }
 
         }
@@ -827,6 +830,8 @@ namespace RenPyTRLauncher
 
             PageVip.Visibility = Visibility.Collapsed;
 
+            PageDestek.Visibility = Visibility.Collapsed;
+
             PageProfil.Visibility = Visibility.Collapsed;
 
             PageAyarlar.Visibility = Visibility.Collapsed;
@@ -841,6 +846,9 @@ namespace RenPyTRLauncher
         private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
 
         {
+
+            if (_isLoggingOut)
+                return;
 
             if (!ConfirmExit())
 
@@ -889,12 +897,13 @@ namespace RenPyTRLauncher
             App.Log("BtnLogout_Click - Calling AuthService.Logout()");
             ServiceLocator.AuthService?.Logout();
 
-            App.Log("BtnLogout_Click - Creating and showing LoginWindow");
-            var login = new LoginWindow();
+            App.Log("BtnLogout_Click - Creating and showing ModernLauncherWindow");
+            var login = new ModernLauncherWindow();
 
             login.Show();
 
-            App.Log("BtnLogout_Click - Closing MainWindow and shutting down application");
+            App.Log("BtnLogout_Click - Setting logout flag and closing MainWindow");
+            _isLoggingOut = true;
             Close();
 
             // Ensure application shuts down completely to prevent double-click issue

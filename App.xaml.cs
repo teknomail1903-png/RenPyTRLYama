@@ -10,6 +10,36 @@ namespace RenPyTRLauncher
     {
         private static readonly string LogPath = Path.Combine(AppContext.BaseDirectory, "logs", "startup.log");
 
+        static App()
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(LogPath)!);
+                File.AppendAllText(LogPath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] [STATIC CONSTRUCTOR] Static App constructor called{Environment.NewLine}");
+            }
+            catch
+            {
+                // Ignore logging errors
+            }
+        }
+
+        public App()
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(LogPath)!);
+                File.AppendAllText(LogPath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] [APP CONSTRUCTOR] App constructor called{Environment.NewLine}");
+                
+                // Add exception handling
+                DispatcherUnhandledException += App_DispatcherUnhandledException;
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            }
+            catch
+            {
+                // Ignore logging errors
+            }
+        }
+
         public static void Log(string message)
         {
             try
@@ -23,61 +53,41 @@ namespace RenPyTRLauncher
             }
         }
 
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log($"[DISPATCHER EXCEPTION] {e.Exception.Message}\n{e.Exception.StackTrace}");
+            MessageBox.Show($"Dispatcher Exception: {e.Exception.Message}\n\n{e.Exception.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception ex)
+            {
+                Log($"[UNHANDLED EXCEPTION] {ex.Message}\n{ex.StackTrace}");
+                MessageBox.Show($"Unhandled Exception: {ex.Message}\n\n{ex.StackTrace}", "Critical Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            DispatcherUnhandledException += (s, args) =>
-            {
-                Log($"DispatcherUnhandledException: {args.Exception.Message}");
-                Log($"DispatcherUnhandledException StackTrace: {args.Exception.StackTrace}");
-                MessageBox.Show($"Unhandled Exception:\n\n{args.Exception.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
-                args.Handled = true;
-            };
-
-            AppDomain.CurrentDomain.UnhandledException += (s, args) =>
-            {
-                if (args.ExceptionObject is Exception ex)
-                {
-                    Log($"AppDomain UnhandledException: {ex.Message}");
-                    Log($"AppDomain UnhandledException StackTrace: {ex.StackTrace}");
-                    MessageBox.Show($"Unhandled Exception:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            };
-
+            Log("[STARTUP] App_OnStartup called");
+            
             try
             {
-                Log("App Started");
-
-                Log("Initializing Services...");
-                AppBootstrap.InitializeServices();
-                Log("Services Loaded");
-
-                Log("Database Initialized");
-
-                Log("Checking for restored session...");
-                var restored = ServiceLocator.AuthService?.TryRestoreSession();
-                if (restored != null)
-                {
-                    Log("Session restored, opening MainWindow");
-                    Log("MainWindow Created");
-                    new MainWindow().Show();
-                    Log("MainWindow Shown");
-                }
-                else
-                {
-                    Log("No session found, opening LoginWindow");
-                    Log("LoginWindow Created");
-                    new LoginWindow().Show();
-                    Log("LoginWindow Shown");
-                }
+                Log("[STARTUP] Calling AppBootstrap.InitializeServices");
+                Services.AppBootstrap.InitializeServices();
+                Log("[STARTUP] AppBootstrap.InitializeServices completed");
             }
             catch (Exception ex)
             {
-                Log($"ERROR: {ex.GetType().Name} - {ex.Message}");
-                Log($"STACK TRACE: {ex.StackTrace}");
-                MessageBox.Show($"Uygulama başlatılırken hata oluştu:\n\n{ex.Message}\n\nDetaylar için logs/startup.log dosyasını kontrol edin.",
-                    "Başlatma Hatası", MessageBoxButton.OK, MessageBoxImage.Error);
-                Shutdown();
+                Log($"[STARTUP] AppBootstrap.InitializeServices failed: {ex.Message}");
+                Log($"[STARTUP] StackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Database initialization failed: {ex.Message}", "Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            
+            var modernLauncherWindow = new ModernLauncherWindow();
+            modernLauncherWindow.Show();
         }
     }
 }

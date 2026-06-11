@@ -22,6 +22,7 @@ namespace RenPyTRLauncher.Data
         public DbSet<AppSetting> AppSettings { get; set; }
         public DbSet<UserActivity> UserActivities { get; set; }
         public DbSet<SupportTicket> SupportTickets { get; set; }
+        public DbSet<SupportMessage> SupportMessages { get; set; }
         public DbSet<GameCategory> Categories { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<HelpGuide> HelpGuides { get; set; }

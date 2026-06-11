@@ -96,6 +96,9 @@ namespace RenPyTRLauncher.Views
             BtnAddMedia.Click += BtnAddMedia_Click;
             BtnCheckMedia.Click += BtnCheckMedia_Click;
 
+            // Support system
+            BtnSupport.Click += BtnSupport_Click;
+
             // Settings
             BtnSaveSettings.Click += BtnSaveSettings_Click;
 
@@ -131,6 +134,40 @@ namespace RenPyTRLauncher.Views
                 case "VipMembers": PageVipMembers.Visibility = Visibility.Visible; break;
                 case "MediaLibrary": PageMediaLibrary.Visibility = Visibility.Visible; break;
                 case "Settings": PageSettings.Visibility = Visibility.Visible; break;
+            }
+
+            UpdateSidebarButtonStyles(pageName);
+        }
+
+        private void UpdateSidebarButtonStyles(string activePage)
+        {
+            BtnDashboard.Style = (Style)FindResource("SidebarButton");
+            BtnGames.Style = (Style)FindResource("SidebarButton");
+            BtnPatches.Style = (Style)FindResource("SidebarButton");
+            BtnSlider.Style = (Style)FindResource("SidebarButton");
+            BtnAnnouncements.Style = (Style)FindResource("SidebarButton");
+            BtnUsers.Style = (Style)FindResource("SidebarButton");
+            BtnVipMembers.Style = (Style)FindResource("SidebarButton");
+            BtnMediaLibrary.Style = (Style)FindResource("SidebarButton");
+            BtnSettings.Style = (Style)FindResource("SidebarButton");
+
+            Button? activeButton = activePage switch
+            {
+                "Dashboard" => BtnDashboard,
+                "Games" => BtnGames,
+                "Patches" => BtnPatches,
+                "Slider" => BtnSlider,
+                "Announcements" => BtnAnnouncements,
+                "Users" => BtnUsers,
+                "VipMembers" => BtnVipMembers,
+                "MediaLibrary" => BtnMediaLibrary,
+                "Settings" => BtnSettings,
+                _ => null
+            };
+
+            if (activeButton != null)
+            {
+                activeButton.Style = (Style)FindResource("SidebarButtonActive");
             }
         }
 
@@ -260,6 +297,11 @@ namespace RenPyTRLauncher.Views
         private void BtnCheckMedia_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Link kontrol özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BtnSupport_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage("PageSupport");
         }
 
         private void BtnSaveTier_Click(object sender, RoutedEventArgs e)
