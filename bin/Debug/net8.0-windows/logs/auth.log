@@ -364,3 +364,15 @@
 [2026-06-11 23:03:17.062] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
 [2026-06-11 23:19:30.329] Login attempt - Username/Email: Argion, RememberMe: True
 [2026-06-11 23:19:30.784] Login successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-12 11:28:14.244] TryRestoreSession attempt
+[2026-06-12 11:28:14.394] TryRestoreSession successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-12 11:28:44.549] TryRestoreSession attempt
+[2026-06-12 11:28:44.635] TryRestoreSession successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-12 11:29:13.706] TryRestoreSession attempt
+[2026-06-12 11:29:13.791] TryRestoreSession successful - User ID: 10b062e3-06f9-4f95-bb90-dd1d46400121, Username: argion
+[2026-06-12 11:29:41.941] TryRestoreSession attempt
+[2026-06-12 11:29:42.039] TryRestoreSession failed - User not found: 10b062e3-06f9-4f95-bb90-dd1d46400121
+[2026-06-12 11:29:57.108] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-12 11:29:57.368] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 11:30:15.713] TryRestoreSession attempt
+[2026-06-12 11:30:15.802] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion

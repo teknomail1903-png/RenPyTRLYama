@@ -960,3 +960,141 @@
 [2026-06-11 23:21:13.173] [STARTUP] DbSeeder.SeedIfEmpty completed
 [2026-06-11 23:21:13.174] [STARTUP] DatabaseInitializer Initialize End
 [2026-06-11 23:21:13.178] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:28:10.280] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-12 11:28:10.695] [APP CONSTRUCTOR] App constructor called
+[2026-06-12 11:28:10.887] [STARTUP] App_OnStartup called
+[2026-06-12 11:28:10.888] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-12 11:28:10.895] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-12 11:28:10.896] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-12 11:28:11.120] [STARTUP] Calling Database.Migrate()
+[2026-06-12 11:28:13.099] [STARTUP] Database.Migrate() completed
+[2026-06-12 11:28:13.099] [STARTUP] Calling EnsureUserColumns
+[2026-06-12 11:28:13.107] [STARTUP] EnsureUserColumns completed
+[2026-06-12 11:28:13.108] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-12 11:28:13.115] [STARTUP] EnsureExtendedSchema completed
+[2026-06-12 11:28:13.116] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-12 11:28:14.237] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-12 11:28:14.238] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-12 11:28:14.242] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:28:14.395] [STARTUP] Auto-login successful, opening MainWindow
+[2026-06-12 11:28:14.508] [STARTUP] MainWindow Constructor Start
+[2026-06-12 11:28:15.636] [STARTUP] InitializeComponent completed
+[2026-06-12 11:28:15.641] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-12 11:28:15.642] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-12 11:28:15.727] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-12 11:28:16.052] [STARTUP] MainViewModel created
+[2026-06-12 11:28:16.054] [STARTUP] DataContext set
+[2026-06-12 11:28:16.061] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-12 11:28:40.838] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-12 11:28:41.130] [APP CONSTRUCTOR] App constructor called
+[2026-06-12 11:28:41.234] [STARTUP] App_OnStartup called
+[2026-06-12 11:28:41.235] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-12 11:28:41.243] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-12 11:28:41.244] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-12 11:28:41.470] [STARTUP] Calling Database.Migrate()
+[2026-06-12 11:28:43.406] [STARTUP] Database.Migrate() completed
+[2026-06-12 11:28:43.407] [STARTUP] Calling EnsureUserColumns
+[2026-06-12 11:28:43.415] [STARTUP] EnsureUserColumns completed
+[2026-06-12 11:28:43.416] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-12 11:28:43.423] [STARTUP] EnsureExtendedSchema completed
+[2026-06-12 11:28:43.424] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-12 11:28:44.543] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-12 11:28:44.544] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-12 11:28:44.547] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:28:44.636] [STARTUP] Auto-login successful, opening MainWindow
+[2026-06-12 11:28:44.695] [STARTUP] MainWindow Constructor Start
+[2026-06-12 11:28:45.336] [STARTUP] InitializeComponent completed
+[2026-06-12 11:28:45.341] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-12 11:28:45.342] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-12 11:28:45.410] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-12 11:28:45.698] [STARTUP] MainViewModel created
+[2026-06-12 11:28:45.700] [STARTUP] DataContext set
+[2026-06-12 11:28:45.706] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-12 11:29:10.065] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-12 11:29:10.357] [APP CONSTRUCTOR] App constructor called
+[2026-06-12 11:29:10.464] [STARTUP] App_OnStartup called
+[2026-06-12 11:29:10.465] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-12 11:29:10.473] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-12 11:29:10.474] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-12 11:29:10.695] [STARTUP] Calling Database.Migrate()
+[2026-06-12 11:29:12.583] [STARTUP] Database.Migrate() completed
+[2026-06-12 11:29:12.584] [STARTUP] Calling EnsureUserColumns
+[2026-06-12 11:29:12.591] [STARTUP] EnsureUserColumns completed
+[2026-06-12 11:29:12.592] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-12 11:29:12.599] [STARTUP] EnsureExtendedSchema completed
+[2026-06-12 11:29:12.599] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-12 11:29:13.700] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-12 11:29:13.700] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-12 11:29:13.704] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:29:13.792] [STARTUP] Auto-login successful, opening MainWindow
+[2026-06-12 11:29:13.861] [STARTUP] MainWindow Constructor Start
+[2026-06-12 11:29:14.496] [STARTUP] InitializeComponent completed
+[2026-06-12 11:29:14.501] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-12 11:29:14.502] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-12 11:29:14.569] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-12 11:29:14.851] [STARTUP] MainViewModel created
+[2026-06-12 11:29:14.853] [STARTUP] DataContext set
+[2026-06-12 11:29:14.859] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-12 11:29:35.843] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-12 11:29:36.135] [APP CONSTRUCTOR] App constructor called
+[2026-06-12 11:29:36.238] [STARTUP] App_OnStartup called
+[2026-06-12 11:29:36.239] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-12 11:29:36.246] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-12 11:29:36.247] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-12 11:29:36.475] [STARTUP] Calling Database.Migrate()
+[2026-06-12 11:29:39.069] [STARTUP] Database.Migrate() completed
+[2026-06-12 11:29:39.070] [STARTUP] Calling EnsureUserColumns
+[2026-06-12 11:29:39.079] [STARTUP] EnsureUserColumns completed
+[2026-06-12 11:29:39.080] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-12 11:29:39.731] [STARTUP] EnsureExtendedSchema completed
+[2026-06-12 11:29:39.732] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-12 11:29:41.935] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-12 11:29:41.936] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-12 11:29:41.939] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:29:42.041] [STARTUP] No valid session, showing login
+[2026-06-12 11:29:57.098] [LOGIN] Button clicked
+[2026-06-12 11:29:57.099] [LOGIN] Checking _auth null status
+[2026-06-12 11:29:57.100] [LOGIN] AuthService NULL: False
+[2026-06-12 11:29:57.101] [LOGIN] Checking controls null status
+[2026-06-12 11:29:57.101] [LOGIN] Reading username
+[2026-06-12 11:29:57.102] [LOGIN] Username: argion
+[2026-06-12 11:29:57.103] [LOGIN] Reading password
+[2026-06-12 11:29:57.105] [LOGIN] Password length: 8
+[2026-06-12 11:29:57.105] [LOGIN] Remember me: True
+[2026-06-12 11:29:57.106] [LOGIN] Calling Authenticate
+[2026-06-12 11:29:57.370] [LOGIN] Authenticate result - Success: True, Message: Giriş başarılı.
+[2026-06-12 11:29:57.370] [LOGIN] Login successful, opening MainWindow
+[2026-06-12 11:29:57.372] [STARTUP] MainWindow Constructor Start
+[2026-06-12 11:29:57.688] [STARTUP] InitializeComponent completed
+[2026-06-12 11:29:57.693] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-12 11:29:57.694] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-12 11:29:57.726] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-12 11:29:57.891] [STARTUP] MainViewModel created
+[2026-06-12 11:29:57.894] [STARTUP] DataContext set
+[2026-06-12 11:29:57.899] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin
+[2026-06-12 11:29:58.345] [LOGIN] MainWindow opened, login window closed
+[2026-06-12 11:30:11.679] [STATIC CONSTRUCTOR] Static App constructor called
+[2026-06-12 11:30:11.984] [APP CONSTRUCTOR] App constructor called
+[2026-06-12 11:30:12.088] [STARTUP] App_OnStartup called
+[2026-06-12 11:30:12.089] [STARTUP] Calling AppBootstrap.InitializeServices
+[2026-06-12 11:30:12.096] [STARTUP] DatabaseInitializer Initialize Start
+[2026-06-12 11:30:12.097] [STARTUP] Database path: D:\RenPyTRLauncher\bin\Debug\net8.0-windows\renpytrlauncher.db
+[2026-06-12 11:30:12.326] [STARTUP] Calling Database.Migrate()
+[2026-06-12 11:30:14.269] [STARTUP] Database.Migrate() completed
+[2026-06-12 11:30:14.270] [STARTUP] Calling EnsureUserColumns
+[2026-06-12 11:30:14.277] [STARTUP] EnsureUserColumns completed
+[2026-06-12 11:30:14.278] [STARTUP] Calling EnsureExtendedSchema
+[2026-06-12 11:30:14.285] [STARTUP] EnsureExtendedSchema completed
+[2026-06-12 11:30:14.286] [STARTUP] Calling DbSeeder.SeedIfEmpty
+[2026-06-12 11:30:15.707] [STARTUP] DbSeeder.SeedIfEmpty completed
+[2026-06-12 11:30:15.707] [STARTUP] DatabaseInitializer Initialize End
+[2026-06-12 11:30:15.711] [STARTUP] AppBootstrap.InitializeServices completed
+[2026-06-12 11:30:15.803] [STARTUP] Auto-login successful, opening MainWindow
+[2026-06-12 11:30:15.863] [STARTUP] MainWindow Constructor Start
+[2026-06-12 11:30:16.496] [STARTUP] InitializeComponent completed
+[2026-06-12 11:30:16.501] [MAINVIEWMODEL] Constructor - ServiceLocator.UserService is null: False
+[2026-06-12 11:30:16.501] [MAINVIEWMODEL] Constructor - Using in-memory fallback: False
+[2026-06-12 11:30:16.567] [MAINVIEWMODEL] Constructor - CurrentUser: argion, Role: Admin
+[2026-06-12 11:30:16.853] [STARTUP] MainViewModel created
+[2026-06-12 11:30:16.855] [STARTUP] DataContext set
+[2026-06-12 11:30:16.863] [UPDATE ROLE] CanAccessAdminPanel: True, CurrentUser: argion, Role: Admin

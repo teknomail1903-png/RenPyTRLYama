@@ -86,8 +86,21 @@ namespace RenPyTRLauncher
                 MessageBox.Show($"Database initialization failed: {ex.Message}", "Startup Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
-            var modernLauncherWindow = new ModernLauncherWindow();
-            modernLauncherWindow.Show();
+            // Check for existing session before showing login
+            var auth = ServiceLocator.AuthService;
+            var restoredUser = auth?.TryRestoreSession();
+            if (restoredUser != null)
+            {
+                Log("[STARTUP] Auto-login successful, opening MainWindow");
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+            else
+            {
+                Log("[STARTUP] No valid session, showing login");
+                var modernLauncherWindow = new ModernLauncherWindow();
+                modernLauncherWindow.Show();
+            }
         }
     }
 }
