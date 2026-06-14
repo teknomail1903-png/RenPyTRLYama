@@ -160,7 +160,7 @@
                         <Button x:Name="BtnFavorite" Content="❤️ Favorilere Ekle" Width="160" Height="44" Margin="0,0,8,0"
                                 Background="#33FFFFFF" Foreground="White" BorderThickness="0" Cursor="Hand" Click="BtnFavorite_Click" FontSize="13"/>
                         <Button x:Name="BtnDownloadGame" Content="⬇ İndir" Style="{StaticResource SecondaryButton}" Height="44" Margin="0,0,8,0" Click="BtnDownloadGame_Click" FontSize="13"/>
-                        <Button x:Name="BtnInstallPatch" Content="🇹🇷 Türkçe Yama" Style="{StaticResource PrimaryButton}" Height="44" Click="BtnInstallPatch_Click" FontSize="13"/>
+                        <Button x:Name="BtnInstallPatch" Content="🇹🇷 Türkçe Mod" Style="{StaticResource PrimaryButton}" Height="44" Click="BtnInstallPatch_Click" FontSize="13"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
