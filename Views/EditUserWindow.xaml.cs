@@ -28,6 +28,17 @@ namespace RenPyTRLauncher.Views
 
             CmbRole.ItemsSource = new[] { UserRole.User, UserRole.Mod, UserRole.Admin };
             CmbMembership.ItemsSource = new[] { "Ücretsiz", "Bronz", "Gümüş", "Altın", "Platin", "Elmas", "VIP" };
+            CmbSecretQuestion.ItemsSource = new[]
+            {
+                "İlk evcil hayvanınızın adı nedir?",
+                "Annenizin kızlık soyadı nedir?",
+                "İlk okulunuzun adı nedir?",
+                "Doğduğunuz şehir nedir?",
+                "En sevdiğiniz yemek nedir?",
+                "İlk arabanızın markası nedir?",
+                "En sevdiğiniz film nedir?",
+                "Çocukluk kahramanınız kimdi?"
+            };
             TxtUsername.Text = _user.Username;
             TxtEmail.Text = _user.Email;
             CmbRole.SelectedItem = _user.Role;
@@ -35,6 +46,12 @@ namespace RenPyTRLauncher.Views
             TxtAvatar.Text = string.IsNullOrEmpty(_user.AvatarPath)
                 ? ImageService.GetDefaultAvatar(_user.Username)
                 : _user.AvatarPath;
+            
+            if (!_isNew && !string.IsNullOrEmpty(_user.SecretQuestion))
+            {
+                CmbSecretQuestion.SelectedItem = _user.SecretQuestion;
+                TxtSecretAnswer.Text = _user.SecretAnswer;
+            }
         }
 
         private void BtnBrowseAvatar_Click(object sender, RoutedEventArgs e)
@@ -62,6 +79,8 @@ namespace RenPyTRLauncher.Views
             var email = TxtEmail.Text.Trim();
             var password = TxtPassword.Password;
             var passwordConfirm = TxtPasswordConfirm.Password;
+            var secretQuestion = CmbSecretQuestion.SelectedItem?.ToString() ?? string.Empty;
+            var secretAnswer = TxtSecretAnswer.Text?.Trim() ?? string.Empty;
 
             if (username.Length < 3)
             {
@@ -101,6 +120,8 @@ namespace RenPyTRLauncher.Views
                 _user.Role = CmbRole.SelectedItem?.ToString() ?? UserRole.User;
                 _user.MembershipLevel = CmbMembership.SelectedItem?.ToString() ?? "Ücretsiz";
                 _user.AvatarPath = TxtAvatar.Text;
+                _user.SecretQuestion = secretQuestion;
+                _user.SecretAnswer = secretAnswer;
                 AuthorizationService.SyncVipBadges(_user);
                 _userService.Create(_user);
             }
@@ -128,6 +149,13 @@ namespace RenPyTRLauncher.Views
                     }
 
                     _user.PasswordHash = PasswordHasher.Hash(password);
+                }
+
+                // Only update secret question/answer if provided
+                if (!string.IsNullOrEmpty(secretQuestion) && !string.IsNullOrEmpty(secretAnswer))
+                {
+                    _user.SecretQuestion = secretQuestion;
+                    _user.SecretAnswer = secretAnswer;
                 }
 
                 AuthorizationService.SyncVipBadges(_user);

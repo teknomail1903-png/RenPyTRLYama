@@ -603,16 +603,10 @@
                         <TextBlock Text=" Oyunlar" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="BtnTurkceYamalar" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
+                <Button x:Name="BtnModlar" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="🇹🇷" FontSize="18" Foreground="#E74C3C"/>
-                        <TextBlock Text=" Türkçe Yamalar" Margin="8,0,0,0"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="BtnFavoriler" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="❤️" FontSize="18" Foreground="#E74C3C"/>
-                        <TextBlock Text=" Favoriler" Margin="8,0,0,0"/>
+                        <TextBlock Text="🧩" FontSize="18" Foreground="#9B59FF"/>
+                        <TextBlock Text=" Modlar" Margin="8,0,0,0"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="BtnKategori" Margin="0,4" Style="{StaticResource SidebarButtonStyle}">
@@ -683,6 +677,7 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -699,6 +694,35 @@
                                    FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </StackPanel>
+            </Border>
+
+            <!-- Breadcrumb Navigation -->
+            <Border Grid.Row="1" Background="#0D0D0F" BorderBrush="#2A2A30" BorderThickness="0,0,0,1" Padding="24,12,24,12" Visibility="Collapsed" x:Name="BreadcrumbBar">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnBack" Content="← Geri" Grid.Column="0" 
+                            Background="Transparent" Foreground="#9B59FF" BorderThickness="0" 
+                            FontSize="14" FontWeight="SemiBold" Padding="12,8" Cursor="Hand" 
+                            Click="BtnBack_Click" Margin="0,0,16,0"/>
+                    <ItemsControl x:Name="BreadcrumbItems" Grid.Column="1">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Text}" Foreground="#888" FontSize="14" Margin="0,0,8,0" Cursor="Hand"/>
+                                    <TextBlock Text="›" Foreground="#555" FontSize="14" Margin="0,0,8,0" Visibility="{Binding IsLast, Converter={StaticResource BoolToVis}, ConverterParameter=Invert}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
             </Border>
 
             <!-- Notification dropdown -->
@@ -753,7 +777,19 @@
                 </Grid>
             </Border>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="#0D0D0F">
+        <!-- Content Area -->
+        <ContentControl x:Name="ContentArea" Grid.Row="2">
+            <ContentControl.ContentTemplate>
+                <DataTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="#0D0D0F">
+                        <ContentPresenter Content="{Binding}"/>
+                    </ScrollViewer>
+                </DataTemplate>
+            </ContentControl.ContentTemplate>
+        </ContentControl>
+
+        <!-- Default Content (Ana Sayfa) -->
+        <ScrollViewer x:Name="DefaultContent" Grid.Row="2" VerticalScrollBarVisibility="Auto" Background="#0D0D0F">
             <StackPanel Margin="32,24">
 
                 <!-- ANA SAYFA -->
@@ -797,7 +833,7 @@
                                         <TextBlock Text="⭐ ÖNE ÇIKAN" Foreground="#9B59FF" FontSize="12" FontWeight="Bold"/>
                                     </Border>
                                     <TextBlock Text="Summer Memories" Foreground="White" FontSize="42" FontWeight="Bold" Margin="0,0,0,12" TextWrapping="Wrap"/>
-                                    <TextBlock Text="En popüler Türkçe yama oyunu. Hikaye modu, gelişmiş grafikler ve daha fazlası." Foreground="#E0E0E8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,24" MaxWidth="500"/>
+                                    <TextBlock Text="En popüler Türkçe destekli oyunu. Hikaye modu, gelişmiş grafikler ve daha fazlası." Foreground="#E0E0E8" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,24" MaxWidth="500"/>
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="🎮 Şimdi Oyna" Background="#9B59FF" Foreground="White" BorderThickness="0" Padding="24,12" Cursor="Hand" FontSize="15" FontWeight="SemiBold" Margin="0,0,12,0"/>
                                         <Button Content="ℹ️ Detaylar" Background="Transparent" Foreground="White" BorderThickness="2" BorderBrush="#FFFFFF44" Padding="24,12" Cursor="Hand" FontSize="15"/>
@@ -1048,7 +1084,7 @@
                                                                             <Setter Property="Text" Value="🇹🇷 Türkçe Destekli"/>
                                                                         </DataTrigger>
                                                                         <DataTrigger Binding="{Binding TurkishStatus}" Value="TurkishPatchAvailable">
-                                                                            <Setter Property="Text" Value="🔧 Türkçe Yama Var"/>
+                                                                            <Setter Property="Text" Value="🔧 Türkçe Mod Var"/>
                                                                         </DataTrigger>
                                                                         <DataTrigger Binding="{Binding TurkishStatus}" Value="English">
                                                                             <Setter Property="Text" Value="🌍 İngilizce"/>
@@ -1234,7 +1270,7 @@
                                                     <Run Text="📅 "/><Run Text="{Binding CompletedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
                                                 </TextBlock>
                                                 <Border Background="#2A2A35" CornerRadius="6" Padding="8,4" HorizontalAlignment="Left">
-                                                    <TextBlock Text="🇹🇷 Türkçe Yama" Foreground="#27AE60" FontSize="11" FontWeight="SemiBold"/>
+                                                    <TextBlock Text="🇹🇷 Türkçe Mod" Foreground="#27AE60" FontSize="11" FontWeight="SemiBold"/>
                                                 </Border>
                                             </StackPanel>
                                         </Grid>
@@ -1310,15 +1346,15 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- TÜRKÇE YAMALAR -->
-                <Grid x:Name="PageTurkceYamalar" Visibility="Collapsed">
+                <!-- MODLAR -->
+                <Grid x:Name="PageModlar" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="🇹🇷 Türkçe Yamalar" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
+                        <TextBlock Text="🧩 Modlar" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16"/>
                         <TextBlock Foreground="#888" FontSize="14" Margin="0,0,0,16">
-                            <Run Text="{Binding PatchCount, Mode=OneWay}"/><Run Text=" yama bulundu"/>
+                            <Run Text="{Binding ModCount, Mode=OneWay}"/><Run Text=" mod bulundu"/>
                         </TextBlock>
                         <WrapPanel>
-                            <ItemsControl ItemsSource="{Binding FilteredPatches}">
+                            <ItemsControl ItemsSource="{Binding FilteredMods}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
@@ -1335,11 +1371,60 @@
                                                         <DataTemplate>
                                                             <Grid>
                                                                 <Border Background="#2A2A35"/>
-                                                                <TextBlock Text="🇹🇷" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
+                                                                <TextBlock Text="🧩" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
                                                                 <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
-                                                                <!-- Status Badge -->
-                                                                <Border Background="#E67E22" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
-                                                                    <TextBlock Text="🇹🇷 Yama" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                                                <!-- Mod Type Badge -->
+                                                                <Border CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8">
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Translation">
+                                                                                    <Setter Property="Background" Value="#E67E22"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Gallery">
+                                                                                    <Setter Property="Background" Value="#9B59FF"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Cheat">
+                                                                                    <Setter Property="Background" Value="#3498DB"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Walkthrough">
+                                                                                    <Setter Property="Background" Value="#27AE60"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Save">
+                                                                                    <Setter Property="Background" Value="#E74C3C"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type}" Value="Extra">
+                                                                                    <Setter Property="Background" Value="#F39C12"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Border.Style>
+                                                                    <TextBlock Foreground="White" FontSize="10" FontWeight="SemiBold">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Translation">
+                                                                                        <Setter Property="Text" Value="🇹🇷 Türkçe Mod"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Gallery">
+                                                                                        <Setter Property="Text" Value="🖼️ Galeri"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Cheat">
+                                                                                        <Setter Property="Text" Value="💻 Cheat"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Walkthrough">
+                                                                                        <Setter Property="Text" Value="📖 Rehber"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Save">
+                                                                                        <Setter Property="Text" Value="💾 Save"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Type}" Value="Extra">
+                                                                                        <Setter Property="Text" Value="📦 Ekstra"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
                                                                 </Border>
                                                                 <!-- VIP Badge -->
                                                                 <Border Background="#FFD700" CornerRadius="6" Padding="6,4" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,32,0,0" Visibility="{Binding IsVip, Converter={StaticResource BoolToVis}}">
@@ -1888,52 +1973,6 @@
                             </ScrollViewer>
                         </StackPanel>
                     </ScrollViewer>
-                </Grid>
-
-                <!-- FAVORİLER -->
-                <Grid x:Name="PageFavoriler" Visibility="Collapsed">
-                    <StackPanel>
-                        <TextBlock FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,0,0,16">
-                            <Run Text="❤️ Favorilerim ("/><Run Text="{Binding FavoriteCount, Mode=OneWay}"/><Run Text=")"/>
-                        </TextBlock>
-                        <TextBlock Text="Favori oyunlarınızı buradan yönetebilirsiniz." Foreground="#888" FontSize="14" Margin="0,0,0,24"/>
-                        <WrapPanel>
-                            <ItemsControl ItemsSource="{Binding FavoriteGames}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Style="{StaticResource GameCardStyle}" MouseLeftButtonUp="GameCard_Click" Tag="{Binding}">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="160"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <ContentControl Grid.Row="0" Content="{Binding}">
-                                                    <ContentControl.ContentTemplate>
-                                                        <DataTemplate>
-                                                            <Grid>
-                                                                <Border Background="#2A2A35"/>
-                                                                <TextBlock Text="🎮" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4"/>
-                                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}, FallbackValue={x:Null}}" Stretch="UniformToFill"/>
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ContentControl.ContentTemplate>
-                                                </ContentControl>
-                                                <StackPanel Grid.Row="1" Margin="12,10">
-                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="SemiBold" FontSize="14" TextTrimming="CharacterEllipsis"/>
-                                                    <TextBlock Foreground="#888" FontSize="12" Margin="0,6,0,0">
-                                                        <Run Text="📅 "/><Run Text="{Binding AddedDate, StringFormat='{}{0:dd.MM.yyyy}', FallbackValue='-'}"/>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </WrapPanel>
-                    </StackPanel>
                 </Grid>
 
                 <!-- AYARLAR -->

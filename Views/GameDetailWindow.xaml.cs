@@ -65,16 +65,29 @@ namespace RenPyTRLauncher.Views
             TxtPatchNotes.Text = string.IsNullOrWhiteSpace(_game.PatchNotes)
                 ? "Yama notları henüz eklenmemiş."
                 : _game.PatchNotes;
-            TxtDownloadCount.Text = _game.DownloadCount.ToString();
-            TxtUpdatedDate.Text = _game.UpdatedDate.ToLocalTime().ToString("dd.MM.yyyy");
+            TxtDownloadCountCard.Text = _game.DownloadCount.ToString();
+            TxtUpdatedDateCard.Text = _game.UpdatedDate.ToLocalTime().ToString("dd.MM.yyyy");
 
             try
             {
                 var path = ImageService.ResolvePath(_game.ImagePath);
                 if (!string.IsNullOrEmpty(path))
+                {
                     ImgHero.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
+                    ImgCover.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
+                    TxtCoverInfo.Text = $"{_game.Name} kapak resmi";
+                }
+                else
+                {
+                    TxtCoverInfo.Text = "Kapak resmi yüklenmemiş.";
+                }
             }
-            catch { ImgHero.Source = null; }
+            catch 
+            { 
+                ImgHero.Source = null;
+                ImgCover.Source = null;
+                TxtCoverInfo.Text = "Kapak resmi yüklenemedi.";
+            }
 
             BadgeVip.Visibility = _game.IsVip ? Visibility.Visible : Visibility.Collapsed;
 
@@ -109,6 +122,12 @@ namespace RenPyTRLauncher.Views
             }
 
             CategoryTags.ItemsSource = _game.Categories;
+            
+            // Populate new info cards
+            TxtPrimaryCategory.Text = _game.Categories.Count > 0 ? _game.Categories[0] : "Belirtilmemiş";
+            TxtGameType.Text = _game.Type.ToString();
+            TxtTurkishStatus.Text = _game.TurkishStatus.ToString();
+            
             RefreshFavoriteButton();
         }
 
@@ -117,21 +136,21 @@ namespace RenPyTRLauncher.Views
             BadgeTurkish.Visibility = Visibility.Visible;
             switch (_game.TurkishStatus)
             {
-                case TurkishStatus.TurkishSupported:
+                case TurkishStatus.Evet:
                     BadgeTurkish.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(39, 174, 96));
-                    TxtTurkish.Text = "🇹🇷 Türkçe Destekli";
+                    TxtTurkish.Text = "🇹🇷 Türkçe";
                     break;
-                case TurkishStatus.TurkishPatchAvailable:
-                    BadgeTurkish.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 126, 34));
-                    TxtTurkish.Text = "🔧 Türkçe Yama Var";
-                    break;
-                case TurkishStatus.English:
+                case TurkishStatus.Hayır:
                     BadgeTurkish.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(52, 152, 219));
                     TxtTurkish.Text = "🌍 İngilizce";
                     break;
-                case TurkishStatus.TranslationInProgress:
+                case TurkishStatus.DevamEdiyor:
                     BadgeTurkish.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(243, 156, 18));
                     TxtTurkish.Text = "🚧 Çeviri Devam Ediyor";
+                    break;
+                case TurkishStatus.KismiCeviri:
+                    BadgeTurkish.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(230, 126, 34));
+                    TxtTurkish.Text = "� Kısmi Çeviri";
                     break;
             }
         }
@@ -141,15 +160,11 @@ namespace RenPyTRLauncher.Views
             BadgeSteam.Visibility = Visibility.Visible;
             switch (_game.SteamStatus)
             {
-                case SteamStatus.Available:
+                case SteamStatus.Var:
                     BadgeSteam.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(30, 144, 255));
-                    TxtSteam.Text = "🟦 Steam'de Mevcut";
+                    TxtSteam.Text = "🟦 Steam'de Var";
                     break;
-                case SteamStatus.ComingSoon:
-                    BadgeSteam.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 215, 0));
-                    TxtSteam.Text = "🟨 Yakında Steam'de";
-                    break;
-                case SteamStatus.NotAvailable:
+                case SteamStatus.Yok:
                     BadgeSteam.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(127, 140, 141));
                     TxtSteam.Text = "⚫ Steam'de Yok";
                     break;
@@ -237,9 +252,49 @@ namespace RenPyTRLauncher.Views
             }
         }
 
-        private void BtnDownloadGame_Click(object sender, RoutedEventArgs e)
+        private async void BtnDownloadGame_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Oyun indirme özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+            var downloadService = ServiceLocator.DownloadService ?? new DownloadService();
+            
+            var saveDialog = new SaveFileDialog
+            {
+                FileName = $"{_game.Name}.zip",
+                Filter = "ZIP Dosyaları|*.zip|Tüm Dosyalar|*.*",
+                Title = $"{_game.Name} - İndirme Konumu Seçin"
+            };
+            
+            if (saveDialog.ShowDialog() != true) return;
+            
+            var progressWindow = new DownloadProgressWindow();
+            var cts = new CancellationTokenSource();
+            progressWindow.SetCancellationTokenSource(cts);
+            progressWindow.Owner = this;
+            progressWindow.Show();
+            
+            try
+            {
+                var progress = new Progress<DownloadProgress>(p => progressWindow.SetProgress(p));
+                var result = await downloadService.DownloadGameAsync(_game, saveDialog.FileName, progress, cts.Token);
+                
+                if (result.Success)
+                {
+                    MessageBox.Show(result.Message, "İndirme Tamamlandı", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show(result.Message, "İndirme Başarısız", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"İndirme hatası: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (progressWindow.IsVisible)
+                    progressWindow.Close();
+                cts.Dispose();
+            }
         }
 
         private void DownloadLink_Click(object sender, RoutedEventArgs e)
@@ -253,6 +308,27 @@ namespace RenPyTRLauncher.Views
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Link açılamadı: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        private void Screenshot_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Border border && border.DataContext is string imagePath)
+            {
+                try
+                {
+                    var resolvedPath = ImageService.ResolvePath(imagePath);
+                    if (!string.IsNullOrEmpty(resolvedPath))
+                    {
+                        var viewer = new ImageViewerWindow(resolvedPath);
+                        viewer.Owner = this;
+                        viewer.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Görüntü açılamadı: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

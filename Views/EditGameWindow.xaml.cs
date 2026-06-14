@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using RenPyTRLauncher.Models;
 using RenPyTRLauncher.Services;
 
@@ -55,6 +56,24 @@ namespace RenPyTRLauncher.Views
             TxtScreenshots.Text = string.Join(Environment.NewLine, _game.ScreenshotPaths);
             TxtDownloadLinks.Text = string.Join(Environment.NewLine, _game.DownloadLinks);
 
+            // Load cover image preview
+            if (!string.IsNullOrEmpty(_game.ImagePath))
+            {
+                UpdateCoverPreview(_game.ImagePath);
+            }
+
+            // Load screenshot preview
+            if (_game.ScreenshotPaths.Count > 0)
+            {
+                UpdateScreenshotPreview();
+            }
+
+            // Load tags
+            LoadTags();
+
+            // Load new fields
+            LoadNewFields();
+
             // Setup game selection ComboBox for patches
             SetupGameSelection();
 
@@ -66,6 +85,256 @@ namespace RenPyTRLauncher.Views
             var btnPatch = this.FindName("BtnBrowsePatch") as System.Windows.Controls.Button;
             if (btnPatch != null) btnPatch.Click += BtnBrowsePatch_Click;
             BtnAddScreenshot.Click += BtnAddScreenshot_Click;
+
+            // Tag management
+            var btnAddTag = this.FindName("BtnAddTag") as System.Windows.Controls.Button;
+            if (btnAddTag != null) btnAddTag.Click += BtnAddTag_Click;
+
+            // New field management
+            var btnAddGameGenre = this.FindName("BtnAddGameGenre") as System.Windows.Controls.Button;
+            if (btnAddGameGenre != null) btnAddGameGenre.Click += BtnAddGameGenre_Click;
+            var btnAddPlatform = this.FindName("BtnAddPlatform") as System.Windows.Controls.Button;
+            if (btnAddPlatform != null) btnAddPlatform.Click += BtnAddPlatform_Click;
+            var btnAddContentWarning = this.FindName("BtnAddContentWarning") as System.Windows.Controls.Button;
+            if (btnAddContentWarning != null) btnAddContentWarning.Click += BtnAddContentWarning_Click;
+        }
+
+        private void LoadTags()
+        {
+            if (_game.Tags != null && _game.Tags.Count > 0)
+            {
+                TagList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Tags);
+            }
+            else
+            {
+                TagList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>();
+            }
+        }
+
+        private void LoadNewFields()
+        {
+            // Load Turkish Status
+            var cmbTurkishStatus = this.FindName("CmbTurkishStatus") as System.Windows.Controls.ComboBox;
+            if (cmbTurkishStatus != null)
+            {
+                foreach (System.Windows.Controls.ComboBoxItem item in cmbTurkishStatus.Items)
+                {
+                    if (item.Tag != null && item.Tag.ToString() == _game.TurkishStatus.ToString())
+                    {
+                        cmbTurkishStatus.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // Load Steam Status
+            var cmbSteamStatus = this.FindName("CmbSteamStatus") as System.Windows.Controls.ComboBox;
+            if (cmbSteamStatus != null)
+            {
+                foreach (System.Windows.Controls.ComboBoxItem item in cmbSteamStatus.Items)
+                {
+                    if (item.Tag != null && item.Tag.ToString() == _game.SteamStatus.ToString())
+                    {
+                        cmbSteamStatus.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // Load Completion Status
+            var cmbCompletionStatus = this.FindName("CmbCompletionStatus") as System.Windows.Controls.ComboBox;
+            if (cmbCompletionStatus != null)
+            {
+                foreach (System.Windows.Controls.ComboBoxItem item in cmbCompletionStatus.Items)
+                {
+                    if (item.Tag != null && item.Tag.ToString() == _game.CompletionStatus.ToString())
+                    {
+                        cmbCompletionStatus.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+
+            // Load text fields
+            var txtDeveloper = this.FindName("TxtDeveloper") as System.Windows.Controls.TextBox;
+            if (txtDeveloper != null) txtDeveloper.Text = _game.Developer;
+
+            var txtPublisher = this.FindName("TxtPublisher") as System.Windows.Controls.TextBox;
+            if (txtPublisher != null) txtPublisher.Text = _game.Publisher;
+
+            var txtGameEngine = this.FindName("TxtGameEngine") as System.Windows.Controls.TextBox;
+            if (txtGameEngine != null) txtGameEngine.Text = _game.GameEngine;
+
+            var dtpReleaseDate = this.FindName("DtpReleaseDate") as System.Windows.Controls.DatePicker;
+            if (dtpReleaseDate != null && _game.ReleaseDate.HasValue)
+            {
+                dtpReleaseDate.SelectedDate = _game.ReleaseDate.Value;
+            }
+
+            var txtAveragePlaytime = this.FindName("TxtAveragePlaytime") as System.Windows.Controls.TextBox;
+            if (txtAveragePlaytime != null) txtAveragePlaytime.Text = _game.AveragePlaytime;
+
+            // Load Game Genres
+            if (_game.GameGenres != null && _game.GameGenres.Count > 0)
+            {
+                GameGenresList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.GameGenres);
+            }
+            else
+            {
+                GameGenresList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>();
+            }
+
+            // Load Platforms
+            if (_game.Platforms != null && _game.Platforms.Count > 0)
+            {
+                PlatformsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Platforms);
+            }
+            else
+            {
+                PlatformsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>();
+            }
+
+            // Load Content Warnings
+            if (_game.ContentWarnings != null && _game.ContentWarnings.Count > 0)
+            {
+                ContentWarningsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.ContentWarnings);
+            }
+            else
+            {
+                ContentWarningsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>();
+            }
+
+            // Load Game Type
+            var cmbGameType = this.FindName("CmbGameType") as System.Windows.Controls.ComboBox;
+            if (cmbGameType != null)
+            {
+                foreach (System.Windows.Controls.ComboBoxItem item in cmbGameType.Items)
+                {
+                    if (item.Tag != null && item.Tag.ToString() == _game.Type.ToString())
+                    {
+                        cmbGameType.SelectedItem = item;
+                        break;
+                    }
+                }
+                cmbGameType.SelectionChanged += CmbGameType_SelectionChanged;
+            }
+        }
+
+        private void BtnAddTag_Click(object? sender, RoutedEventArgs e)
+        {
+            var txtNewTag = this.FindName("TxtNewTag") as System.Windows.Controls.TextBox;
+            if (txtNewTag == null || string.IsNullOrWhiteSpace(txtNewTag.Text)) return;
+
+            var newTag = txtNewTag.Text.Trim();
+            if (_game.Tags.Contains(newTag))
+            {
+                MessageBox.Show("Bu etiket zaten mevcut.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            _game.Tags.Add(newTag);
+            TagList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Tags);
+            txtNewTag.Text = "";
+        }
+
+        private void RemoveTag_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string tagToRemove)
+            {
+                _game.Tags.Remove(tagToRemove);
+                TagList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Tags);
+            }
+        }
+
+        private void RemoveGameGenre_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string genreToRemove)
+            {
+                _game.GameGenres.Remove(genreToRemove);
+                GameGenresList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.GameGenres);
+            }
+        }
+
+        private void RemovePlatform_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string platformToRemove)
+            {
+                _game.Platforms.Remove(platformToRemove);
+                PlatformsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Platforms);
+            }
+        }
+
+        private void RemoveContentWarning_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button btn && btn.Tag is string warningToRemove)
+            {
+                _game.ContentWarnings.Remove(warningToRemove);
+                ContentWarningsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.ContentWarnings);
+            }
+        }
+
+        private void BtnAddGameGenre_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbGameGenre = this.FindName("CmbGameGenre") as System.Windows.Controls.ComboBox;
+            if (cmbGameGenre == null || cmbGameGenre.SelectedItem == null) return;
+
+            var newGenre = cmbGameGenre.SelectedItem.ToString();
+            if (_game.GameGenres.Contains(newGenre))
+            {
+                MessageBox.Show("Bu oyun türü zaten mevcut.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            _game.GameGenres.Add(newGenre);
+            GameGenresList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.GameGenres);
+        }
+
+        private void BtnAddPlatform_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbPlatform = this.FindName("CmbPlatform") as System.Windows.Controls.ComboBox;
+            if (cmbPlatform == null || cmbPlatform.SelectedItem == null) return;
+
+            var newPlatform = cmbPlatform.SelectedItem.ToString();
+            if (_game.Platforms.Contains(newPlatform))
+            {
+                MessageBox.Show("Bu platform zaten mevcut.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            _game.Platforms.Add(newPlatform);
+            PlatformsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.Platforms);
+        }
+
+        private void BtnAddContentWarning_Click(object sender, RoutedEventArgs e)
+        {
+            var cmbContentWarning = this.FindName("CmbContentWarning") as System.Windows.Controls.ComboBox;
+            if (cmbContentWarning == null || cmbContentWarning.SelectedItem == null) return;
+
+            var newWarning = cmbContentWarning.SelectedItem.ToString();
+            if (_game.ContentWarnings.Contains(newWarning))
+            {
+                MessageBox.Show("Bu içerik uyarısı zaten mevcut.", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            _game.ContentWarnings.Add(newWarning);
+            ContentWarningsList.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(_game.ContentWarnings);
+        }
+
+        private void CmbGameType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cmbGameType = sender as System.Windows.Controls.ComboBox;
+            if (cmbGameType == null || cmbGameType.SelectedItem == null) return;
+
+            var selectedItem = cmbGameType.SelectedItem as System.Windows.Controls.ComboBoxItem;
+            if (selectedItem == null || selectedItem.Tag == null) return;
+
+            var selectedTypeStr = selectedItem.Tag.ToString();
+            if (Enum.TryParse<GameType>(selectedTypeStr, out var selectedType))
+            {
+                _game.Type = selectedType;
+                SetupGameSelection();
+            }
         }
 
         private void SetupGameSelection()
@@ -76,13 +345,20 @@ namespace RenPyTRLauncher.Views
 
             if (lblGameSelection == null || cmbGameSelection == null || lblNoGameWarning == null) return;
 
-            // Show game selection only for patches
-            if (_game.Type == GameType.Patch)
+            // Show game selection only for mod types (not games)
+            bool isModType = _game.Type == GameType.Translation ||
+                            _game.Type == GameType.Gallery ||
+                            _game.Type == GameType.Cheat ||
+                            _game.Type == GameType.Walkthrough ||
+                            _game.Type == GameType.Save ||
+                            _game.Type == GameType.Extra;
+
+            if (isModType)
             {
                 lblGameSelection.Visibility = Visibility.Visible;
                 cmbGameSelection.Visibility = Visibility.Visible;
 
-                // Load games from database (only games, not patches)
+                // Load games from database (only games, not mods)
                 var games = _gameService.GetAll().Where(g => g.Type == GameType.Game).ToList();
                 System.Diagnostics.Debug.WriteLine($"SetupGameSelection - Loaded {games.Count} games from database");
 
@@ -99,8 +375,8 @@ namespace RenPyTRLauncher.Views
                     cmbGameSelection.ItemsSource = games;
                     cmbGameSelection.DisplayMemberPath = "Name";
                     cmbGameSelection.SelectedValuePath = "Id";
-                    
-                    // If editing an existing patch, select its parent game
+
+                    // If editing an existing mod, select its parent game
                     if (!_isNew && _game.ParentGameId != Guid.Empty)
                     {
                         var parentGame = games.FirstOrDefault(g => g.Id == _game.ParentGameId);
@@ -127,6 +403,7 @@ namespace RenPyTRLauncher.Views
                 lblGameSelection.Visibility = Visibility.Collapsed;
                 cmbGameSelection.Visibility = Visibility.Collapsed;
                 lblNoGameWarning.Visibility = Visibility.Collapsed;
+                BtnSave.IsEnabled = true;
             }
         }
 
@@ -143,6 +420,7 @@ namespace RenPyTRLauncher.Views
                 TxtScreenshots.Text = string.IsNullOrWhiteSpace(TxtScreenshots.Text)
                     ? path
                     : TxtScreenshots.Text + Environment.NewLine + path;
+                UpdateScreenshotPreview();
             }
             catch (Exception ex)
             {
@@ -150,18 +428,68 @@ namespace RenPyTRLauncher.Views
             }
         }
 
+        private void UpdateScreenshotPreview()
+        {
+            var previewBorder = this.FindName("ImgScreenshotsPreview") as System.Windows.Controls.Border;
+            if (previewBorder == null) return;
+
+            try
+            {
+                var screenshotPaths = TxtScreenshots.Text
+                    .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim())
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToList();
+
+                if (screenshotPaths.Count > 0)
+                {
+                    var firstScreenshot = screenshotPaths[0];
+                    var resolvedPath = ImageService.ResolvePath(firstScreenshot);
+                    if (!string.IsNullOrEmpty(resolvedPath))
+                    {
+                        previewBorder.Child = new System.Windows.Controls.Image
+                        {
+                            Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(resolvedPath, UriKind.RelativeOrAbsolute)),
+                            Stretch = System.Windows.Media.Stretch.UniformToFill
+                        };
+                    }
+                }
+            }
+            catch
+            {
+                // Keep placeholder if preview fails
+            }
+        }
+
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine($"BtnSave_Click - Before save. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _isNew: {_isNew}, _game.GetHashCode(): {_game.GetHashCode()}");
 
-            // For patches, validate game selection
-            if (_game.Type == GameType.Patch)
+            // Save GameType from ComboBox
+            var cmbGameType = this.FindName("CmbGameType") as System.Windows.Controls.ComboBox;
+            if (cmbGameType != null && cmbGameType.SelectedItem is System.Windows.Controls.ComboBoxItem gameTypeItem && gameTypeItem.Tag != null)
+            {
+                if (Enum.TryParse<GameType>(gameTypeItem.Tag.ToString(), out var selectedType))
+                {
+                    _game.Type = selectedType;
+                }
+            }
+
+            // For mod types, validate game selection
+            bool isModType = _game.Type == GameType.Translation ||
+                            _game.Type == GameType.Gallery ||
+                            _game.Type == GameType.Cheat ||
+                            _game.Type == GameType.Walkthrough ||
+                            _game.Type == GameType.Save ||
+                            _game.Type == GameType.Extra;
+
+            if (isModType)
             {
                 var cmbGameSelection = this.FindName("CmbGameSelection") as System.Windows.Controls.ComboBox;
                 if (cmbGameSelection != null && cmbGameSelection.SelectedItem is Game selectedGame)
                 {
                     _game.ParentGameId = selectedGame.Id;
-                    System.Diagnostics.Debug.WriteLine($"BtnSave_Click - Patch parent game selected: {selectedGame.Id}, {selectedGame.Name}");
+                    System.Diagnostics.Debug.WriteLine($"BtnSave_Click - Mod parent game selected: {selectedGame.Id}, {selectedGame.Name}");
 
                     // Verify the selected game exists in database
                     var gameInDb = _gameService.GetById(selectedGame.Id);
@@ -198,6 +526,43 @@ namespace RenPyTRLauncher.Views
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => s.Trim()).Where(s => !string.IsNullOrEmpty(s)).ToList();
 
+            // Save new fields
+            var cmbTurkishStatus = this.FindName("CmbTurkishStatus") as System.Windows.Controls.ComboBox;
+            if (cmbTurkishStatus != null && cmbTurkishStatus.SelectedItem is System.Windows.Controls.ComboBoxItem turkishItem)
+            {
+                _game.TurkishStatus = Enum.Parse<TurkishStatus>(turkishItem.Tag.ToString());
+            }
+
+            var cmbSteamStatus = this.FindName("CmbSteamStatus") as System.Windows.Controls.ComboBox;
+            if (cmbSteamStatus != null && cmbSteamStatus.SelectedItem is System.Windows.Controls.ComboBoxItem steamItem)
+            {
+                _game.SteamStatus = Enum.Parse<SteamStatus>(steamItem.Tag.ToString());
+            }
+
+            var cmbCompletionStatus = this.FindName("CmbCompletionStatus") as System.Windows.Controls.ComboBox;
+            if (cmbCompletionStatus != null && cmbCompletionStatus.SelectedItem is System.Windows.Controls.ComboBoxItem completionItem)
+            {
+                _game.CompletionStatus = Enum.Parse<CompletionStatus>(completionItem.Tag.ToString());
+            }
+
+            var txtDeveloper = this.FindName("TxtDeveloper") as System.Windows.Controls.TextBox;
+            if (txtDeveloper != null) _game.Developer = txtDeveloper.Text ?? string.Empty;
+
+            var txtPublisher = this.FindName("TxtPublisher") as System.Windows.Controls.TextBox;
+            if (txtPublisher != null) _game.Publisher = txtPublisher.Text ?? string.Empty;
+
+            var txtGameEngine = this.FindName("TxtGameEngine") as System.Windows.Controls.TextBox;
+            if (txtGameEngine != null) _game.GameEngine = txtGameEngine.Text ?? string.Empty;
+
+            var dtpReleaseDate = this.FindName("DtpReleaseDate") as System.Windows.Controls.DatePicker;
+            if (dtpReleaseDate != null)
+            {
+                _game.ReleaseDate = dtpReleaseDate.SelectedDate;
+            }
+
+            var txtAveragePlaytime = this.FindName("TxtAveragePlaytime") as System.Windows.Controls.TextBox;
+            if (txtAveragePlaytime != null) _game.AveragePlaytime = txtAveragePlaytime.Text ?? string.Empty;
+
             System.Diagnostics.Debug.WriteLine($"BtnSave_Click - After field updates. Game.Id: {_game.Id}, Game.Name: {_game.Name}, _game.GetHashCode(): {_game.GetHashCode()}");
 
             if (_isNew)
@@ -229,6 +594,7 @@ namespace RenPyTRLauncher.Views
             try
             {
                 TxtImage.Text = ImageService.UploadFromFile(dlg.FileName, ImageCategory.Games);
+                UpdateCoverPreview(TxtImage.Text);
             }
             catch (Exception ex)
             {
@@ -236,11 +602,37 @@ namespace RenPyTRLauncher.Views
             }
         }
 
+        private void UpdateCoverPreview(string imagePath)
+        {
+            var previewBorder = this.FindName("ImgCoverPreview") as System.Windows.Controls.Border;
+            if (previewBorder == null) return;
+
+            try
+            {
+                var resolvedPath = ImageService.ResolvePath(imagePath);
+                if (!string.IsNullOrEmpty(resolvedPath))
+                {
+                    previewBorder.Child = new System.Windows.Controls.Image
+                    {
+                        Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(resolvedPath, UriKind.RelativeOrAbsolute)),
+                        Stretch = System.Windows.Media.Stretch.UniformToFill
+                    };
+                }
+            }
+            catch
+            {
+                // Keep placeholder if preview fails
+            }
+        }
+
         private void BtnUrlImage_Click(object? sender, RoutedEventArgs e)
         {
             var dlg = new InputDialog("Kapak görseli URL'sini girin:", TxtImage.Text) { Owner = this };
             if (dlg.ShowDialog() == true && !string.IsNullOrWhiteSpace(dlg.Result))
+            {
                 TxtImage.Text = dlg.Result.Trim();
+                UpdateCoverPreview(TxtImage.Text);
+            }
         }
 
         private void BtnBrowsePatch_Click(object? sender, RoutedEventArgs e)

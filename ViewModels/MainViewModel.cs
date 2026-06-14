@@ -64,11 +64,12 @@ namespace RenPyTRLauncher.ViewModels
             CurrentUser?.Age.HasValue == true ? $"{CurrentUser.Age} yaşında" : "Yaş belirtilmemiş";
 
         public int FavoriteCount => CurrentUser?.FavoriteGameIds?.Count ?? 0;
-        public int PatchCount => FilteredPatches.Count;
+        public int ModCount => FilteredMods.Count;
+        public int TotalGamesCount => Games.Count(g => g.Type == GameType.Game);
 
         public ObservableCollection<Game> Games { get; } = new();
         public ObservableCollection<Game> FilteredGames { get; } = new();
-        public ObservableCollection<Game> FilteredPatches { get; } = new();
+        public ObservableCollection<Game> FilteredMods { get; } = new();
         public ObservableCollection<Game> Recent { get; } = new();
         public ObservableCollection<Game> UpdatedGames { get; } = new();
         public ObservableCollection<Game> CompletedGames { get; } = new();
@@ -314,7 +315,7 @@ namespace RenPyTRLauncher.ViewModels
         public void ApplySearchFilter()
         {
             FilteredGames.Clear();
-            FilteredPatches.Clear();
+            FilteredMods.Clear();
 
             var query = Games.AsEnumerable();
 
@@ -343,12 +344,17 @@ namespace RenPyTRLauncher.ViewModels
             {
                 if (g.Type == GameType.Game)
                     FilteredGames.Add(g);
-                else if (g.Type == GameType.Patch)
-                    FilteredPatches.Add(g);
+                else if (g.Type == GameType.Translation ||
+                         g.Type == GameType.Gallery ||
+                         g.Type == GameType.Cheat ||
+                         g.Type == GameType.Walkthrough ||
+                         g.Type == GameType.Save ||
+                         g.Type == GameType.Extra)
+                    FilteredMods.Add(g);
             }
 
             OnPropertyChanged(nameof(SearchResultCount));
-            OnPropertyChanged(nameof(PatchCount));
+            OnPropertyChanged(nameof(ModCount));
         }
 
         public int SearchResultCount => FilteredGames.Count;

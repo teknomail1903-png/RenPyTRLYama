@@ -121,6 +121,7 @@ namespace RenPyTRLauncher.Views
             PageUsers.Visibility = Visibility.Collapsed;
             PageVipMembers.Visibility = Visibility.Collapsed;
             PageMediaLibrary.Visibility = Visibility.Collapsed;
+            PageSupport.Visibility = Visibility.Collapsed;
             PageSettings.Visibility = Visibility.Collapsed;
 
             switch (pageName)
@@ -133,6 +134,7 @@ namespace RenPyTRLauncher.Views
                 case "Users": PageUsers.Visibility = Visibility.Visible; break;
                 case "VipMembers": PageVipMembers.Visibility = Visibility.Visible; break;
                 case "MediaLibrary": PageMediaLibrary.Visibility = Visibility.Visible; break;
+                case "Support": PageSupport.Visibility = Visibility.Visible; break;
                 case "Settings": PageSettings.Visibility = Visibility.Visible; break;
             }
 
@@ -148,6 +150,7 @@ namespace RenPyTRLauncher.Views
             BtnAnnouncements.Style = (Style)FindResource("SidebarButton");
             BtnUsers.Style = (Style)FindResource("SidebarButton");
             BtnVipMembers.Style = (Style)FindResource("SidebarButton");
+            BtnSupport.Style = (Style)FindResource("SidebarButton");
             BtnMediaLibrary.Style = (Style)FindResource("SidebarButton");
             BtnSettings.Style = (Style)FindResource("SidebarButton");
 
@@ -160,6 +163,7 @@ namespace RenPyTRLauncher.Views
                 "Announcements" => BtnAnnouncements,
                 "Users" => BtnUsers,
                 "VipMembers" => BtnVipMembers,
+                "Support" => BtnSupport,
                 "MediaLibrary" => BtnMediaLibrary,
                 "Settings" => BtnSettings,
                 _ => null
@@ -196,7 +200,7 @@ namespace RenPyTRLauncher.Views
         private void RefreshDashboard()
         {
             var games = _gameService.GetAll();
-            var patches = games.Where(g => g.Type == GameType.Patch).ToList();
+            var patches = games.Where(g => g.Type == GameType.Translation || g.Type == GameType.Gallery || g.Type == GameType.Cheat || g.Type == GameType.Walkthrough || g.Type == GameType.Save || g.Type == GameType.Extra).ToList();
             var users = _userService.GetAll().ToList();
             var vipUsers = users.Where(u => u.IsVip).ToList();
             var announcements = _announcementService.GetAll().ToList();
@@ -208,11 +212,18 @@ namespace RenPyTRLauncher.Views
             TxtStatAnnouncements.Text = activeAnnouncements.Count.ToString();
             TxtStatVip.Text = vipUsers.Count.ToString();
 
+            // System Status
+            TxtDbStatus.Text = "Aktif";
+            TxtTotalGames.Text = games.Count(g => g.Type == GameType.Game).ToString();
+            TxtTotalPatches.Text = patches.Count.ToString();
+            TxtTotalUsers.Text = users.Count.ToString();
+            TxtAppVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0";
+
             // Son eklenen içerikler
             var recentContent = games.OrderByDescending(g => g.CreatedDate).Take(5).Select(g => new
             {
                 g.Name,
-                TypeLabel = g.Type == GameType.Patch ? "Yama" : "Oyun",
+                TypeLabel = g.Type == GameType.Game ? "Oyun" : "Mod",
                 AddedDate = g.CreatedDate
             }).ToList();
             RecentContentList.ItemsSource = recentContent;
@@ -241,7 +252,7 @@ namespace RenPyTRLauncher.Views
         {
             App.Log("AdminUserControl.RefreshPatches - Starting to refresh patches list");
 
-            var patches = _gameService.GetAll().Where(g => g.Type == GameType.Patch).ToList();
+            var patches = _gameService.GetAll().Where(g => g.Type == GameType.Translation || g.Type == GameType.Gallery || g.Type == GameType.Cheat || g.Type == GameType.Walkthrough || g.Type == GameType.Save || g.Type == GameType.Extra).ToList();
             App.Log($"AdminUserControl.RefreshPatches - Retrieved {patches.Count} patches from database");
 
             LstPatches.ItemsSource = null;
@@ -301,7 +312,7 @@ namespace RenPyTRLauncher.Views
 
         private void BtnSupport_Click(object sender, RoutedEventArgs e)
         {
-            ShowPage("PageSupport");
+            ShowPage("Support");
         }
 
         private void BtnSaveTier_Click(object sender, RoutedEventArgs e)
@@ -386,7 +397,7 @@ namespace RenPyTRLauncher.Views
 
         private void BtnAddPatch_Click(object sender, RoutedEventArgs e)
         {
-            var patch = new Game { Type = GameType.Patch, Id = Guid.NewGuid() };
+            var patch = new Game { Type = GameType.Translation, Id = Guid.NewGuid() };
             System.Diagnostics.Debug.WriteLine($"AdminUserControl.BtnAddPatch_Click - Created new patch with Id: {patch.Id}");
             new EditGameWindow(patch, _gameService).ShowDialog();
             ServiceLocator.NotifyDataChanged();

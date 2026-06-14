@@ -14,6 +14,8 @@ namespace RenPyTRLauncher.Services
         public static ICategoryService? CategoryService { get; set; }
         public static INotificationService? NotificationService { get; set; }
         public static IHelpService? HelpService { get; set; }
+        public static IDownloadService? DownloadService { get; set; }
+        public static IGameTagService? GameTagService { get; set; }
         public static event Action? DataChanged;
         public static void NotifyDataChanged() => DataChanged?.Invoke();
     }

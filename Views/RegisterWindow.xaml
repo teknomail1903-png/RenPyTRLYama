@@ -1,0 +1,125 @@
+<Window x:Class="RenPyTRLauncher.Views.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="RenPy TR Launcher — Kayıt Ol"
+        Height="650" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#0A0A0C"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="AccentBrush" Color="#9B59FF"/>
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#8E44FF"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1A1A22"/>
+        <SolidColorBrush x:Key="InputBrush" Color="#25252D"/>
+        <SolidColorBrush x:Key="InputBorderBrush" Color="#3A3A45"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#A0A0A8"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#6A6A75"/>
+
+        <DropShadowEffect x:Key="WindowShadow" BlurRadius="30" ShadowDepth="0" Opacity="0.4" Color="#000"/>
+        <DropShadowEffect x:Key="ButtonShadow" BlurRadius="12" ShadowDepth="0" Opacity="0.3" Color="#9B59FF"/>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource InputBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,14"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource InputBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,14"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource InputBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="16,14"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="PrimaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20,16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect" Value="{StaticResource ButtonShadow}"/>
+        </Style>
+
+        <Style x:Key="SecondaryBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondary}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="{StaticResource CardBrush}"
+            CornerRadius="16"
+            Effect="{StaticResource WindowShadow}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="50,50,50,50">
+                <!-- Header -->
+                <TextBlock Text="Kayıt Ol" FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8"/>
+                <TextBlock Text="Hesap oluşturun ve Türkçe oyunlara erişin." FontSize="14" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" Margin="0,0,0,32"/>
+
+                <!-- Username -->
+                <TextBlock Text="Kullanıcı Adı" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBox x:Name="TxtUsername"/>
+
+                <!-- Email -->
+                <TextBlock Text="E-posta Adresi" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBox x:Name="TxtEmail"/>
+
+                <!-- Password -->
+                <TextBlock Text="Şifre" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <PasswordBox x:Name="TxtPassword"/>
+
+                <!-- Password Confirm -->
+                <TextBlock Text="Şifre (Tekrar)" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <PasswordBox x:Name="TxtPasswordConfirm"/>
+
+                <!-- Secret Question -->
+                <TextBlock Text="Gizli Soru" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <ComboBox x:Name="CmbSecretQuestion"/>
+
+                <!-- Secret Answer -->
+                <TextBlock Text="Gizli Cevap" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                <TextBox x:Name="TxtSecretAnswer"/>
+
+                <!-- Info Message -->
+                <Border Background="#2D1B4E" CornerRadius="8" Padding="16" Margin="0,0,0,24">
+                    <StackPanel>
+                        <TextBlock Text="ℹ️" FontSize="18" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Gizli soru ve cevap, şifrenizi unuttuğunuzda şifrenizi sıfırlamanızı sağlar." 
+                                   FontSize="13" Foreground="{StaticResource TextSecondary}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Buttons -->
+                <Button x:Name="BtnRegister" Content="Kayıt Ol" Style="{StaticResource PrimaryBtn}" Margin="0,0,0,12" Click="BtnRegister_Click"/>
+                <Button x:Name="BtnBack" Content="Giriş Ekranına Dön" Style="{StaticResource SecondaryBtn}" Click="BtnBack_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>

@@ -1,6 +1,7 @@
 <Window x:Class="RenPyTRLauncher.Views.ModernLauncherWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:RenPyTRLauncher.Data"
         Title="RenPy TR Launcher"
         Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
@@ -10,6 +11,7 @@
         AllowsTransparency="True">
 
     <Window.Resources>
+        <local:SafeImageConverter x:Key="SafeImage"/>
         <SolidColorBrush x:Key="PrimaryAccent" Color="#6C5CE7"/>
         <SolidColorBrush x:Key="SecondaryAccent" Color="#00CEC9"/>
         <SolidColorBrush x:Key="DarkBackground" Color="#0A0E1A"/>
@@ -251,12 +253,32 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Hero Banner -->
-                <Border Grid.Row="0" Margin="16,16,8,12">
-                    <Grid Background="#1A1F2E">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="RenPy TR Launcher" FontSize="32" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Hoş Geldiniz" FontSize="16" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                <!-- Hero Banner Carousel -->
+                <Border Grid.Row="0" Margin="16,16,8,12" Height="340">
+                    <Grid>
+                        <Border x:Name="BannerContainer" Background="#1A1F2E" CornerRadius="8">
+                            <Grid>
+                                <Image x:Name="BannerImage" Stretch="UniformToFill" Opacity="0.6"/>
+                                <Border>
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#1A1F2E" Offset="0"/>
+                                            <GradientStop Color="#1A1F2E88" Offset="0.5"/>
+                                            <GradientStop Color="#1A1F2E" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel VerticalAlignment="Bottom" Margin="20,20,20,20">
+                                    <TextBlock x:Name="BannerTitle" Text="RenPy TR Launcher" FontSize="28" FontWeight="Bold" Foreground="{StaticResource TextPrimary}"/>
+                                    <TextBlock x:Name="BannerSubtitle" Text="En iyi Türkçe oyunlar burada" FontSize="14" Foreground="{StaticResource TextSecondary}" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <!-- Carousel Indicators -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,16">
+                            <Ellipse x:Name="IndicatorDot0" Width="8" Height="8" Fill="{StaticResource PrimaryAccent}" Margin="4,0"/>
+                            <Ellipse x:Name="IndicatorDot1" Width="8" Height="8" Fill="#3D4659" Margin="4,0"/>
+                            <Ellipse x:Name="IndicatorDot2" Width="8" Height="8" Fill="#3D4659" Margin="4,0"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -268,58 +290,29 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Popüler Oyunlar" FontSize="14" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,12"/>
+                    <TextBlock Grid.Row="0" Text="🔥 Popüler Oyunlar" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,12"/>
 
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Horizontal">
-                            <Border Style="{StaticResource SmallGameCard}">
-                                <StackPanel>
-                                    <Border Height="100" CornerRadius="8,8,0,0" Background="#2D3748">
-                                        <TextBlock Text="🎮" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TextMuted}"/>
+                        <ItemsControl x:Name="PopularGamesList">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource SmallGameCard}" MouseLeftButtonUp="GameCard_Click">
+                                        <StackPanel>
+                                            <Border Height="100" CornerRadius="8,8,0,0" Background="#2D3748" ClipToBounds="True">
+                                                <Image Source="{Binding ImagePath, Converter={StaticResource SafeImage}}" Stretch="UniformToFill"/>
+                                            </Border>
+                                            <StackPanel Margin="8">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" FontSize="11" TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding TurkishStatusLabel}" Foreground="{Binding TurkishStatusColor}" FontSize="10" Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                        </StackPanel>
                                     </Border>
-                                    <StackPanel Margin="8">
-                                        <TextBlock Text="Being A DIK" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" FontSize="11" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="🇹🇷 %100" Foreground="{StaticResource SuccessGreen}" FontSize="10" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Style="{StaticResource SmallGameCard}">
-                                <StackPanel>
-                                    <Border Height="100" CornerRadius="8,8,0,0" Background="#2D3748">
-                                        <TextBlock Text="🎮" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TextMuted}"/>
-                                    </Border>
-                                    <StackPanel Margin="8">
-                                        <TextBlock Text="Summer's Gone" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" FontSize="11" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="🇹🇷 %95" Foreground="{StaticResource WarningOrange}" FontSize="10" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Style="{StaticResource SmallGameCard}">
-                                <StackPanel>
-                                    <Border Height="100" CornerRadius="8,8,0,0" Background="#2D3748">
-                                        <TextBlock Text="🎮" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TextMuted}"/>
-                                    </Border>
-                                    <StackPanel Margin="8">
-                                        <TextBlock Text="College Kings" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" FontSize="11" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="🇹🇷 %100" Foreground="{StaticResource SuccessGreen}" FontSize="10" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Style="{StaticResource SmallGameCard}">
-                                <StackPanel>
-                                    <Border Height="100" CornerRadius="8,8,0,0" Background="#2D3748">
-                                        <TextBlock Text="🎮" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource TextMuted}"/>
-                                    </Border>
-                                    <StackPanel Margin="8">
-                                        <TextBlock Text="Eternum" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" FontSize="11" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="🇹🇷 %60" Foreground="{StaticResource ErrorRed}" FontSize="10" Margin="0,2,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </ScrollViewer>
                 </Grid>
             </Grid>
@@ -358,7 +351,16 @@
 
                     <StackPanel Grid.Row="3" Margin="0,24,0,0">
                         <Border Height="1" Background="#1A1F2E" Margin="0,0,0,16"/>
-                        <Button x:Name="BtnVIP" Content="💎 VIP Üyelik" Background="#FFD700" Foreground="#000" BorderThickness="0" Padding="16,10" FontSize="13" FontWeight="SemiBold" Cursor="Hand" Height="40" Margin="0,0,0,8">
+                        
+                        <!-- News/Announcements Section -->
+                        <Border Background="#1A1F2E" CornerRadius="8" Padding="16" Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock Text="📢 Duyurular" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="TxtNews" Text="Yeni oyunlar eklendi! VIP üyeliğe özel içerikler..." Foreground="{StaticResource TextSecondary}" FontSize="11" TextWrapping="Wrap" Height="40" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Button x:Name="BtnVIP" Content="💎 VIP Üyelik" Background="#FFD700" Foreground="#000" BorderThickness="0" Padding="16,10" FontSize="13" FontWeight="SemiBold" Cursor="Hand" Height="40" Margin="0,0,0,8" Click="BtnVIP_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
@@ -367,7 +369,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <Button x:Name="BtnDiscord" Content="💬 Discord" Background="#5865F2" Foreground="White" BorderThickness="0" Padding="16,10" FontSize="13" FontWeight="SemiBold" Cursor="Hand" Height="40" Margin="0,0,0,8">
+                        <Button x:Name="BtnDiscord" Content="💬 Discord" Background="#5865F2" Foreground="White" BorderThickness="0" Padding="16,10" FontSize="13" FontWeight="SemiBold" Cursor="Hand" Height="40" Margin="0,0,0,8" Click="BtnDiscord_Click">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">

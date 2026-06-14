@@ -376,3 +376,151 @@
 [2026-06-12 11:29:57.368] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
 [2026-06-12 11:30:15.713] TryRestoreSession attempt
 [2026-06-12 11:30:15.802] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 12:45:32.746] TryRestoreSession attempt
+[2026-06-12 12:45:32.879] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 13:20:31.151] TryRestoreSession attempt
+[2026-06-12 13:20:31.236] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 14:49:00.566] TryRestoreSession attempt
+[2026-06-12 14:49:00.830] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 15:55:22.835] TryRestoreSession attempt
+[2026-06-12 15:55:22.922] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 19:03:55.852] TryRestoreSession attempt
+[2026-06-12 19:03:55.938] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 19:08:28.819] TryRestoreSession attempt
+[2026-06-12 19:08:28.905] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 20:48:51.375] TryRestoreSession attempt
+[2026-06-12 20:48:51.465] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 21:02:15.088] TryRestoreSession attempt
+[2026-06-12 21:02:15.207] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 21:23:41.440] TryRestoreSession attempt
+[2026-06-12 21:23:41.639] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 21:25:40.970] TryRestoreSession attempt
+[2026-06-12 21:25:41.068] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-12 21:32:44.177] TryRestoreSession attempt
+[2026-06-12 21:32:44.270] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-13 16:56:07.391] TryRestoreSession attempt
+[2026-06-13 16:56:07.486] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-13 17:30:22.292] TryRestoreSession attempt
+[2026-06-13 17:30:22.379] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-13 17:45:49.117] TryRestoreSession attempt
+[2026-06-13 17:45:49.206] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-13 18:41:50.941] TryRestoreSession attempt
+[2026-06-13 18:41:51.028] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-13 22:29:06.769] TryRestoreSession attempt
+[2026-06-13 22:29:06.848] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 01:14:28.876] TryRestoreSession attempt
+[2026-06-14 01:14:28.962] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 01:15:21.582] TryRestoreSession attempt
+[2026-06-14 01:15:21.661] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 08:24:40.100] TryRestoreSession attempt
+[2026-06-14 08:24:40.206] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 08:25:39.221] TryRestoreSession attempt
+[2026-06-14 08:25:39.304] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 08:44:45.957] TryRestoreSession attempt
+[2026-06-14 08:44:46.048] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 08:45:32.930] Logout - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 08:45:40.111] TryRestoreSession attempt
+[2026-06-14 08:45:40.121] TryRestoreSession failed - No session found
+[2026-06-14 08:55:10.061] TryRestoreSession attempt
+[2026-06-14 08:55:10.071] TryRestoreSession failed - No session found
+[2026-06-14 09:09:56.840] TryRestoreSession attempt
+[2026-06-14 09:09:56.849] TryRestoreSession failed - No session found
+[2026-06-14 09:10:51.401] Register attempt - Username: Mete, Email: Mete@gmail.com
+[2026-06-14 09:10:52.494] Register successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:11:03.672] Login attempt - Username/Email: Mete, RememberMe: False
+[2026-06-14 09:11:03.875] Login failed - Invalid credentials for: Mete
+[2026-06-14 09:11:12.802] Login attempt - Username/Email: Mete@gmail.com, RememberMe: False
+[2026-06-14 09:11:13.004] Login failed - Invalid credentials for: Mete@gmail.com
+[2026-06-14 09:11:21.287] Login attempt - Username/Email: Mete@gmail.com, RememberMe: False
+[2026-06-14 09:11:21.569] Login successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:11:55.330] ChangePassword attempt - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b
+[2026-06-14 09:11:55.841] ChangePassword successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b
+[2026-06-14 09:12:16.531] Logout - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:12:23.199] TryRestoreSession attempt
+[2026-06-14 09:12:23.211] TryRestoreSession failed - No session found
+[2026-06-14 09:13:11.146] Login attempt - Username/Email: argion@gmail.com, RememberMe: True
+[2026-06-14 09:13:11.190] Login failed - Invalid credentials for: argion@gmail.com
+[2026-06-14 09:13:23.590] Login attempt - Username/Email: argion@gmail.com, RememberMe: True
+[2026-06-14 09:13:23.596] Login failed - Invalid credentials for: argion@gmail.com
+[2026-06-14 09:13:30.382] Login attempt - Username/Email: argion@gmail.com, RememberMe: True
+[2026-06-14 09:13:30.385] Login failed - Invalid credentials for: argion@gmail.com
+[2026-06-14 09:13:50.655] Login attempt - Username/Email: argion, RememberMe: True
+[2026-06-14 09:13:51.065] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:15:10.693] Logout - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:15:20.980] TryRestoreSession attempt
+[2026-06-14 09:15:20.991] TryRestoreSession failed - No session found
+[2026-06-14 09:15:40.314] Login attempt - Username/Email: Mete@gmail.coım, RememberMe: False
+[2026-06-14 09:15:40.356] Login failed - Invalid credentials for: Mete@gmail.coım
+[2026-06-14 09:15:47.587] Login attempt - Username/Email: Mete@gmail.coım, RememberMe: False
+[2026-06-14 09:15:47.591] Login failed - Invalid credentials for: Mete@gmail.coım
+[2026-06-14 09:15:55.628] Login attempt - Username/Email: Mete@gmail.coım, RememberMe: False
+[2026-06-14 09:15:55.631] Login failed - Invalid credentials for: Mete@gmail.coım
+[2026-06-14 09:16:39.799] TryRestoreSession attempt
+[2026-06-14 09:16:39.809] TryRestoreSession failed - No session found
+[2026-06-14 09:17:07.136] Login attempt - Username/Email: Mete, RememberMe: False
+[2026-06-14 09:17:07.574] Login successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:18:03.089] Logout - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:18:20.063] TryRestoreSession attempt
+[2026-06-14 09:18:20.072] TryRestoreSession failed - No session found
+[2026-06-14 09:18:40.050] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-14 09:18:40.492] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:19:24.190] Logout - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:19:36.267] TryRestoreSession attempt
+[2026-06-14 09:19:36.276] TryRestoreSession failed - No session found
+[2026-06-14 09:19:49.837] Login attempt - Username/Email: Mete, RememberMe: True
+[2026-06-14 09:19:50.273] Login successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:22:16.046] TryRestoreSession attempt
+[2026-06-14 09:22:16.140] TryRestoreSession successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:22:28.952] Logout - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:22:42.259] TryRestoreSession attempt
+[2026-06-14 09:22:42.268] TryRestoreSession failed - No session found
+[2026-06-14 09:23:00.116] Login attempt - Username/Email: argion, RememberMe: False
+[2026-06-14 09:23:00.353] Login failed - Invalid credentials for: argion
+[2026-06-14 09:23:17.004] Login attempt - Username/Email: Mete@gmail.com, RememberMe: True
+[2026-06-14 09:23:17.428] Login successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:23:36.254] Logout - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:23:48.973] TryRestoreSession attempt
+[2026-06-14 09:23:48.982] TryRestoreSession failed - No session found
+[2026-06-14 09:24:18.384] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-14 09:24:18.823] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:24:57.373] Logout - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:25:09.044] TryRestoreSession attempt
+[2026-06-14 09:25:09.053] TryRestoreSession failed - No session found
+[2026-06-14 09:25:23.212] Login attempt - Username/Email: Mete@gmail.com, RememberMe: True
+[2026-06-14 09:25:23.657] Login successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:44:58.079] TryRestoreSession attempt
+[2026-06-14 09:44:58.312] TryRestoreSession successful - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:45:11.043] Logout - User ID: 3eafca0e-f523-492e-9429-633b2b81b87b, Username: Mete
+[2026-06-14 09:45:22.812] TryRestoreSession attempt
+[2026-06-14 09:45:22.821] TryRestoreSession failed - No session found
+[2026-06-14 09:46:14.772] Register attempt - Username: test, Email: test@test.com
+[2026-06-14 09:46:15.705] Register successful - User ID: d472234e-eb5c-427c-b403-6753ba622471, Username: test
+[2026-06-14 09:46:42.509] Login attempt - Username/Email: test@test.com, RememberMe: True
+[2026-06-14 09:46:42.816] Login successful - User ID: d472234e-eb5c-427c-b403-6753ba622471, Username: test
+[2026-06-14 09:47:34.218] ChangePassword attempt - User ID: d472234e-eb5c-427c-b403-6753ba622471
+[2026-06-14 09:47:34.419] ChangePassword failed - Invalid current password for: test
+[2026-06-14 09:47:41.387] ChangePassword attempt - User ID: d472234e-eb5c-427c-b403-6753ba622471
+[2026-06-14 09:47:41.588] ChangePassword failed - Invalid current password for: test
+[2026-06-14 09:48:00.756] Logout - User ID: d472234e-eb5c-427c-b403-6753ba622471, Username: test
+[2026-06-14 09:48:12.380] TryRestoreSession attempt
+[2026-06-14 09:48:12.390] TryRestoreSession failed - No session found
+[2026-06-14 09:48:28.134] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-14 09:48:28.574] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:49:47.830] Logout - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 09:50:00.957] TryRestoreSession attempt
+[2026-06-14 09:50:00.967] TryRestoreSession failed - No session found
+[2026-06-14 09:50:19.408] Login attempt - Username/Email: test, RememberMe: False
+[2026-06-14 09:50:19.998] Login successful - User ID: d472234e-eb5c-427c-b403-6753ba622471, Username: test
+[2026-06-14 09:50:53.836] Logout - User ID: d472234e-eb5c-427c-b403-6753ba622471, Username: test
+[2026-06-14 09:51:05.919] TryRestoreSession attempt
+[2026-06-14 09:51:05.929] TryRestoreSession failed - No session found
+[2026-06-14 09:52:07.294] Register attempt - Username: Admin, Email: Admin@tekno.com
+[2026-06-14 09:52:08.026] Register successful - User ID: fd6a0694-054f-4ca0-916e-c1ebd0bcbfbc, Username: Admin
+[2026-06-14 09:52:18.936] Login attempt - Username/Email: Argion, RememberMe: True
+[2026-06-14 09:52:19.264] Login successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 10:10:36.808] TryRestoreSession attempt
+[2026-06-14 10:10:36.894] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 11:17:15.923] TryRestoreSession attempt
+[2026-06-14 11:17:16.008] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion
+[2026-06-14 11:37:19.895] TryRestoreSession attempt
+[2026-06-14 11:37:19.999] TryRestoreSession successful - User ID: b1000001-0000-4000-8000-000000000001, Username: argion

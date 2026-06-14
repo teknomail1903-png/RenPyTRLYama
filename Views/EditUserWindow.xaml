@@ -1,7 +1,7 @@
 <Window x:Class="RenPyTRLauncher.Views.EditUserWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Kullanıcı Düzenle" Height="580" Width="460"
+        Title="Kullanıcı Düzenle" Height="680" Width="460"
         WindowStartupLocation="CenterOwner" Background="#0D0D0F">
 
     <Window.Resources>
@@ -32,29 +32,35 @@
     </Window.Resources>
 
     <Border Background="#1A1A22" CornerRadius="12" Margin="16" Padding="20">
-        <StackPanel>
-            <TextBlock Text="👤 Kullanıcı Bilgileri" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
-            <TextBlock Text="Kullanıcı Adı" Foreground="#AAA" FontSize="12"/>
-            <TextBox x:Name="TxtUsername"/>
-            <TextBlock Text="E-posta" Foreground="#AAA" FontSize="12"/>
-            <TextBox x:Name="TxtEmail"/>
-            <TextBlock Text="Şifre" Foreground="#AAA" FontSize="12"/>
-            <PasswordBox x:Name="TxtPassword"/>
-            <TextBlock Text="Şifre Doğrulama" Foreground="#AAA" FontSize="12"/>
-            <PasswordBox x:Name="TxtPasswordConfirm"/>
-            <TextBlock Text="Rol" Foreground="#AAA" FontSize="12"/>
-            <ComboBox x:Name="CmbRole" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
-            <TextBlock Text="Üyelik Seviyesi" Foreground="#AAA" FontSize="12"/>
-            <ComboBox x:Name="CmbMembership" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
-            <TextBlock Text="Profil Resmi (URL veya yükle)" Foreground="#AAA" FontSize="12"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="TxtAvatar" Width="300"/>
-                <Button x:Name="BtnBrowseAvatar" Content="Yükle" Margin="8,0,0,10" Padding="10,6" Click="BtnBrowseAvatar_Click"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <TextBlock Text="👤 Kullanıcı Bilgileri" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+                <TextBlock Text="Kullanıcı Adı" Foreground="#AAA" FontSize="12"/>
+                <TextBox x:Name="TxtUsername"/>
+                <TextBlock Text="E-posta" Foreground="#AAA" FontSize="12"/>
+                <TextBox x:Name="TxtEmail"/>
+                <TextBlock Text="Şifre" Foreground="#AAA" FontSize="12"/>
+                <PasswordBox x:Name="TxtPassword"/>
+                <TextBlock Text="Şifre Doğrulama" Foreground="#AAA" FontSize="12"/>
+                <PasswordBox x:Name="TxtPasswordConfirm"/>
+                <TextBlock Text="Rol" Foreground="#AAA" FontSize="12"/>
+                <ComboBox x:Name="CmbRole" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Text="Üyelik Seviyesi" Foreground="#AAA" FontSize="12"/>
+                <ComboBox x:Name="CmbMembership" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Text="Profil Resmi (URL veya yükle)" Foreground="#AAA" FontSize="12"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="TxtAvatar" Width="300"/>
+                    <Button x:Name="BtnBrowseAvatar" Content="Yükle" Margin="8,0,0,10" Padding="10,6" Click="BtnBrowseAvatar_Click"/>
+                </StackPanel>
+                <TextBlock Text="Gizli Soru" Foreground="#AAA" FontSize="12"/>
+                <ComboBox x:Name="CmbSecretQuestion" Margin="0,0,0,10" Background="#222228" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Text="Gizli Cevap" Foreground="#AAA" FontSize="12"/>
+                <TextBox x:Name="TxtSecretAnswer" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                    <Button Content="İptal" Width="90" Margin="0,0,8,0" Click="BtnCancel_Click"/>
+                    <Button Content="Kaydet" Style="{StaticResource SaveBtn}" Width="100" Click="BtnSave_Click"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
-                <Button Content="İptal" Width="90" Margin="0,0,8,0" Click="BtnCancel_Click"/>
-                <Button Content="Kaydet" Style="{StaticResource SaveBtn}" Width="100" Click="BtnSave_Click"/>
-            </StackPanel>
-        </StackPanel>
+        </ScrollViewer>
     </Border>
 </Window>

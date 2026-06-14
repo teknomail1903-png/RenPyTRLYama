@@ -141,14 +141,34 @@ namespace RenPyTRLauncher.Data
                 EnsureColumn(db, "Users", "PasswordHash", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Users", "City", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Users", "Age", "INTEGER");
+                EnsureColumn(db, "Users", "SecretQuestion", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Users", "SecretAnswer", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "ScreenshotPaths", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "PatchNotes", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "DownloadLinks", "TEXT NOT NULL DEFAULT ''");
                 EnsureColumn(db, "Games", "Type", "TEXT NOT NULL DEFAULT 'Game'");
-                EnsureColumn(db, "Games", "TurkishStatus", "TEXT NOT NULL DEFAULT 'English'");
-                EnsureColumn(db, "Games", "SteamStatus", "TEXT NOT NULL DEFAULT 'NotAvailable'");
+                EnsureColumn(db, "Games", "TurkishStatus", "TEXT NOT NULL DEFAULT 'Hayır'");
+                EnsureColumn(db, "Games", "SteamStatus", "TEXT NOT NULL DEFAULT 'Yok'");
                 EnsureColumn(db, "Games", "UpdateStatus", "TEXT NOT NULL DEFAULT 'Updated'");
                 EnsureColumn(db, "Games", "ParentGameId", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "Tags", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "Developer", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "Publisher", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "GameEngine", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "ReleaseDate", "TEXT NULL");
+                EnsureColumn(db, "Games", "CompletionStatus", "TEXT NOT NULL DEFAULT 'DevamEdiyor'");
+                EnsureColumn(db, "Games", "ContentWarnings", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "AveragePlaytime", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "GameGenres", "TEXT NOT NULL DEFAULT ''");
+                EnsureColumn(db, "Games", "Platforms", "TEXT NOT NULL DEFAULT ''");
+
+                // Repair existing data: Convert empty ReleaseDate strings to NULL
+                cmd.CommandText = "UPDATE Games SET ReleaseDate = NULL WHERE ReleaseDate = '' OR ReleaseDate IS NULL";
+                cmd.ExecuteNonQuery();
+
+                // Migration: Convert existing "Patch" Type to "Translation"
+                cmd.CommandText = "UPDATE Games SET Type = 'Translation' WHERE Type = 'Patch'";
+                cmd.ExecuteNonQuery();
 
                 cmd.CommandText = @"
                     CREATE TABLE IF NOT EXISTS Categories (

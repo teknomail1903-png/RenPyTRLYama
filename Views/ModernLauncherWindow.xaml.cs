@@ -2,12 +2,26 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using RenPyTRLauncher.Services;
+using RenPyTRLauncher.Data;
+using RenPyTRLauncher.Models;
+using RenPyTRLauncher.Config;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RenPyTRLauncher.Views
 {
     public partial class ModernLauncherWindow : Window
     {
         private readonly IAuthService? _auth;
+        private readonly IGameService? _gameService;
+        private DispatcherTimer _bannerTimer;
+        private int _currentBannerIndex = 0;
+        private readonly List<BannerItem> _banners = new List<BannerItem>
+        {
+            new BannerItem { Title = "RenPy TR Launcher", Subtitle = "En iyi Türkçe oyunlar burada", Color = "#6C5CE7" },
+            new BannerItem { Title = "VIP Üyelik", Subtitle = "Özel içeriklere erişim", Color = "#FFD700" },
+            new BannerItem { Title = "Yeni Oyunlar", Subtitle = "Her hafta güncelleniyor", Color = "#00CEC9" }
+        };
 
         public ModernLauncherWindow()
         {
@@ -17,6 +31,7 @@ namespace RenPyTRLauncher.Views
             {
                 _auth = ServiceLocator.AuthService ?? new AuthService(
                     ServiceLocator.UserService ?? new InMemoryUserService());
+                _gameService = ServiceLocator.GameService;
             }
             catch
             {
@@ -25,6 +40,197 @@ namespace RenPyTRLauncher.Views
 
             // Enable window dragging
             MouseLeftButtonDown += (s, e) => DragMove();
+
+            // Load configuration
+            LauncherConfig.LoadConfig();
+
+            // Initialize banner carousel
+            InitializeBannerCarousel();
+
+            // Load popular games
+            LoadPopularGames();
+
+            // Load news
+            LoadNews();
+        }
+
+        private void InitializeBannerCarousel()
+        {
+            _bannerTimer = new DispatcherTimer();
+            _bannerTimer.Interval = System.TimeSpan.FromSeconds(5);
+            _bannerTimer.Tick += BannerTimer_Tick;
+            _bannerTimer.Start();
+            LoadBannerImages();
+            UpdateBanner();
+        }
+
+        private void LoadBannerImages()
+        {
+            if (LauncherConfig.UseRealBannerImages && _gameService != null)
+            {
+                try
+                {
+                    var featuredGames = _gameService.GetAll()
+                        .Where(g => g.IsFeatured)
+                        .Take(3)
+                        .ToList();
+
+                    if (featuredGames.Count > 0)
+                    {
+                        _banners.Clear();
+                        foreach (var game in featuredGames)
+                        {
+                            _banners.Add(new BannerItem 
+                            { 
+                                Title = game.Name, 
+                                Subtitle = $"{game.Description.Substring(0, Math.Min(50, game.Description.Length))}...", 
+                                Color = "#6C5CE7",
+                                Game = game
+                            });
+                        }
+                    }
+                }
+                catch
+                {
+                    // Use default banners if loading fails
+                }
+            }
+        }
+
+        private void BannerTimer_Tick(object sender, System.EventArgs e)
+        {
+            _currentBannerIndex = (_currentBannerIndex + 1) % _banners.Count;
+            UpdateBanner();
+        }
+
+        private void UpdateBanner()
+        {
+            var banner = _banners[_currentBannerIndex];
+            BannerTitle.Text = banner.Title;
+            BannerSubtitle.Text = banner.Subtitle;
+
+            // Load banner image if game is available
+            if (banner.Game != null && !string.IsNullOrEmpty(banner.Game.ImagePath))
+            {
+                try
+                {
+                    var imagePath = ImageService.ResolvePath(banner.Game.ImagePath);
+                    if (!string.IsNullOrEmpty(imagePath))
+                    {
+                        BannerImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                    }
+                }
+                catch
+                {
+                    BannerImage.Source = null;
+                }
+            }
+
+            // Update indicators
+            IndicatorDot0.Fill = _currentBannerIndex == 0 ? System.Windows.Media.Brushes.Purple : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(61, 70, 89));
+            IndicatorDot1.Fill = _currentBannerIndex == 1 ? System.Windows.Media.Brushes.Purple : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(61, 70, 89));
+            IndicatorDot2.Fill = _currentBannerIndex == 2 ? System.Windows.Media.Brushes.Purple : new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(61, 70, 89));
+        }
+
+        private void LoadPopularGames()
+        {
+            try
+            {
+                if (_gameService != null)
+                {
+                    var allGames = _gameService.GetAll();
+                    var popularGames = allGames
+                        .OrderByDescending(g => g.DownloadCount)
+                        .Take(5)
+                        .Select(g => new GameCardItem
+                        {
+                            Name = g.Name,
+                            ImagePath = g.ImagePath,
+                            TurkishStatusLabel = GetTurkishStatusLabel(g.TurkishStatus),
+                            TurkishStatusColor = GetTurkishStatusColor(g.TurkishStatus),
+                            Game = g
+                        })
+                        .ToList();
+
+                    PopularGamesList.ItemsSource = popularGames;
+                }
+            }
+            catch
+            {
+                // Ignore errors for now
+            }
+        }
+
+        private string GetTurkishStatusLabel(TurkishStatus status)
+        {
+            return status switch
+            {
+                TurkishStatus.Evet => "🇹🇷 %100",
+                TurkishStatus.KismiCeviri => "🇹🇷 %75",
+                TurkishStatus.DevamEdiyor => "🇹🇷 %50",
+                TurkishStatus.Hayır => "🇬🇧 %0",
+                _ => "🇹🇷 %0"
+            };
+        }
+
+        private System.Windows.Media.Brush GetTurkishStatusColor(TurkishStatus status)
+        {
+            return status switch
+            {
+                TurkishStatus.Evet => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(16, 185, 129)),
+                TurkishStatus.KismiCeviri => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(59, 130, 246)),
+                TurkishStatus.DevamEdiyor => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 158, 11)),
+                TurkishStatus.Hayır => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(239, 68, 68)),
+                _ => new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(107, 114, 128))
+            };
+        }
+
+        private void GameCard_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Border border && border.DataContext is GameCardItem item && item.Game != null)
+            {
+                // Show message that user needs to login first
+                MessageBox.Show($"{item.Name} detaylarını görüntülemek için önce giriş yapmalısınız.", "Giriş Gerekli", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void BtnVIP_Click(object sender, RoutedEventArgs e)
+        {
+            // Open VIP market link from config
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo 
+                { 
+                    FileName = LauncherConfig.VipMarketUrl, 
+                    UseShellExecute = true 
+                });
+            }
+            catch
+            {
+                MessageBox.Show("VIP market sayfası açılamadı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnDiscord_Click(object sender, RoutedEventArgs e)
+        {
+            // Open Discord link from config
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo 
+                { 
+                    FileName = LauncherConfig.DiscordUrl, 
+                    UseShellExecute = true 
+                });
+            }
+            catch
+            {
+                MessageBox.Show("Discord bağlantısı açılamadı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadNews()
+        {
+            TxtNews.Text = LauncherConfig.NewsText;
         }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
@@ -117,8 +323,8 @@ namespace RenPyTRLauncher.Views
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-            // Open registration window or switch to registration tab
-            MessageBox.Show("Kayıt özelliği yakında eklenecek.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+            var registerWindow = new RegisterWindow();
+            registerWindow.ShowDialog();
         }
 
         private void BtnForgotPassword_Click(object sender, RoutedEventArgs e)
@@ -153,6 +359,23 @@ namespace RenPyTRLauncher.Views
         private string GetPassword(System.Windows.Controls.PasswordBox passwordBox, System.Windows.Controls.TextBox textBox)
         {
             return passwordBox.Visibility == Visibility.Visible ? passwordBox.Password : textBox.Text;
+        }
+
+        private class BannerItem
+        {
+            public string Title { get; set; } = "";
+            public string Subtitle { get; set; } = "";
+            public string Color { get; set; } = "";
+            public Game? Game { get; set; }
+        }
+
+        private class GameCardItem
+        {
+            public string Name { get; set; } = "";
+            public string ImagePath { get; set; } = "";
+            public string TurkishStatusLabel { get; set; } = "";
+            public System.Windows.Media.Brush TurkishStatusColor { get; set; } = System.Windows.Media.Brushes.Gray;
+            public Game Game { get; set; } = null!;
         }
     }
 }

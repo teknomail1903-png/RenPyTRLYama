@@ -144,7 +144,7 @@ namespace RenPyTRLauncher.Tests
                     Version = "1.0",
                     PatchVersion = "v1.0",
                     PatchFilePath = "test.zip",
-                    Type = GameType.Patch,
+                    Type = GameType.Translation,
                     ParentGameId = parentGame.Id
                 };
 
@@ -164,7 +164,7 @@ namespace RenPyTRLauncher.Tests
             Console.WriteLine("[TEST 5] Yama Düzenle (Edit Patch)");
             try
             {
-                var patches = gameService.GetAll().Where(g => g.Type == GameType.Patch).ToList();
+                var patches = gameService.GetAll().Where(g => g.Type == GameType.Translation).ToList();
                 var testPatch = patches.FirstOrDefault(p => p.Name == "Test Yaması");
                 
                 if (testPatch == null)
@@ -190,7 +190,7 @@ namespace RenPyTRLauncher.Tests
             Console.WriteLine("[TEST 6] Yama Sil (Delete Patch)");
             try
             {
-                var patches = gameService.GetAll().Where(g => g.Type == GameType.Patch).ToList();
+                var patches = gameService.GetAll().Where(g => g.Type == GameType.Translation).ToList();
                 var testPatch = patches.FirstOrDefault(p => p.Name == "Test Yaması");
                 
                 if (testPatch == null)

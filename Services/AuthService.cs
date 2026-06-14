@@ -32,10 +32,12 @@ namespace RenPyTRLauncher.Services
 
         public User? CurrentUser { get; private set; }
 
-        public AuthResult Register(string username, string email, string password)
+        public AuthResult Register(string username, string email, string password, string secretQuestion = "", string secretAnswer = "")
         {
             username = username?.Trim() ?? "";
             email = email?.Trim() ?? "";
+            secretQuestion = secretQuestion?.Trim() ?? "";
+            secretAnswer = secretAnswer?.Trim() ?? "";
 
             Log($"Register attempt - Username: {username}, Email: {email}");
 
@@ -73,7 +75,9 @@ namespace RenPyTRLauncher.Services
                 PasswordHash = PasswordHasher.Hash(password),
                 Role = UserRole.User,
                 MembershipLevel = "Ücretsiz",
-                AvatarPath = ImageService.GetDefaultAvatar(username)
+                AvatarPath = ImageService.GetDefaultAvatar(username),
+                SecretQuestion = secretQuestion,
+                SecretAnswer = secretAnswer
             };
             AuthorizationService.SyncVipBadges(user);
             _userService.Create(user);
@@ -137,6 +141,27 @@ namespace RenPyTRLauncher.Services
             _userService.Update(user);
             Log($"ChangePassword successful - User ID: {userId}");
             return AuthResult.Ok(user, "Şifre başarıyla değiştirildi.");
+        }
+
+        public AuthResult ResetPassword(Guid userId, string newPassword)
+        {
+            Log($"ResetPassword attempt - User ID: {userId}");
+            var user = _userService.GetById(userId);
+            if (user == null)
+            {
+                Log($"ResetPassword failed - User not found: {userId}");
+                return AuthResult.Fail("Kullanıcı bulunamadı.");
+            }
+            if (newPassword.Length < 6)
+            {
+                Log($"ResetPassword failed - New password too short for: {user.Username}");
+                return AuthResult.Fail("Yeni şifre en az 6 karakter olmalıdır.");
+            }
+
+            user.PasswordHash = PasswordHasher.Hash(newPassword);
+            _userService.Update(user);
+            Log($"ResetPassword successful - User ID: {userId}");
+            return AuthResult.Ok(user, "Şifre başarıyla sıfırlandı.");
         }
 
         public User? TryRestoreSession()

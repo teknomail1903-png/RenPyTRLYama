@@ -22,6 +22,8 @@ namespace RenPyTRLauncher.Services
             ServiceLocator.PatchService = new PatchService(
                 ServiceLocator.GameService,
                 ServiceLocator.UserService);
+            ServiceLocator.DownloadService = new DownloadService();
+            ServiceLocator.GameTagService = new EfGameTagService(db);
 
             return db;
         }

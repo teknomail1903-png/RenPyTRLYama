@@ -22,5 +22,7 @@ namespace RenPyTRLauncher.Models
         public int TotalDownloadCount { get; set; } = 0;
         public string City { get; set; } = string.Empty;
         public int? Age { get; set; }
+        public string SecretQuestion { get; set; } = string.Empty;
+        public string SecretAnswer { get; set; } = string.Empty;
     }
 }

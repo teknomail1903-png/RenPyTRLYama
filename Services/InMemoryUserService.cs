@@ -60,6 +60,8 @@ namespace RenPyTRLauncher.Services
             existing.IsVip = user.IsVip;
             existing.VipEndDate = user.VipEndDate;
             existing.Role = user.Role;
+            existing.SecretQuestion = user.SecretQuestion;
+            existing.SecretAnswer = user.SecretAnswer;
             // yeni alanlar
             existing.FavoriteGameIds = new System.Collections.Generic.List<Guid>(user.FavoriteGameIds ?? new System.Collections.Generic.List<Guid>());
             existing.DownloadedPatchIds = new System.Collections.Generic.List<Guid>(user.DownloadedPatchIds ?? new System.Collections.Generic.List<Guid>());

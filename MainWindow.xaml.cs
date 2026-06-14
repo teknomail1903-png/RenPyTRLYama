@@ -36,6 +36,8 @@ namespace RenPyTRLauncher
 
         private readonly System.Collections.Generic.Dictionary<string, Button> _sidebarMap = new();
 
+        private readonly System.Collections.Generic.Stack<FrameworkElement> _navigationStack = new();
+
 
 
         public MainWindow()
@@ -143,9 +145,7 @@ namespace RenPyTRLauncher
 
             _sidebarMap["PageOyunlar"] = BtnOyunlar;
 
-            _sidebarMap["PageTurkceYamalar"] = BtnTurkceYamalar;
-
-            _sidebarMap["PageFavoriler"] = BtnFavoriler;
+            _sidebarMap["PageModlar"] = BtnModlar;
 
             _sidebarMap["PageKategori"] = BtnKategori;
 
@@ -166,9 +166,7 @@ namespace RenPyTRLauncher
 
             BtnOyunlar.Click += (_, _) => SetActivePage("PageOyunlar");
 
-            BtnTurkceYamalar.Click += (_, _) => SetActivePage("PageTurkceYamalar");
-
-            BtnFavoriler.Click += (_, _) => SetActivePage("PageFavoriler");
+            BtnModlar.Click += (_, _) => SetActivePage("PageModlar");
 
             BtnKategori.Click += (_, _) => { viewModel.CloseCategoryFolder(); SetActivePage("PageKategori"); };
 
@@ -229,7 +227,7 @@ namespace RenPyTRLauncher
 
             BtnProfileMyFavorites.Click += (_, _) =>
             {
-                SetActivePage("PageFavoriler");
+                SetActivePage("PageProfil");
             };
 
             BtnProfileNotifications.Click += (_, _) =>
@@ -450,7 +448,7 @@ namespace RenPyTRLauncher
 
             if (sender is FrameworkElement fe && fe.Tag is Game game)
 
-                OpenGameDetail(game);
+                NavigateToGameDetail(game);
 
         }
 
@@ -484,7 +482,7 @@ namespace RenPyTRLauncher
 
         {
 
-            new GameDetailWindow(game, viewModel) { Owner = this }.ShowDialog();
+            NavigateToGameDetail(game);
 
         }
 
@@ -750,6 +748,12 @@ namespace RenPyTRLauncher
 
             HideAllPages();
 
+            // Clear content area and show default content when switching pages
+            ContentArea.Content = null;
+            ContentArea.Visibility = Visibility.Collapsed;
+            DefaultContent.Visibility = Visibility.Visible;
+            BreadcrumbBar.Visibility = Visibility.Collapsed;
+            _navigationStack.Clear();
 
 
             switch (pageName)
@@ -760,9 +764,7 @@ namespace RenPyTRLauncher
 
                 case "PageOyunlar": PageOyunlar.Visibility = Visibility.Visible; break;
 
-                case "PageTurkceYamalar": PageTurkceYamalar.Visibility = Visibility.Visible; break;
-
-                case "PageFavoriler": PageFavoriler.Visibility = Visibility.Visible; break;
+                case "PageModlar": PageModlar.Visibility = Visibility.Visible; break;
 
                 case "PageKategori": PageKategori.Visibility = Visibility.Visible; break;
 
@@ -822,9 +824,7 @@ namespace RenPyTRLauncher
 
             PageOyunlar.Visibility = Visibility.Collapsed;
 
-            PageTurkceYamalar.Visibility = Visibility.Collapsed;
-
-            PageFavoriler.Visibility = Visibility.Collapsed;
+            PageModlar.Visibility = Visibility.Collapsed;
 
             PageKategori.Visibility = Visibility.Collapsed;
 
@@ -911,6 +911,71 @@ namespace RenPyTRLauncher
 
         }
 
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateBack();
+        }
+
+        public void NavigateToGameDetail(Game game)
+        {
+            if (game == null) return;
+
+            // Push current view to stack
+            _navigationStack.Push(DefaultContent);
+
+            // Create GameDetailUserControl
+            var gameDetailControl = new GameDetailUserControl(game, viewModel);
+            gameDetailControl.BackRequested += () => NavigateBack();
+
+            // Show breadcrumb
+            BreadcrumbBar.Visibility = Visibility.Visible;
+
+            // Create breadcrumb based on game categories
+            if (game.Categories.Count > 0)
+            {
+                // Format: Ana Sayfa > Kategori > Oyun Adı
+                UpdateBreadcrumb(new[] { "Ana Sayfa", game.Categories[0], game.Name });
+            }
+            else
+            {
+                // Format: Ana Sayfa > Oyun Adı
+                UpdateBreadcrumb(new[] { "Ana Sayfa", game.Name });
+            }
+
+            // Hide default content, show game detail
+            DefaultContent.Visibility = Visibility.Collapsed;
+            ContentArea.Content = gameDetailControl;
+            ContentArea.Visibility = Visibility.Visible;
+        }
+
+        public void NavigateBack()
+        {
+            if (_navigationStack.Count > 0)
+            {
+                var previousView = _navigationStack.Pop();
+                ContentArea.Content = null;
+                ContentArea.Visibility = Visibility.Collapsed;
+                DefaultContent.Visibility = Visibility.Visible;
+                BreadcrumbBar.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateBreadcrumb(string[] items)
+        {
+            var breadcrumbList = new System.Collections.ObjectModel.ObservableCollection<BreadcrumbItem>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                breadcrumbList.Add(new BreadcrumbItem { Text = items[i], IsLast = i == items.Length - 1 });
+            }
+            BreadcrumbItems.ItemsSource = breadcrumbList;
+        }
+
+    }
+
+    public class BreadcrumbItem
+    {
+        public string Text { get; set; } = "";
+        public bool IsLast { get; set; }
     }
 
 }

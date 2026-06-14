@@ -185,8 +185,8 @@
                 </Button>
                 <Button x:Name="BtnPatches" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="🇹🇷" FontSize="18" Foreground="#27AE60"/>
-                        <TextBlock Text="Türkçe Yamalar" Margin="12,0,0,0"/>
+                        <TextBlock Text="🧩" FontSize="18" Foreground="#9B59FF"/>
+                        <TextBlock Text="Modlar" Margin="12,0,0,0"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="BtnSlider" Style="{StaticResource SidebarButton}" Margin="0,0,0,4">
@@ -296,19 +296,31 @@
                             <Border Style="{StaticResource StatusCard}">
                                 <StackPanel>
                                     <TextBlock Text="🟢 Veritabanı Durumu" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock Text="Aktif" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
+                                    <TextBlock x:Name="TxtDbStatus" Text="Aktif" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatusCard}">
                                 <StackPanel>
-                                    <TextBlock Text="🟢 Sunucu Durumu" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock Text="Online" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
+                                    <TextBlock Text="🎮 Toplam Oyun" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtTotalGames" Text="0" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource StatusCard}">
                                 <StackPanel>
-                                    <TextBlock Text="🟢 Güncelleme Sistemi" Style="{StaticResource AdminLabel}"/>
-                                    <TextBlock Text="Hazır" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
+                                    <TextBlock Text="🧩 Toplam Mod" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtTotalPatches" Text="0" Style="{StaticResource AdminValue}" Foreground="#9B59FF" FontSize="24"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatusCard}">
+                                <StackPanel>
+                                    <TextBlock Text="� Toplam Kullanıcı" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtTotalUsers" Text="0" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource StatusCard}">
+                                <StackPanel>
+                                    <TextBlock Text="📦 Sürüm" Style="{StaticResource AdminLabel}"/>
+                                    <TextBlock x:Name="TxtAppVersion" Text="1.0.0" Style="{StaticResource AdminValue}" Foreground="#27AE60" FontSize="24"/>
                                 </StackPanel>
                             </Border>
                         </WrapPanel>
@@ -345,11 +357,11 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Patches Page -->
+                <!-- Mods Page -->
                 <Grid x:Name="PagePatches" Visibility="Collapsed">
                     <StackPanel>
-                        <TextBlock Text="🇹🇷 Türkçe Yama Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
-                        <Button x:Name="BtnAddPatch" Content="+ Yama Ekle" Width="160" Height="44" Margin="0,0,0,16" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold" FontSize="14"/>
+                        <TextBlock Text="🧩 Mod Yönetimi" FontSize="28" Foreground="White" FontWeight="Bold" Margin="0,0,0,20"/>
+                        <Button x:Name="BtnAddPatch" Content="+ Mod Ekle" Width="160" Height="44" Margin="0,0,0,16" Background="{StaticResource AdminPrimary}" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold" FontSize="14"/>
                         <ListBox x:Name="LstPatches" DisplayMemberPath="Name" Height="320" Background="#1A1A22" Foreground="White" BorderThickness="0"/>
                         <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
                             <Button x:Name="BtnEditPatch" Content="Düzenle" Width="130" Height="40" Margin="0,0,12,0" Background="#2A2A35" Foreground="White" BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
